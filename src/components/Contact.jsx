@@ -123,7 +123,7 @@ export default function Contact() {
             <div className="mt-10 space-y-6">
               {/* Email */}
               <motion.a
-                href="mailto:hello@zence.co"
+                href="mailto:zenceservice@gmail.com"
                 className="flex items-center gap-4 group cursor-pointer"
                 onMouseEnter={playHover}
               >
@@ -132,13 +132,13 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Email Us</p>
-                  <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">hello@zence.co</p>
+                  <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">zenceservice@gmail.com</p>
                 </div>
               </motion.a>
 
               {/* Phone */}
               <motion.a
-                href="tel:+919999988888"
+                href="tel:+917904035820"
                 className="flex items-center gap-4 group cursor-pointer"
                 onMouseEnter={playHover}
               >
@@ -147,7 +147,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Call Us</p>
-                  <p className="font-sora font-semibold text-white group-hover:text-accent-purple transition-colors">+91 99999 88888</p>
+                  <p className="font-sora font-semibold text-white group-hover:text-accent-purple transition-colors">+91 7904035820</p>
                 </div>
               </motion.a>
 
