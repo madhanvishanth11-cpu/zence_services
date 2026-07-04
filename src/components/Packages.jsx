@@ -18,15 +18,15 @@ const glowStyles = {
     badgeText: 'text-accent-blue'
   },
   purple: {
-    radial: 'radial-gradient(120% 120% at 0% 0%, rgba(139, 92, 246, 0.15) 0%, rgba(13, 18, 34, 0) 50%)',
-    border: 'rgba(139, 92, 246, 0.55)', // Slightly stronger purple-blue border glow
-    borderHover: 'rgba(139, 92, 246, 1)',
-    shadow: '0 0 35px rgba(139, 92, 246, 0.15)',
-    shadowHover: '0 0 50px rgba(139, 92, 246, 0.45)', // Enhanced shadow expand on hover
-    iconBg: 'rgba(139, 92, 246, 0.2)', // Slightly stronger icon container bg
-    iconBorder: 'rgba(139, 92, 246, 0.5)', // Stronger border
+    radial: 'radial-gradient(120% 120% at 0% 0%, rgba(139, 92, 246, 0.05) 0%, rgba(13, 18, 34, 0) 50%)',
+    border: 'rgba(139, 92, 246, 0.35)', // Reduced by 20% for elegant look
+    borderHover: 'rgba(139, 92, 246, 0.8)', // Reduced by 20%
+    shadow: '0 0 25px rgba(139, 92, 246, 0.1)', // Reduced by 20%
+    shadowHover: '0 0 40px rgba(139, 92, 246, 0.25)', // Reduced by 20%
+    iconBg: 'rgba(139, 92, 246, 0.1)',
+    iconBorder: 'rgba(139, 92, 246, 0.3)',
     iconColor: '#8B5CF6',
-    btnBg: 'from-accent-purple to-accent-blue hover:from-accent-blue hover:to-accent-purple hover:shadow-[0_0_30px_rgba(139,92,246,0.75)]', // Much stronger button hover glow
+    btnBg: 'from-accent-purple to-accent-blue hover:from-accent-blue hover:to-accent-purple hover:shadow-[0_0_30px_rgba(139,92,246,0.75)]',
     badgeText: 'text-accent-purple'
   },
   cyan: {
@@ -79,16 +79,15 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
         background: `${style.radial}, #0D1222`,
         borderColor: style.border,
         boxShadow: style.shadow,
-        borderWidth: popular ? '2px' : '1.5px', // Thicker border for featured card
         willChange: "transform, box-shadow"
       }}
       whileHover={{
         y: -8, // Lift by exactly 8px on hover
-        scale: 1.02, // Consistent scale lift across all cards
+        scale: 1.02,
         boxShadow: style.shadowHover,
         borderColor: style.borderHover
       }}
-      className={`relative flex flex-col justify-between p-8 sm:p-10 rounded-[28px] transition-all duration-300 cursor-pointer backdrop-blur-[20px] select-none`}
+      className="relative flex flex-col justify-between p-8 sm:p-10 rounded-[28px] border-[1.5px] transition-all duration-300 cursor-pointer backdrop-blur-[20px] select-none"
       onClick={handleCardClick}
       onMouseEnter={playHover}
     >
@@ -99,19 +98,6 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
         }}
       />
-
-      {/* Thin Animated Gradient Top Edge Line for Featured Card */}
-      {popular && (
-        <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-accent-purple via-accent-cyan to-accent-blue rounded-t-[28px] animate-pulse z-10" />
-      )}
-
-      {/* Faint Animated Background Glow inside the Card for Premium effect */}
-      {popular && (
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-accent-purple/5 via-transparent to-accent-blue/5 rounded-[28px] animate-pulse pointer-events-none z-0" 
-          style={{ animationDuration: '4s' }}
-        />
-      )}
 
       <div className="relative z-10">
         {/* Package Header */}
@@ -128,7 +114,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
             style={{
               backgroundColor: style.iconBg,
               borderColor: style.iconBorder,
-              boxShadow: popular ? '0 0 15px rgba(139, 92, 246, 0.3)' : 'none' // Stronger icon glow for featured
+              boxShadow: popular ? '0 0 15px rgba(139, 92, 246, 0.3)' : 'none'
             }}
             className="p-3 rounded-2xl border text-white transition-all duration-300"
           >
