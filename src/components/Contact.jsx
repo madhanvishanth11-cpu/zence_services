@@ -81,7 +81,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative bg-[#070b13] py-24 border-t border-white/5">
+    <section id="contact" className="relative bg-[#0B1120] py-24 border-t border-white/5">
       {/* Background glowing decorations */}
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/5 rounded-full blur-[130px] pointer-events-none" />
@@ -179,7 +179,7 @@ export default function Contact() {
             </div>
 
             {/* Styled Dark Google Maps Frame */}
-            <div className="mt-10 rounded-2xl overflow-hidden border border-white/5 bg-[#0f172a] h-48 relative shadow-inner">
+            <div className="mt-10 rounded-2xl overflow-hidden border border-white/5 bg-[#111827] h-48 relative shadow-inner">
               <div className="absolute inset-0 bg-slate-900/60 z-1 pointer-events-none mix-blend-color" />
               <iframe
                 title="Office Location"

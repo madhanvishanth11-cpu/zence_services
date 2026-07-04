@@ -46,7 +46,7 @@ export default function Process() {
   const { playHover } = useAudio();
 
   return (
-    <section id="process" className="relative bg-[#070b13] py-24 border-t border-white/5">
+    <section id="process" className="relative bg-[#0B1120] py-24 border-t border-white/5">
       {/* Background glowing decorations */}
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/5 rounded-full blur-[130px] pointer-events-none" />
@@ -94,7 +94,7 @@ export default function Process() {
                     whileInView={{ scale: 1, opacity: 1 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ type: 'spring', damping: 15, stiffness: 200 }}
-                    className="absolute left-4 md:left-1/2 transform -translate-x-1/2 z-10 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#070b13] border-2 border-accent-cyan flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+                    className="absolute left-4 md:left-1/2 transform -translate-x-1/2 z-10 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#0B1120] border-2 border-accent-cyan flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)]"
                   >
                     <StepIcon size={16} className="text-accent-cyan animate-pulse" />
                   </motion.div>

@@ -78,7 +78,7 @@ export default function Testimonials() {
   const activeTestimonial = testimonials[index];
 
   return (
-    <section className="relative bg-[#070b13] py-24 border-t border-white/5">
+    <section className="relative bg-[#0B1120] py-24 border-t border-white/5">
       {/* Background decoration */}
       <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-accent-purple/5 rounded-full blur-[100px] pointer-events-none" />
 

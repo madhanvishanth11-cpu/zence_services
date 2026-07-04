@@ -13,14 +13,14 @@ function ZenceFeatureCard({ icon: Icon, title, description, delay }) {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay }}
       whileHover={{
-        y: -8,
+        y: -6, // Lift by exactly 6px
         scale: 1.02,
-        borderColor: 'rgba(249, 115, 22, 0.4)',
-        boxShadow: '0 0 30px rgba(249, 115, 22, 0.2)'
+        borderColor: 'rgba(56, 189, 248, 0.35)', // Border glow becomes slightly brighter
+        boxShadow: '0 0 25px rgba(56, 189, 248, 0.15)' // Glow increases slightly
       }}
       onMouseEnter={playHover}
       style={{
-        background: 'radial-gradient(120% 120% at 0% 0%, rgba(249, 115, 22, 0.08) 0%, rgba(13, 18, 34, 0) 60%), #0f172a',
+        background: 'radial-gradient(120% 120% at 0% 0%, rgba(56, 189, 248, 0.05) 0%, rgba(11, 17, 32, 0) 60%), #111827', // Card Background #111827
         willChange: 'transform, box-shadow'
       }}
       className="glassmorphism p-6 sm:p-8 rounded-[24px] border border-white/5 shadow-xl flex flex-col items-start text-left cursor-pointer transition-all duration-300 relative overflow-hidden group select-none"
@@ -33,9 +33,9 @@ function ZenceFeatureCard({ icon: Icon, title, description, delay }) {
         }}
       />
 
-      {/* Icon Wrapper */}
-      <div className="p-3.5 bg-orange-500/10 rounded-xl text-orange-500 border border-orange-500/20 group-hover:bg-orange-500/20 group-hover:border-orange-500/40 transition-all duration-300 mb-6">
-        <Icon size={22} className="group-hover:scale-105 transition-transform" />
+      {/* Icon Wrapper: Dark navy glass + Soft cyan-blue glow + #38BDF8 icon color */}
+      <div className="p-3.5 bg-[#0B1120]/80 rounded-xl text-[#38BDF8] border border-[#38BDF8]/20 shadow-[0_0_12px_rgba(56,189,248,0.15)] group-hover:bg-[#0B1120] group-hover:border-[#38BDF8]/40 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.3)] transition-all duration-300 mb-6">
+        <Icon size={22} className="transition-transform duration-300 group-hover:scale-[1.05]" />
       </div>
 
       {/* Heading */}
@@ -80,9 +80,9 @@ export default function WhyChooseZence() {
   ];
 
   return (
-    <section className="relative bg-[#070b13] py-20 border-t border-white/5">
-      {/* Background orange glow */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-500/3 rounded-full blur-[160px] pointer-events-none" />
+    <section className="relative bg-[#0B1120] py-20 border-t border-white/5">
+      {/* Background blue/cyan glow */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#2563EB]/4 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">

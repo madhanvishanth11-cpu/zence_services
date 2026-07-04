@@ -96,7 +96,7 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
-        background: `${style.radial}, #0D1222`,
+        background: `${style.radial}, #111827`,
         borderColor: style.border,
         boxShadow: style.shadow,
         willChange: "transform, box-shadow"
@@ -183,7 +183,7 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="relative bg-[#070b13] py-24 border-t border-white/5 overflow-hidden">
+    <section id="services" className="relative bg-[#0B1120] py-24 border-t border-white/5 overflow-hidden">
       {/* Dynamic Background glowing decorations */}
       <div className="absolute top-1/3 right-0 w-[450px] h-[450px] bg-accent-blue/5 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/3 left-0 w-[450px] h-[450px] bg-accent-purple/5 rounded-full blur-[140px] pointer-events-none" />

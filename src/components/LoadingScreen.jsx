@@ -63,7 +63,7 @@ export default function LoadingScreen({ onComplete }) {
   return (
     <div
       ref={screenRef}
-      className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-[#070b13]"
+      className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-[#0B1120]"
       style={{
         clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
       }}

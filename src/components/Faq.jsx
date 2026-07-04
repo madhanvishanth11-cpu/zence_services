@@ -80,7 +80,7 @@ export default function Faq() {
   };
 
   return (
-    <section className="relative bg-[#070b13] py-24 border-t border-white/5">
+    <section className="relative bg-[#0B1120] py-24 border-t border-white/5">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

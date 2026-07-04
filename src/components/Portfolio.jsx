@@ -141,7 +141,7 @@ export default function Portfolio() {
   };
 
   return (
-    <section id="portfolio" className="relative bg-[#070b13] py-24 border-t border-white/5">
+    <section id="portfolio" className="relative bg-[#0B1120] py-24 border-t border-white/5">
       {/* Background glow decoration */}
       <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-accent-blue/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent-purple/5 rounded-full blur-[100px] pointer-events-none" />
@@ -201,7 +201,7 @@ export default function Portfolio() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
-                className="group relative rounded-2xl overflow-hidden cursor-pointer bg-[#0f172a] border border-white/5 hover:border-accent-cyan/30 transition-all flex flex-col hover:shadow-2xl shadow-xl h-96"
+                className="group relative rounded-2xl overflow-hidden cursor-pointer bg-[#111827] border border-white/5 hover:border-accent-cyan/30 transition-all flex flex-col hover:shadow-2xl shadow-xl h-96"
                 onClick={() => handleProjectClick(p)}
                 onMouseEnter={playHover}
               >
@@ -261,7 +261,7 @@ export default function Portfolio() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-[#070b13]/85 backdrop-blur-md cursor-pointer"
+              className="absolute inset-0 bg-[#0B1120]/85 backdrop-blur-md cursor-pointer"
             />
 
             {/* Modal Box */}
@@ -344,7 +344,7 @@ export default function Portfolio() {
                         {activeProject.caseStudy.tech.map((t, idx) => (
                           <span
                             key={idx}
-                            className="text-[10px] sm:text-xs font-poppins font-bold bg-[#070b13]/60 px-2.5 py-1.5 rounded-lg border border-white/5 text-white/70"
+                            className="text-[10px] sm:text-xs font-poppins font-bold bg-[#0B1120]/60 px-2.5 py-1.5 rounded-lg border border-white/5 text-white/70"
                           >
                             {t}
                           </span>

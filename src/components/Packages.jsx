@@ -14,19 +14,19 @@ const glowStyles = {
     iconBg: 'rgba(59, 130, 246, 0.1)',
     iconBorder: 'rgba(59, 130, 246, 0.3)',
     iconColor: '#3B82F6',
-    btnBg: 'from-blue-600 to-cyan-500 hover:from-cyan-500 hover:to-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]',
+    btnBg: 'from-[#2563EB] to-[#0EA5E9] hover:from-[#0EA5E9] hover:to-[#2563EB] hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]',
     badgeText: 'text-accent-blue'
   },
   purple: {
     radial: 'radial-gradient(120% 120% at 0% 0%, rgba(139, 92, 246, 0.05) 0%, rgba(13, 18, 34, 0) 50%)',
-    border: 'rgba(139, 92, 246, 0.35)', // Reduced by 20% for elegant look
-    borderHover: 'rgba(139, 92, 246, 0.8)', // Reduced by 20%
-    shadow: '0 0 25px rgba(139, 92, 246, 0.1)', // Reduced by 20%
-    shadowHover: '0 0 40px rgba(139, 92, 246, 0.25)', // Reduced by 20%
+    border: 'rgba(139, 92, 246, 0.35)',
+    borderHover: 'rgba(139, 92, 246, 0.8)',
+    shadow: '0 0 25px rgba(139, 92, 246, 0.1)',
+    shadowHover: '0 0 40px rgba(139, 92, 246, 0.25)',
     iconBg: 'rgba(139, 92, 246, 0.1)',
     iconBorder: 'rgba(139, 92, 246, 0.3)',
     iconColor: '#8B5CF6',
-    btnBg: 'from-accent-purple to-accent-blue hover:from-accent-blue hover:to-accent-purple hover:shadow-[0_0_30px_rgba(139,92,246,0.75)]',
+    btnBg: 'from-[#2563EB] to-[#0EA5E9] hover:from-[#0EA5E9] hover:to-[#2563EB] hover:shadow-[0_0_30px_rgba(37,99,235,0.55)]', // Matches left and right blue gradient but maintains a purple glow
     badgeText: 'text-accent-purple'
   },
   cyan: {
@@ -38,7 +38,7 @@ const glowStyles = {
     iconBg: 'rgba(6, 182, 212, 0.1)',
     iconBorder: 'rgba(6, 182, 212, 0.3)',
     iconColor: '#06B6D4',
-    btnBg: 'from-cyan-500 to-blue-500 hover:from-blue-500 hover:to-cyan-500 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]',
+    btnBg: 'from-[#0EA5E9] to-[#2563EB] hover:from-[#2563EB] hover:to-[#0EA5E9] hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]',
     badgeText: 'text-accent-cyan'
   }
 };
@@ -76,7 +76,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: delay }}
       style={{
-        background: `${style.radial}, #0D1222`,
+        background: `${style.radial}, #111827`,
         borderColor: style.border,
         boxShadow: style.shadow,
         willChange: "transform, box-shadow"
@@ -245,7 +245,7 @@ export default function Packages() {
   ];
 
   return (
-    <section id="packages" className="relative bg-[#070b13] py-24 border-t border-white/5">
+    <section id="packages" className="relative bg-[#0B1120] py-24 border-t border-white/5">
       {/* Background glowing decorations */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none" />

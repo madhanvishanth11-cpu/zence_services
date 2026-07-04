@@ -207,7 +207,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative min-h-[80vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#070b13] pt-24 pb-16 lg:py-0">
+    <section id="home" className="relative min-h-[80vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0B1120] pt-24 pb-16 lg:py-0">
       {/* 3D WebGL Canvas container */}
       <div ref={mountRef} className="absolute inset-0 z-0 opacity-80" />
 
