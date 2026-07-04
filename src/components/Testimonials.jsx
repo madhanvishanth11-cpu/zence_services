@@ -64,7 +64,16 @@ export default function ClientFeedback() {
     const saved = localStorage.getItem('zence_reviews');
     if (saved) {
       try {
-        setReviews(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        // Filter out the test review to remove it completely
+        const filtered = parsed.filter(review => {
+          const isTarget = 
+            review.name.toLowerCase().trim() === 'madhan m' &&
+            review.company.toLowerCase().trim() === 'zence';
+          return !isTarget;
+        });
+        setReviews(filtered);
+        localStorage.setItem('zence_reviews', JSON.stringify(filtered));
       } catch (e) {
         setReviews(defaultReviews);
       }
