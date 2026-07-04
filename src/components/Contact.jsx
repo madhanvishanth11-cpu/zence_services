@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, MessageSquare, CheckCircle } from 'lucide-react';
+import { Mail, Phone, Send, MessageSquare, CheckCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAudio } from '../hooks/useAudio';
 
@@ -89,8 +89,8 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
           
-          {/* Left Side: Contact Information & Map */}
-          <div className="lg:col-span-5 flex flex-col text-left">
+          {/* Left Side: Contact Information (Vertically Centered) */}
+          <div className="lg:col-span-5 flex flex-col justify-center lg:self-center text-left">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -112,7 +112,7 @@ export default function Contact() {
             </motion.p>
 
             {/* Direct Contact Links */}
-            <div className="mt-10 space-y-6">
+            <div className="mt-8 space-y-6">
               {/* Email */}
               <motion.a
                 href="mailto:zenceservice@gmail.com"
@@ -143,54 +143,28 @@ export default function Contact() {
                 </div>
               </motion.a>
 
-              {/* Location */}
-              <div className="flex items-center gap-4">
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-cyan">
-                  <MapPin size={18} />
-                </div>
-                <div>
-                  <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Office</p>
-                  <p className="font-sora font-semibold text-white">Cyber City, Gurugram, India</p>
+              {/* Socials Media Grid */}
+              <div className="pt-6 border-t border-white/5">
+                <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest mb-4">Connect Socially</p>
+                <div className="flex items-center gap-3">
+                  {socialLinks.map((social, idx) => {
+                    const SocialIcon = social.icon;
+                    return (
+                      <a
+                        key={idx}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/20 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
+                        title={social.label}
+                        onMouseEnter={playHover}
+                      >
+                        <SocialIcon size={16} />
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
-            </div>
-
-            {/* Socials Media Grid */}
-            <div className="mt-10">
-              <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest mb-4">Connect Socially</p>
-              <div className="flex items-center gap-3">
-                {socialLinks.map((social, idx) => {
-                  const SocialIcon = social.icon;
-                  return (
-                    <a
-                      key={idx}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/20 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
-                      title={social.label}
-                      onMouseEnter={playHover}
-                    >
-                      <SocialIcon size={16} />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Styled Dark Google Maps Frame */}
-            <div className="mt-10 rounded-2xl overflow-hidden border border-white/5 bg-[#111827] h-48 relative shadow-inner">
-              <div className="absolute inset-0 bg-slate-900/60 z-1 pointer-events-none mix-blend-color" />
-              <iframe
-                title="Office Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.9602534571954!2d77.08546597629559!3d28.49576859061036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d193eb774a3e7%3A0xc3b8eb30743b6795!2sCyber%20Hub!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: "grayscale(1) invert(0.92) contrast(1.2)" }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
             </div>
           </div>
 
