@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, Target, Code, Mic, Award } from 'lucide-react';
+import { Check, Target, Code, Mic } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAudio } from '../hooks/useAudio';
 
@@ -19,14 +19,14 @@ const glowStyles = {
   },
   purple: {
     radial: 'radial-gradient(120% 120% at 0% 0%, rgba(139, 92, 246, 0.15) 0%, rgba(13, 18, 34, 0) 50%)',
-    border: 'rgba(139, 92, 246, 0.5)',
+    border: 'rgba(139, 92, 246, 0.55)', // Slightly stronger purple-blue border glow
     borderHover: 'rgba(139, 92, 246, 1)',
     shadow: '0 0 35px rgba(139, 92, 246, 0.15)',
-    shadowHover: '0 0 50px rgba(139, 92, 246, 0.35)',
-    iconBg: 'rgba(139, 92, 246, 0.15)',
-    iconBorder: 'rgba(139, 92, 246, 0.4)',
+    shadowHover: '0 0 50px rgba(139, 92, 246, 0.45)', // Enhanced shadow expand on hover
+    iconBg: 'rgba(139, 92, 246, 0.2)', // Slightly stronger icon container bg
+    iconBorder: 'rgba(139, 92, 246, 0.5)', // Stronger border
     iconColor: '#8B5CF6',
-    btnBg: 'from-accent-purple to-accent-blue hover:from-accent-blue hover:to-accent-purple hover:shadow-[0_0_25px_rgba(139,92,246,0.5)]',
+    btnBg: 'from-accent-purple to-accent-blue hover:from-accent-blue hover:to-accent-purple hover:shadow-[0_0_30px_rgba(139,92,246,0.75)]', // Much stronger button hover glow
     badgeText: 'text-accent-purple'
   },
   cyan: {
@@ -79,37 +79,41 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
         background: `${style.radial}, #0D1222`,
         borderColor: style.border,
         boxShadow: style.shadow,
+        borderWidth: popular ? '2px' : '1.5px', // Thicker border for featured card
         willChange: "transform, box-shadow"
       }}
       whileHover={{
-        y: -10,
-        scale: popular ? 1.04 : 1.02,
+        y: -8, // Lift by exactly 8px on hover
+        scale: 1.02, // Consistent scale lift across all cards
         boxShadow: style.shadowHover,
         borderColor: style.borderHover
       }}
-      className={`relative flex flex-col justify-between p-8 sm:p-10 rounded-[28px] border-[1.5px] transition-all duration-300 cursor-pointer backdrop-blur-[20px] select-none ${
-        popular ? 'z-10 md:scale-[1.03]' : ''
-      }`}
+      className={`relative flex flex-col justify-between p-8 sm:p-10 rounded-[28px] transition-all duration-300 cursor-pointer backdrop-blur-[20px] select-none`}
       onClick={handleCardClick}
       onMouseEnter={playHover}
     >
       {/* Subtle Noise Texture Overlay */}
       <div 
-        className="absolute inset-0 opacity-[0.015] pointer-events-none mix-blend-overlay rounded-[28px]"
+        className="absolute inset-0 opacity-[0.015] pointer-events-none mix-blend-overlay rounded-[28px] z-1"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
         }}
       />
 
-      {/* Popular Tag */}
+      {/* Thin Animated Gradient Top Edge Line for Featured Card */}
       {popular && (
-        <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent-purple to-accent-cyan text-white text-xs font-bold font-poppins uppercase tracking-widest px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-[0_0_15px_rgba(139,92,246,0.4)]">
-          <Award size={12} className="animate-spin" style={{ animationDuration: '6s' }} />
-          MOST POPULAR
-        </span>
+        <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-accent-purple via-accent-cyan to-accent-blue rounded-t-[28px] animate-pulse z-10" />
       )}
 
-      <div>
+      {/* Faint Animated Background Glow inside the Card for Premium effect */}
+      {popular && (
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-accent-purple/5 via-transparent to-accent-blue/5 rounded-[28px] animate-pulse pointer-events-none z-0" 
+          style={{ animationDuration: '4s' }}
+        />
+      )}
+
+      <div className="relative z-10">
         {/* Package Header */}
         <div className="flex justify-between items-start mb-6">
           <div>
@@ -123,9 +127,10 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
           <div 
             style={{
               backgroundColor: style.iconBg,
-              borderColor: style.iconBorder
+              borderColor: style.iconBorder,
+              boxShadow: popular ? '0 0 15px rgba(139, 92, 246, 0.3)' : 'none' // Stronger icon glow for featured
             }}
-            className="p-3 rounded-2xl border text-white"
+            className="p-3 rounded-2xl border text-white transition-all duration-300"
           >
             <Icon size={22} color={style.iconColor} />
           </div>
