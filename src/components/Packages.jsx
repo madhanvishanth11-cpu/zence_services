@@ -252,24 +252,66 @@ export default function Packages() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+        <div className="text-center max-w-3xl mx-auto mb-20 flex flex-col items-center">
+          {/* Glowing Pill Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight"
+            className="mb-6"
           >
-            Premium <span className="text-gradient-blue-cyan neon-text-blue">Packages</span>
-          </motion.h2>
+            <motion.div
+              animate={{ scale: [1, 1.05, 1], boxShadow: ["0 0 10px rgba(37,99,235,0.2)", "0 0 20px rgba(37,99,235,0.45)", "0 0 10px rgba(37,99,235,0.2)"] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+              className="px-4.5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold font-poppins bg-gradient-to-r from-accent-blue to-accent-cyan text-white tracking-widest uppercase shadow-[0_0_15px_rgba(37,99,235,0.3)] border border-white/10"
+            >
+              🔥 LIMITED TO ONLY 5 CLIENTS
+            </motion.div>
+          </motion.div>
+
+          {/* Word-by-word Heading Reveal */}
+          <h2 className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight flex flex-wrap justify-center">
+            {"Exclusive Launch Offer".split(" ").map((word, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 + i * 0.1 }}
+                className="inline-block mr-3 text-gradient-blue-cyan neon-text-blue"
+              >
+                {word}
+              </motion.span>
+            ))}
+          </h2>
+
+          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-5 font-poppins text-base sm:text-lg text-white/50 font-light leading-relaxed"
           >
-            Clear pricing tailored for ambitious businesses. Invest in world-class systems built to generate ROI.
+            To ensure premium quality and dedicated support, we are accepting only 5 new client projects under our exclusive launch pricing. Once all 5 slots are filled, our standard pricing will apply.
+          </motion.p>
+
+          {/* Gently Pulsing Urgency Text */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="mt-4 font-poppins text-xs sm:text-sm text-accent-blue font-bold tracking-wide"
+          >
+            <motion.span
+              animate={{ opacity: [0.6, 1, 0.6] }}
+              transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+              className="flex items-center justify-center gap-1.5 drop-shadow-[0_0_8px_rgba(37,99,235,0.4)]"
+            >
+              ⚡ Only a few spots remaining.
+            </motion.span>
           </motion.p>
         </div>
 
