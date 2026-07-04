@@ -20,16 +20,9 @@ const LinkedinIcon = ({ size = 16, className = "" }) => (
   </svg>
 );
 
-const TwitterIcon = ({ size = 16, className = "" }) => (
-  <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" className={className}>
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-  </svg>
-);
-
-const GithubIcon = ({ size = 16, className = "" }) => (
+const FacebookIcon = ({ size = 16, className = "" }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-    <path d="M9 18c-4.51 2-5-2-7-2" />
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
   </svg>
 );
 
@@ -84,8 +77,7 @@ export default function Contact() {
   const socialLinks = [
     { icon: InstagramIcon, url: "https://instagram.com/zence", label: "Instagram" },
     { icon: LinkedinIcon, url: "https://linkedin.com/company/zence", label: "LinkedIn" },
-    { icon: TwitterIcon, url: "https://twitter.com/zence", label: "Twitter" },
-    { icon: GithubIcon, url: "https://github.com/zence", label: "GitHub" }
+    { icon: FacebookIcon, url: "https://facebook.com/zence", label: "Facebook" }
   ];
 
   return (
@@ -175,7 +167,7 @@ export default function Contact() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer"
+                      className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/20 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
                       title={social.label}
                       onMouseEnter={playHover}
                     >
