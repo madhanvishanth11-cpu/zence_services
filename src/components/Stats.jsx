@@ -50,7 +50,7 @@ export default function FounderAboutSection() {
     "Meta Ads Growth Expert",
     "Premium Website Development",
     "AI Voice Agent Solutions",
-    "Business Automation",
+    "Lead Generation Strategy",
     "SEO & GEO Optimization",
     "Client-Focused Digital Solutions"
   ];
@@ -183,7 +183,7 @@ export default function FounderAboutSection() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="font-poppins text-sm sm:text-base text-accent-cyan font-bold uppercase tracking-wider mt-4 leading-relaxed max-w-xl"
             >
-              Founder of ZENCE | Meta Ads Strategist | No-Code Website Developer | AI Automation Specialist
+              Founder of ZENCE | Meta Ads Strategist | No-Code Website Developer | AI Voice Agent Specialist
             </motion.h3>
 
             {/* Body Copy */}
@@ -202,7 +202,7 @@ export default function FounderAboutSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.55 }}
               >
-                I help businesses grow through high-converting Meta Ads, premium no-code websites, AI Voice Agents, and workflow automation.
+                I help businesses grow through high-converting Meta Ads, premium no-code websites, and AI Voice Agents that improve customer communication and lead generation.
               </motion.p>
               <motion.p 
                 initial={{ opacity: 0, y: 15 }}
@@ -210,7 +210,7 @@ export default function FounderAboutSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                My mission is to help startups, local businesses, and entrepreneurs build a strong digital presence that generates leads, increases sales, and automates repetitive business processes.
+                My mission is to help startups, local businesses, and entrepreneurs build a strong digital presence that generates quality leads, increases sales, and strengthens their online brand.
               </motion.p>
               <motion.p 
                 initial={{ opacity: 0, y: 15 }}
@@ -218,7 +218,7 @@ export default function FounderAboutSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.65 }}
               >
-                Every project is designed with performance, speed, trust, and long-term business growth in mind.
+                Every project is built with performance, trust, speed, user experience, and measurable business growth in mind.
               </motion.p>
             </div>
 
