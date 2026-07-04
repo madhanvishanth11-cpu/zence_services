@@ -137,16 +137,17 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
         {/* Responsive Heading with Target Custom CSS Rules */}
         <h3 
           style={isWebsiteDev ? {
-            wordWrap: 'break-word',
-            overflowWrap: 'break-word',
+            wordBreak: 'normal',
+            overflowWrap: 'normal',
             whiteSpace: 'normal',
-            paddingRight: '48px',
+            hyphens: 'none',
+            paddingRight: '16px',
             maxWidth: '100%',
             width: '100%'
           } : {}}
           className={`font-sora font-bold text-left tracking-tight text-white transition-all duration-300 ${
             isWebsiteDev 
-              ? 'text-[34px] lg:text-[48px] leading-[1.1] lg:leading-[1.05] whitespace-normal' 
+              ? 'text-[30px] sm:text-[36px] lg:text-[44px] leading-[1.1] lg:leading-[1.05] whitespace-normal' 
               : 'text-[32px] sm:text-[44px] lg:text-[56px] leading-tight'
           }`}
         >
