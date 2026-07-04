@@ -181,7 +181,7 @@ export default function Contact() {
               <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
                 <span className="font-sora font-bold text-lg text-white">Inquiry Form</span>
                 <a
-                  href="https://wa.me/919999988888?text=Hello%20ZENCE%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services."
+                  href="https://wa.me/917904035820?text=Hi%20ZENCE%2C%20I%20want%20to%20know%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white px-4 py-2 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(37,211,102,0.3)] hover:shadow-[0_0_20px_rgba(37,211,102,0.5)] cursor-pointer"
