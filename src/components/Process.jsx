@@ -1,59 +1,161 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Search, Compass, Paintbrush, Terminal, Rocket, LineChart } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Target, Code, Mic, Check } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
 
-const steps = [
-  {
-    number: "01",
-    icon: Search,
-    title: "Discovery & Analysis",
-    description: "We deep-dive into your existing analytics, map target audience profiles, audit competitors, and establish core conversion metrics to build a solid growth foundation.",
+const serviceProcesses = {
+  ads: {
+    title: "Meta Ads Service",
+    steps: [
+      { num: "01", title: "Business & Audience Research", desc: "We deep-dive into your analytics, audit competitors, and build precise client personas." },
+      { num: "02", title: "Campaign Strategy", desc: "We map out ad funnels, set budgets, and plan conversion paths." },
+      { num: "03", title: "Pixel & Tracking Setup", desc: "We install Meta Pixels and verify Conversion APIs to track every single event." },
+      { num: "04", title: "Ad Creative Planning", desc: "We direct hooks, copy variants, and high-impact motion assets." },
+      { num: "05", title: "Campaign Launch", desc: "We activate targeted ad sets on Facebook and Instagram." },
+      { num: "06", title: "Weekly Optimization & Reports", desc: "We prune low-performing ads and deliver detailed ROI summaries." }
+    ]
   },
-  {
-    number: "02",
-    icon: Compass,
-    title: "Strategic Planning",
-    description: "We map out wireframe structures, build ad campaign mockups, design AI agent conversational workflows, and set clear milestones in a granular roadmap.",
+  web: {
+    title: "Website Development",
+    steps: [
+      { num: "01", title: "Business Requirement Analysis", desc: "We gather technical specifications, content goals, and architecture needs." },
+      { num: "02", title: "Wireframe & Content Planning", desc: "We draft low-fidelity user flow wireframes and plan content sections." },
+      { num: "03", title: "Premium UI/UX Design", desc: "We craft custom layouts, micro-animations, and visual systems." },
+      { num: "04", title: "Responsive Website Development", desc: "We code mobile-first React/Next.js pages with clean, fast layouts." },
+      { num: "05", title: "SEO, GEO & Analytics Setup", desc: "We optimize tags, inject search engines, and configure tracking maps." },
+      { num: "06", title: "Launch & Support", desc: "We push code live to global servers and offer 30 days of free support." }
+    ]
   },
-  {
-    number: "03",
-    icon: Paintbrush,
-    title: "UX/UI Design",
-    description: "We craft custom, high-fidelity mockups using premium typography, dynamic animations, and luxury layouts designed to captivate visitors and convert them.",
-  },
-  {
-    number: "04",
-    icon: Terminal,
-    title: "Development & Setup",
-    description: "We code responsive Vite+React pages, configure meta conversion tracking APIs, script automated dialog trees, and connect all lead databases together.",
-  },
-  {
-    number: "05",
-    icon: Rocket,
-    title: "System Launch",
-    description: "We push code to fast global servers, activate the Meta Ad campaign sets, wire up live WhatsApp notifications, and release AI voice agents into production.",
-  },
-  {
-    number: "06",
-    icon: LineChart,
-    title: "Scale & Optimize",
-    description: "We review analytics daily, perform A/B split testing on key headlines, prune low-performing ad audiences, and scale your systems to maximize daily revenue.",
+  ai: {
+    title: "AI Voice Agent",
+    steps: [
+      { num: "01", title: "Business Call Flow Analysis", desc: "We map incoming/outgoing phone paths and lead routing scenarios." },
+      { num: "02", title: "AI Agent Script Planning", desc: "We script conversation dialog trees, guidelines, and API prompts." },
+      { num: "03", title: "Voice Agent Setup", desc: "We configure Vapi/Bland AI agents with realistic organic voices." },
+      { num: "04", title: "CRM / WhatsApp Integration", desc: "We connect lead pipelines to Twilio, calendar schedules, and CRMs." },
+      { num: "05", title: "Testing & Training", desc: "We test call routing latency and run multiple A/B validation calls." },
+      { num: "06", title: "Go Live & Optimization", desc: "We launch phone automation lines and optimize conversational flow daily." }
+    ]
   }
-];
+};
 
-export default function Process() {
+function ProcessStepCard({ num, title, desc, delay }) {
   const { playHover } = useAudio();
+  const cardRef = useRef(null);
+
+  // Mouse coords relative to card for 3D tilt
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { damping: 25, stiffness: 180 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { damping: 25, stiffness: 180 });
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
-    <section id="process" className="relative bg-[#0B1120] py-24 border-t border-white/5">
-      {/* Background glowing decorations */}
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/5 rounded-full blur-[130px] pointer-events-none" />
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onMouseEnter={playHover}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, delay }}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+        background: 'radial-gradient(120% 120% at 0% 0%, rgba(37, 99, 235, 0.03) 0%, rgba(13, 18, 34, 0) 50%), #111827',
+        willChange: "transform"
+      }}
+      className="relative p-6 sm:p-8 rounded-[24px] border border-white/5 shadow-xl flex flex-col items-start text-left cursor-pointer transition-all duration-300 backdrop-blur-md select-none group hover:border-accent-cyan/35 hover:shadow-[0_0_20px_rgba(6,182,212,0.1)]"
+    >
+      {/* Node Marker & Number with pulsing border glow */}
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-9 h-9 rounded-full bg-[#0B1120] border-2 border-accent-cyan/40 group-hover:border-accent-cyan flex items-center justify-center shadow-[0_0_10px_rgba(6,182,212,0.15)] group-hover:shadow-[0_0_15px_rgba(6,182,212,0.35)] transition-all duration-300">
+          <span className="font-sora font-extrabold text-xs text-accent-cyan animate-pulse">
+            {num}
+          </span>
+        </div>
+        <span className="font-poppins text-xs font-bold text-white/30 uppercase tracking-widest group-hover:text-accent-cyan/40 transition-colors">
+          Step {num}
+        </span>
+      </div>
+
+      {/* Step Title */}
+      <h4 className="font-sora font-bold text-base sm:text-lg text-white group-hover:text-accent-cyan transition-colors duration-300">
+        {title}
+      </h4>
+
+      {/* Step Description */}
+      <p className="mt-3 font-poppins text-xs sm:text-sm text-white/55 leading-relaxed font-light">
+        {desc}
+      </p>
+    </motion.div>
+  );
+}
+
+export default function Process() {
+  const [activeTab, setActiveTab] = useState('ads');
+  const { playClick, playHover } = useAudio();
+
+  const handleTabClick = (tabId) => {
+    playClick();
+    setActiveTab(tabId);
+  };
+
+  const tabs = [
+    { id: 'ads', label: 'Meta Ads', icon: Target },
+    { id: 'web', label: 'Website Development', icon: Code },
+    { id: 'ai', label: 'AI Voice Agent', icon: Mic }
+  ];
+
+  return (
+    <section id="process" className="relative bg-[#0B1120] py-24 border-t border-white/5 overflow-hidden">
+      
+      {/* Animated Background Particles */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-accent-blue/30"
+            style={{
+              top: `${15 + Math.random() * 70}%`,
+              left: `${10 + Math.random() * 80}%`,
+            }}
+            animate={{
+              y: [0, -60, 0],
+              opacity: [0.1, 0.6, 0.1]
+            }}
+            transition={{
+              duration: 7 + Math.random() * 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: Math.random() * 3
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Background decoration glows */}
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/3 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 sm:mb-28">
+        
+        {/* Header Section fade-up */}
+        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -61,7 +163,7 @@ export default function Process() {
             transition={{ duration: 0.6 }}
             className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight"
           >
-            The <span className="text-gradient-purple-cyan neon-text-cyan">Process</span>
+            How We <span className="text-gradient-blue-cyan neon-text-blue">Work</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -70,70 +172,82 @@ export default function Process() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light"
           >
-            How we take your business from discovery to automated scaling.
+            A clear step-by-step process for Meta Ads, Premium Websites, and AI Voice Agents.
           </motion.p>
         </div>
 
-        {/* Timeline container */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Vertical Center Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-white/10 -translate-x-1/2" />
-
-          {/* Timeline Steps */}
-          <div className="space-y-16 md:space-y-24">
-            {steps.map((step, idx) => {
-              const StepIcon = step.icon;
-              const isEven = idx % 2 === 0;
+        {/* Large Glassmorphism Container */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="glassmorphism p-6 sm:p-12 rounded-[32px] border border-white/5 shadow-2xl relative flex flex-col items-center z-10"
+        >
+          {/* Service Tabs/Cards: slide in from bottom */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12 sm:mb-16 w-full max-w-4xl z-10">
+            {tabs.map((tab) => {
+              const TabIcon = tab.icon;
+              const isActive = activeTab === tab.id;
 
               return (
-                <div key={idx} className="relative flex flex-col md:flex-row md:justify-between items-start">
-                  
-                  {/* Glowing Node Marker */}
-                  <motion.div
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ type: 'spring', damping: 15, stiffness: 200 }}
-                    className="absolute left-4 md:left-1/2 transform -translate-x-1/2 z-10 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#0B1120] border-2 border-accent-cyan flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)]"
-                  >
-                    <StepIcon size={16} className="text-accent-cyan animate-pulse" />
-                  </motion.div>
-
-                  {/* Empty Spacer column for desktop */}
-                  <div className="hidden md:block w-[45%]" />
-
-                  {/* Text Card Column */}
-                  <motion.div
-                    initial={{ opacity: 0, x: isEven ? 50 : -50, y: 20 }}
-                    whileInView={{ opacity: 1, x: 0, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6 }}
-                    onMouseEnter={playHover}
-                    className={`ml-12 md:ml-0 w-[calc(100%-3rem)] md:w-[45%] glassmorphism p-6 sm:p-8 rounded-2xl border border-white/5 hover:border-accent-cyan/20 transition-all duration-300 relative group ${
-                      isEven ? 'md:text-left' : 'md:text-left' // Consistent left-alignment is cleaner for reading
-                    }`}
-                  >
-                    {/* Step Number Tag */}
-                    <span className="absolute top-4 right-6 font-sora font-extrabold text-3xl sm:text-4xl text-white/5 select-none group-hover:text-accent-cyan/10 transition-colors">
-                      {step.number}
-                    </span>
-
-                    {/* Step Title */}
-                    <h3 className="font-sora font-bold text-lg sm:text-xl text-white tracking-wide">
-                      {step.title}
-                    </h3>
-
-                    {/* Step Description */}
-                    <p className="mt-3 font-poppins text-xs sm:text-sm text-white/55 leading-relaxed font-light">
-                      {step.description}
-                    </p>
-                  </motion.div>
-
-                </div>
+                <motion.button
+                  key={tab.id}
+                  onClick={() => handleTabClick(tab.id)}
+                  onMouseEnter={playHover}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  style={{
+                    boxShadow: isActive ? '0 0 20px rgba(6,182,212,0.25)' : 'none'
+                  }}
+                  className={`relative p-5 rounded-2xl border flex items-center justify-center gap-3.5 font-poppins text-xs sm:text-sm font-bold tracking-wide uppercase transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? 'bg-gradient-to-r from-accent-blue to-accent-cyan border-accent-cyan text-white'
+                      : 'bg-white/5 border-white/10 hover:border-white/20 text-white/60 hover:text-white'
+                  }`}
+                >
+                  <TabIcon size={18} className={isActive ? 'animate-pulse text-white' : 'text-white/40'} />
+                  <span>{tab.label}</span>
+                </motion.button>
               );
             })}
           </div>
-        </div>
+
+          {/* Process Timeline below */}
+          <div className="relative w-full z-10">
+            {/* Connecting line animates left to right behind step nodes (desktop/tablet only) */}
+            <div className="absolute top-[38px] left-[10%] right-[10%] h-[1.5px] bg-white/5 hidden lg:block z-0">
+              <motion.div
+                key={activeTab}
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+                className="h-full bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-blue shadow-[0_0_8px_rgba(6,182,212,0.4)]"
+              />
+            </div>
+
+            {/* Steps list grid with slide transition */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.4 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10"
+              >
+                {serviceProcesses[activeTab].steps.map((step, idx) => (
+                  <ProcessStepCard
+                    key={idx}
+                    num={step.num}
+                    title={step.title}
+                    desc={step.desc}
+                    delay={idx * 0.08}
+                  />
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
