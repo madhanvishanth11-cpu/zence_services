@@ -75,9 +75,9 @@ export default function Contact() {
   };
 
   const socialLinks = [
-    { icon: InstagramIcon, url: "https://instagram.com/zence", label: "Instagram" },
+    { icon: InstagramIcon, url: "https://www.instagram.com/zence.service?igsh=MWZpOXoxcGtld3diNg==", label: "Instagram" },
     { icon: LinkedinIcon, url: "https://linkedin.com/company/zence", label: "LinkedIn" },
-    { icon: FacebookIcon, url: "https://facebook.com/zence", label: "Facebook" }
+    { icon: FacebookIcon, url: "https://www.facebook.com/profile.php?id=100077480087016", label: "Facebook" }
   ];
 
   return (
