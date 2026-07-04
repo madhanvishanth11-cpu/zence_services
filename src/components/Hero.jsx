@@ -207,7 +207,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#070b13] pt-24 pb-16">
+    <section id="home" className="relative min-h-[80vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#070b13] pt-24 pb-16 lg:py-0">
       {/* 3D WebGL Canvas container */}
       <div ref={mountRef} className="absolute inset-0 z-0 opacity-80" />
 
@@ -240,7 +240,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 3.2 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-sora font-extrabold text-white leading-tight"
+            className="text-3xl sm:text-5xl md:text-6xl font-sora font-extrabold text-white leading-tight"
           >
             {typedText}
             <span className="w-1.5 h-10 md:h-14 bg-accent-cyan inline-block ml-1 animate-pulse" />
@@ -284,7 +284,7 @@ export default function Hero() {
         </div>
 
         {/* Right dashboard column */}
-        <div className="lg:col-span-5 relative w-full h-[350px] sm:h-[450px] flex items-center justify-center">
+        <div className="hidden lg:flex lg:col-span-5 relative w-full h-[350px] sm:h-[450px] items-center justify-center">
           {/* Main Visual Center: Glowing Hologram Sphere */}
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}

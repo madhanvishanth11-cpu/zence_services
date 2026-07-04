@@ -73,6 +73,7 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
   };
 
   const style = glowStyles[glowColor] || glowStyles.blue;
+  const isWebsiteDev = title === "Website Development";
 
   return (
     <motion.div
@@ -100,7 +101,7 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
         boxShadow: style.shadow,
         willChange: "transform, box-shadow"
       }}
-      className="w-full max-w-[420px] min-h-[620px] rounded-[24px] border-[1.5px] p-12 flex flex-col justify-between items-start cursor-pointer transition-colors duration-300 relative overflow-hidden group select-none backdrop-blur-[20px]"
+      className="w-full max-w-[420px] min-h-[620px] rounded-[24px] border-[1.5px] p-8 sm:p-12 flex flex-col justify-between items-start cursor-pointer transition-colors duration-300 relative overflow-hidden group select-none backdrop-blur-[20px]"
     >
       {/* Subtle Noise Texture Overlay */}
       <div 
@@ -110,9 +111,8 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
         }}
       />
 
-      {/* Card Content Wrapper for 3D Layering */}
-      <div style={{ transform: "translateZ(40px)" }} className="flex flex-col gap-6 w-full items-start">
-        {/* Floating Icon Container */}
+      {/* Top: Floating Icon Container */}
+      <div style={{ transform: "translateZ(40px)" }} className="w-full items-start">
         <motion.div
           animate={{ y: [0, -6, 0] }}
           transition={{
@@ -130,9 +130,26 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
         >
           <Icon size={32} color={style.iconColor} style={{ filter: `drop-shadow(0 0 8px ${style.iconColor})` }} />
         </motion.div>
+      </div>
 
-        {/* Heading */}
-        <h3 className="font-sora font-bold text-3xl sm:text-[42px] lg:text-[48px] text-white leading-none tracking-tight text-left mt-2">
+      {/* Middle: Centered text content */}
+      <div style={{ transform: "translateZ(40px)" }} className="my-auto py-6 flex flex-col gap-5 w-full items-start">
+        {/* Responsive Heading with Target Custom CSS Rules */}
+        <h3 
+          style={isWebsiteDev ? {
+            wordWrap: 'break-word',
+            overflowWrap: 'break-word',
+            whiteSpace: 'normal',
+            paddingRight: '48px',
+            maxWidth: '100%',
+            width: '100%'
+          } : {}}
+          className={`font-sora font-bold text-left tracking-tight text-white transition-all duration-300 ${
+            isWebsiteDev 
+              ? 'text-[34px] lg:text-[48px] leading-[1.1] lg:leading-[1.05] whitespace-normal' 
+              : 'text-[32px] sm:text-[44px] lg:text-[56px] leading-tight'
+          }`}
+        >
           {title}
         </h3>
 
@@ -145,7 +162,7 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
       {/* Bottom CTA */}
       <div 
         style={{ transform: "translateZ(30px)" }} 
-        className="mt-6 flex items-center gap-1 font-poppins font-bold text-sm tracking-[2px] uppercase select-none transition-colors duration-300"
+        className="flex items-center gap-1 font-poppins font-bold text-sm tracking-[2px] uppercase select-none transition-colors duration-300"
         style={{ color: ctaColor }}
       >
         <span>LEARN MORE</span>

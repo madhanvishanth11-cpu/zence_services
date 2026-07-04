@@ -67,8 +67,8 @@ export default function Navbar() {
           scrolled ? 'py-3' : 'py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className={`flex items-center justify-between px-6 py-3 rounded-2xl transition-all duration-300 ${
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <nav className={`flex items-center justify-between px-3 py-2.5 sm:px-6 sm:py-3 rounded-2xl transition-all duration-300 ${
             scrolled ? 'glassmorphism shadow-2xl backdrop-blur-xl' : 'bg-transparent border-b border-transparent'
           }`}>
             {/* Logo */}
@@ -78,7 +78,7 @@ export default function Navbar() {
               className="flex items-center gap-2 select-none group"
               onMouseEnter={playHover}
             >
-              <span className="font-sora font-extrabold text-2xl md:text-3xl tracking-wider text-white group-hover:text-accent-blue transition-colors">
+              <span className="font-sora font-extrabold text-xl sm:text-2xl md:text-3xl tracking-wider text-white group-hover:text-accent-blue transition-colors">
                 ZEN<span className="text-accent-cyan group-hover:text-accent-purple transition-colors">CE</span>
               </span>
               <span className="w-2.5 h-2.5 bg-accent-blue rounded-full group-hover:bg-accent-purple animate-pulse" />

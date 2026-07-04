@@ -109,7 +109,7 @@ export default function Process() {
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6 }}
                     onMouseEnter={playHover}
-                    className={`ml-12 md:ml-0 w-[85%] md:w-[45%] glassmorphism p-6 sm:p-8 rounded-2xl border border-white/5 hover:border-accent-cyan/20 transition-all duration-300 relative group ${
+                    className={`ml-12 md:ml-0 w-[calc(100%-3rem)] md:w-[45%] glassmorphism p-6 sm:p-8 rounded-2xl border border-white/5 hover:border-accent-cyan/20 transition-all duration-300 relative group ${
                       isEven ? 'md:text-left' : 'md:text-left' // Consistent left-alignment is cleaner for reading
                     }`}
                   >

@@ -35,7 +35,7 @@ function PackageCard({ name, price, badge, icon: Icon, features, bonuses, button
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: delay }}
-      className={`relative flex flex-col p-8 sm:p-10 rounded-3xl transition-all duration-300 ${
+      className={`relative flex flex-col p-6 sm:p-10 rounded-3xl transition-all duration-300 ${
         popular 
           ? 'glassmorphism border-accent-purple/50 bg-[#0F172A]/70 shadow-[0_0_40px_rgba(139,92,246,0.15)] glow-purple scale-105 z-10' 
           : 'glassmorphism border-white/5 hover:border-white/10 hover:shadow-2xl shadow-xl'

@@ -44,7 +44,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="bg-[#0b0f19] min-h-screen text-white antialiased relative selection:bg-accent-cyan selection:text-black">
+    <div className="bg-[#0b0f19] min-h-screen text-white antialiased relative selection:bg-accent-cyan selection:text-black overflow-x-hidden w-full max-w-full">
       {/* Premium custom cursor followers */}
       <CustomCursor />
 

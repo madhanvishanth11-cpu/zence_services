@@ -23,7 +23,7 @@ function ZenceFeatureCard({ icon: Icon, title, description, delay }) {
         background: 'radial-gradient(120% 120% at 0% 0%, rgba(249, 115, 22, 0.08) 0%, rgba(13, 18, 34, 0) 60%), #0f172a',
         willChange: 'transform, box-shadow'
       }}
-      className="glassmorphism p-8 rounded-[24px] border border-white/5 shadow-xl flex flex-col items-start text-left cursor-pointer transition-all duration-300 relative overflow-hidden group select-none"
+      className="glassmorphism p-6 sm:p-8 rounded-[24px] border border-white/5 shadow-xl flex flex-col items-start text-left cursor-pointer transition-all duration-300 relative overflow-hidden group select-none"
     >
       {/* Subtle Noise overlay for luxury look */}
       <div 
