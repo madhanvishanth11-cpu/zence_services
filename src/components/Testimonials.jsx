@@ -202,7 +202,7 @@ export default function ClientFeedback() {
   const currentReview = reviews[slideIndex];
 
   return (
-    <section id="reviews" className="relative bg-[#0B1120] py-24 border-t border-white/5 overflow-hidden">
+    <section id="feedback" className="relative bg-[#0B1120] py-24 border-t border-white/5 overflow-hidden">
       
       {/* Background decorations */}
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[140px] pointer-events-none" />

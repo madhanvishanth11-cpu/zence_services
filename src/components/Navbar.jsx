@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, Menu, X, ArrowRight } from 'lucide-react';
+import { MessageSquare, Menu, X, ArrowRight } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { isMuted, toggleMute, playHover, playClick } = useAudio();
+  const { playHover, playClick } = useAudio();
 
   const navLinks = [
     { id: 'home', label: 'Home' },
@@ -107,18 +107,14 @@ export default function Navbar() {
 
             {/* CTA & Controls */}
             <div className="hidden lg:flex items-center gap-4">
-              {/* Audio Toggle */}
+              {/* Feedback Button */}
               <button
-                onClick={toggleMute}
-                className={`p-2.5 rounded-full border transition-all duration-300 cursor-pointer ${
-                  isMuted 
-                    ? 'border-white/10 hover:border-white/30 text-white/50 hover:text-white bg-white/5' 
-                    : 'border-accent-blue/30 hover:border-accent-blue/60 text-accent-cyan bg-accent-blue/10 glow-blue'
-                }`}
+                onClick={() => handleNavClick('feedback')}
+                className="relative overflow-hidden group flex items-center gap-2 bg-white/5 border border-white/10 text-white px-5 py-2.5 rounded-xl font-poppins text-sm font-semibold tracking-wide hover:border-accent-cyan/40 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 cursor-pointer"
                 onMouseEnter={playHover}
-                title={isMuted ? "Unmute UI Sounds" : "Mute UI Sounds"}
               >
-                {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} className="animate-pulse" />}
+                <MessageSquare size={15} className="text-accent-cyan" />
+                <span>Feedback</span>
               </button>
 
               <button
@@ -131,19 +127,16 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Mobile Actions (Audio & Menu) */}
+            {/* Mobile Actions (Feedback & Menu) */}
             <div className="flex lg:hidden items-center gap-3">
-              {/* Audio Toggle for Mobile */}
+              {/* Feedback Button for Mobile */}
               <button
-                onClick={toggleMute}
-                className={`p-2 rounded-full border transition-all ${
-                  isMuted 
-                    ? 'border-white/10 text-white/50 bg-white/5' 
-                    : 'border-accent-blue/30 text-accent-cyan bg-accent-blue/10'
-                }`}
+                onClick={() => handleNavClick('feedback')}
+                className="flex items-center gap-1.5 bg-white/5 border border-white/10 text-white px-3 py-1.5 rounded-xl font-poppins text-xs font-semibold tracking-wide hover:border-accent-cyan/40 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all cursor-pointer"
                 onMouseEnter={playHover}
               >
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                <MessageSquare size={13} className="text-accent-cyan" />
+                <span>Feedback</span>
               </button>
 
               {/* Hamburger Button */}
