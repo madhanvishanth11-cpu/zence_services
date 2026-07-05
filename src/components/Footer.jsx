@@ -114,7 +114,7 @@ export default function Footer() {
       {/* Footer Bottom copyright */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-white/5 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
         <span className="font-poppins text-xs text-white/30 font-light">
-          © 2026 ZENCE. All rights reserved. Made in Gurugram, IN.
+          © 2026 ZENCE. All rights reserved. Made in Tamil Nadu, IN.
         </span>
         <div className="flex items-center gap-6">
           <a href="#" className="font-poppins text-xs text-white/30 hover:text-white transition-colors">Privacy Policy</a>
