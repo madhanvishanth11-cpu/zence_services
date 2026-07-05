@@ -89,8 +89,8 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
           
-          {/* Left Side: Contact Information (Vertically Centered) */}
-          <div className="lg:col-span-5 flex flex-col justify-center lg:self-center text-left">
+          {/* Left Side: Contact Information (order-1 on mobile, lg:col-span-5 on desktop) */}
+          <div className="order-1 lg:col-span-5 flex flex-col justify-center lg:self-center text-left">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -111,8 +111,8 @@ export default function Contact() {
               Ready to scale your business? Fill out the inquiry form or reach out directly to set up a free consultation.
             </motion.p>
 
-            {/* Direct Contact Links */}
-            <div className="mt-8 space-y-6">
+            {/* Desktop-only Direct Contact Links */}
+            <div className="hidden lg:block mt-8 space-y-6">
               {/* Email */}
               <motion.a
                 href="mailto:zenceservice@gmail.com"
@@ -168,8 +168,8 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right Side: Interactive Inquiry Form */}
-          <div className="lg:col-span-7 w-full">
+          {/* Right Side: Interactive Inquiry Form (order-2 on mobile, lg:col-span-7 on desktop) */}
+          <div className="order-2 lg:col-span-7 w-full">
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -329,6 +329,62 @@ export default function Contact() {
                 )}
               </AnimatePresence>
             </motion.div>
+          </div>
+
+          {/* Mobile-only Direct Contact Links (order-3 on mobile, hidden on desktop) */}
+          <div className="lg:hidden order-3 flex flex-col items-center gap-6 mt-8 w-full">
+            {/* Email */}
+            <motion.a
+              href="mailto:zenceservice@gmail.com"
+              className="flex items-center gap-4 group cursor-pointer text-left w-fit"
+              onMouseEnter={playHover}
+            >
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-cyan group-hover:text-white group-hover:bg-accent-cyan/10 group-hover:border-accent-cyan/20 transition-all duration-300">
+                <Mail size={18} />
+              </div>
+              <div>
+                <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Email Us</p>
+                <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">zenceservice@gmail.com</p>
+              </div>
+            </motion.a>
+
+            {/* Phone */}
+            <motion.a
+              href="tel:+917904035820"
+              className="flex items-center gap-4 group cursor-pointer text-left w-fit"
+              onMouseEnter={playHover}
+            >
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-purple group-hover:text-white group-hover:bg-accent-purple/10 group-hover:border-accent-purple/20 transition-all duration-300">
+                <Phone size={18} />
+              </div>
+              <div>
+                <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Call Us</p>
+                <p className="font-sora font-semibold text-white group-hover:text-accent-purple transition-colors">+91 7904035820</p>
+              </div>
+            </motion.a>
+
+            {/* Socials Media Grid */}
+            <div className="pt-6 border-t border-white/5 w-4/5 max-w-[280px] flex flex-col items-center">
+              <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest mb-4">Connect Socially</p>
+              <div className="flex items-center gap-3">
+                {socialLinks.map((social, idx) => {
+                  const SocialIcon = social.icon;
+                  return (
+                    <a
+                      key={idx}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/20 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
+                      title={social.label}
+                      onMouseEnter={playHover}
+                    >
+                      <SocialIcon size={16} />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
         </div>
