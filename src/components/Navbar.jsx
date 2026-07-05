@@ -51,10 +51,7 @@ export default function Navbar() {
   const handleContactClick = () => {
     playClick();
     setIsMobileMenuOpen(false);
-    const element = document.getElementById('contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    window.location.href = "tel:+917904035820";
   };
 
   return (
