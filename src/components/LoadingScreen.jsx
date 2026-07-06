@@ -13,12 +13,12 @@ export default function LoadingScreen({ onComplete }) {
     // Prevent scrolling during load
     document.body.style.overflow = 'hidden';
 
-    // Percentage loading ticker
+    // Percentage loading ticker (Optimized to 0.4s total)
     const val = { progress: 0 };
     const progressTimeline = gsap.to(val, {
       progress: 100,
-      duration: 2.2,
-      ease: "power2.out",
+      duration: 0.4,
+      ease: "power1.inOut",
       onUpdate: () => {
         setProgress(Math.floor(val.progress));
       }
@@ -29,15 +29,15 @@ export default function LoadingScreen({ onComplete }) {
     words.forEach((_, idx) => {
       if (idx > 0) {
         wordTimeline.to({}, {
-          duration: 0.4,
+          duration: 0.08,
           onComplete: () => setWordIndex(idx)
         });
       }
     });
 
-    // Exit animation when loading completes
+    // Exit animation when loading completes (Optimized duration and delay)
     gsap.timeline({
-      delay: 2.3,
+      delay: 0.45,
       onComplete: () => {
         document.body.style.overflow = '';
         if (onComplete) onComplete();
@@ -45,14 +45,14 @@ export default function LoadingScreen({ onComplete }) {
     })
     .to(textRef.current, {
       opacity: 0,
-      y: -50,
-      duration: 0.5,
+      y: -30,
+      duration: 0.2,
       ease: "power2.in"
     })
     .to(screenRef.current, {
       clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
-      duration: 1.0,
-      ease: "power4.inOut"
+      duration: 0.4,
+      ease: "power3.inOut"
     });
 
     return () => {
