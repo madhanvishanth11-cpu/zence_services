@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, Send, MessageSquare, CheckCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAudio } from '../hooks/useAudio';
+import { db } from '../utils/db';
 
 const InstagramIcon = ({ size = 16, className = "" }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -56,12 +57,7 @@ export default function Contact() {
     const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
     const submissionDate = new Date().toLocaleString();
 
-    // 1. Save data locally
-    const savedInquiries = localStorage.getItem('zence_inquiries');
-    let inquiries = [];
-    if (savedInquiries) {
-      try { inquiries = JSON.parse(savedInquiries); } catch(e) {}
-    }
+    // 1. Save data locally & cloud sync
     const newInquiry = {
       id: Date.now().toString(),
       name: formState.name,
@@ -71,9 +67,9 @@ export default function Contact() {
       date: submissionDate,
       status: 'New'
     };
-    inquiries.unshift(newInquiry);
-    localStorage.setItem('zence_inquiries', JSON.stringify(inquiries));
-    window.dispatchEvent(new Event('inquiry_submitted'));
+    db.addInquiry(newInquiry).then(() => {
+      window.dispatchEvent(new Event('inquiry_submitted'));
+    });
 
     // Simulate API delay
     setTimeout(() => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, Search, Shield, Download, RefreshCw, Lock, User, LogOut, Check } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
+import { db } from '../utils/db';
 
 export default function AdminDashboard({ isOpen, onClose }) {
   const { playClick, playHover } = useAudio();
@@ -10,9 +11,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
   const [statusFilter, setStatusFilter] = useState('all');
 
   // Authentication states
-  const [hasPasswordSet, setHasPasswordSet] = useState(() => {
-    return !!localStorage.getItem('zence_admin_password');
-  });
+  const [hasPasswordSet, setHasPasswordSet] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
@@ -21,23 +20,20 @@ export default function AdminDashboard({ isOpen, onClose }) {
   const [loginError, setLoginError] = useState('');
   const [setupError, setSetupError] = useState('');
 
-  // Load inquiries
+  // Load inquiries from database
   const loadInquiries = () => {
-    const saved = localStorage.getItem('zence_inquiries');
-    if (saved) {
-      try {
-        setInquiries(JSON.parse(saved));
-      } catch (e) {
-        setInquiries([]);
-      }
-    } else {
-      setInquiries([]);
-    }
+    db.getInquiries().then((data) => {
+      setInquiries(data);
+    });
   };
 
   // Synchronize dynamic updates instantly
   useEffect(() => {
     if (isOpen) {
+      // Check password configuration status from central DB
+      db.getPassword().then(pass => {
+        setHasPasswordSet(!!pass);
+      });
       loadInquiries();
     }
     
@@ -63,26 +59,28 @@ export default function AdminDashboard({ isOpen, onClose }) {
       return;
     }
     playClick();
-    localStorage.setItem('zence_admin_password', newPassword);
-    setHasPasswordSet(true);
-    setSetupError('');
-    // Auto login after setting password
-    setIsLoggedIn(true);
+    db.setPassword(newPassword).then(() => {
+      setHasPasswordSet(true);
+      setSetupError('');
+      // Auto login after setting password
+      setIsLoggedIn(true);
+    });
   };
 
   // Handle Login submission
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    const savedPassword = localStorage.getItem('zence_admin_password');
-    if (usernameInput === 'admin' && passwordInput === savedPassword) {
-      playClick();
-      setIsLoggedIn(true);
-      setLoginError('');
-      loadInquiries();
-    } else {
-      playClick();
-      setLoginError("Incorrect username or password.");
-    }
+    db.getPassword().then((savedPassword) => {
+      if (usernameInput === 'admin' && passwordInput === savedPassword) {
+        playClick();
+        setIsLoggedIn(true);
+        setLoginError('');
+        loadInquiries();
+      } else {
+        playClick();
+        setLoginError("Incorrect username or password.");
+      }
+    });
   };
 
   // Handle Logout
@@ -103,7 +101,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
       return item;
     });
     setInquiries(updated);
-    localStorage.setItem('zence_inquiries', JSON.stringify(updated));
+    db.saveInquiries(updated);
   };
 
   const handleDelete = (id) => {
@@ -111,7 +109,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
     if (window.confirm("Are you sure you want to delete this inquiry?")) {
       const updated = inquiries.filter(item => item.id !== id);
       setInquiries(updated);
-      localStorage.setItem('zence_inquiries', JSON.stringify(updated));
+      db.saveInquiries(updated);
     }
   };
 
@@ -119,7 +117,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
     playClick();
     if (window.confirm("WARNING: This will permanently delete ALL inquiries. Are you sure?")) {
       setInquiries([]);
-      localStorage.removeItem('zence_inquiries');
+      db.saveInquiries([]);
     }
   };
 
