@@ -338,6 +338,32 @@ export default function Portfolio() {
     }
   };
 
+  const getHeaderContent = () => {
+    switch (filter) {
+      case 'ads':
+        return {
+          prefix: "Our Meta Ads ",
+          highlight: "Results",
+          subtitle: "Explore real campaign-style case studies showing lead generation, ROAS growth, and business performance through Meta Ads."
+        };
+      case 'ai':
+        return {
+          prefix: "Our AI Voice Agent ",
+          highlight: "Projects",
+          subtitle: "Explore AI voice agent examples built for call handling, appointment booking, lead qualification, and customer support automation."
+        };
+      case 'websites':
+      default:
+        return {
+          prefix: "Our Website ",
+          highlight: "Portfolio",
+          subtitle: "Explore our live website projects. Click any card to open the live demo and experience the quality of our work."
+        };
+    }
+  };
+
+  const headerContent = getHeaderContent();
+
   return (
     <section id="portfolio" className="relative bg-[#0B1120] py-24 border-t border-white/5">
       {/* Background glow decoration */}
@@ -346,25 +372,24 @@ export default function Portfolio() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight"
-          >
-            Our Website <span className="text-gradient-blue-cyan neon-text-blue">Portfolio</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light leading-relaxed"
-          >
-            Explore some of our live website projects. Click any card to open the live demo and experience the quality of our work.
-          </motion.p>
+        <div className="text-center max-w-3xl mx-auto mb-16 min-h-[150px] sm:min-h-[120px] flex flex-col justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={filter}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+            >
+              <h2 className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
+                {headerContent.prefix}
+                <span className="text-gradient-blue-cyan neon-text-blue">{headerContent.highlight}</span>
+              </h2>
+              <p className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light leading-relaxed">
+                {headerContent.subtitle}
+              </p>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Filters */}
