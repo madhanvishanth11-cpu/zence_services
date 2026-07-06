@@ -67,18 +67,24 @@ export default function LoadingScreen({ onComplete }) {
       <div className="absolute w-[350px] h-[350px] bg-accent-blue/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />
 
       {/* Main Container */}
-      <div className="relative flex flex-col items-center text-center px-4 w-full max-w-md">
+      <div 
+        className="relative flex flex-col items-center text-center px-4 w-full"
+        style={{ maxWidth: '90vw', overflow: 'visible' }}
+      >
         
         {/* Cinematic Word Reveal with Blur-to-Sharp & Smooth Scale */}
-        <div className="h-28 flex items-center justify-center relative w-full overflow-hidden">
+        <div 
+          className="h-28 flex items-center justify-center relative w-full"
+          style={{ overflow: 'visible' }}
+        >
           <AnimatePresence mode="wait">
             <motion.h1
               key={wordIndex}
-              initial={{ opacity: 0, scale: 0.85, filter: "blur(12px)" }}
+              initial={{ opacity: 0, scale: 0.92, filter: "blur(12px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 1.05, filter: "blur(8px)" }}
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute text-4xl sm:text-5xl font-sora font-extrabold tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-blue bg-[size:200%_auto] animate-text-gradient neon-text-blue"
+              className="absolute font-sora font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-blue bg-[size:200%_auto] animate-text-gradient neon-text-blue preloader-word text-center whitespace-nowrap"
             >
               {words[wordIndex]}
             </motion.h1>
@@ -113,6 +119,22 @@ export default function LoadingScreen({ onComplete }) {
       </div>
 
       <style>{`
+        .preloader-word {
+          font-size: clamp(28px, 8vw, 44px);
+          letter-spacing: 0.1em;
+        }
+        @media (min-width: 640px) {
+          .preloader-word {
+            font-size: clamp(34px, 7vw, 64px);
+            letter-spacing: 0.15em;
+          }
+        }
+        @media (min-width: 1024px) {
+          .preloader-word {
+            font-size: clamp(42px, 6vw, 88px);
+            letter-spacing: 0.2em;
+          }
+        }
         @keyframes text-gradient {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
