@@ -13,31 +13,31 @@ export default function LoadingScreen({ onComplete }) {
     // Prevent scrolling during load
     document.body.style.overflow = 'hidden';
 
-    // Percentage loading ticker (Smooth 2.7s duration)
+    // Percentage loading ticker (Smooth 1.2s max duration)
     const val = { progress: 0 };
     const progressTimeline = gsap.to(val, {
       progress: 100,
-      duration: 2.7,
+      duration: 1.2,
       ease: "power2.inOut",
       onUpdate: () => {
         setProgress(Math.floor(val.progress));
       }
     });
 
-    // Words morph/cycler timeline (0.54s per word to align with 2.7s total)
+    // Words morph/cycler timeline (0.24s per word to align with 1.2s total)
     const wordTimeline = gsap.timeline();
     words.forEach((_, idx) => {
       if (idx > 0) {
         wordTimeline.to({}, {
-          duration: 0.54,
+          duration: 0.24,
           onComplete: () => setWordIndex(idx)
         });
       }
     });
 
-    // Exit animation when loading completes (Smooth 0.7s curtain exit)
-    gsap.timeline({
-      delay: 2.8,
+    // Exit animation when loading completes (Smooth 0.35s curtain exit)
+    const exitTimeline = gsap.timeline({
+      delay: 1.25,
       onComplete: () => {
         document.body.style.overflow = '';
         if (onComplete) onComplete();
@@ -46,17 +46,31 @@ export default function LoadingScreen({ onComplete }) {
     .to(textRef.current, {
       opacity: 0,
       y: -30,
-      duration: 0.3,
+      duration: 0.25,
       ease: "power2.in"
     })
     .to(screenRef.current, {
       clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
-      duration: 0.7,
+      duration: 0.35,
       ease: "power3.inOut"
     });
 
+    // If page content is ready before 1.2 seconds, accelerate completion immediately!
+    const handleLoadComplete = () => {
+      progressTimeline.timeScale(2.5); // Accelerate progress ticks
+      wordTimeline.timeScale(2.5); // Accelerate words cycle
+      exitTimeline.delay(exitTimeline.delay() / 2.5); // Move exit animation up
+    };
+
+    if (document.readyState === 'complete') {
+      handleLoadComplete();
+    } else {
+      window.addEventListener('load', handleLoadComplete);
+    }
+
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('load', handleLoadComplete);
     };
   }, [onComplete]);
 

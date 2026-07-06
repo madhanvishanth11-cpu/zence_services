@@ -21,10 +21,14 @@ export default function Hero() {
 
   // Three.js interactive particle background
   useEffect(() => {
+    const isMobileDevice = window.innerWidth < 768;
+    if (isMobileDevice) {
+      // Bypass WebGL initialization entirely on mobile for absolute native 60fps performance
+      return;
+    }
+
     const mountElem = mountRef.current;
     if (!mountElem) return;
-
-    const isMobileDevice = window.innerWidth < 768;
 
     // Scene setup
     const scene = new THREE_LIB.Scene();
@@ -33,13 +37,13 @@ export default function Hero() {
     camera.position.y = 80;
     camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE_LIB.WebGLRenderer({ antialias: !isMobileDevice, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobileDevice ? 1 : 2));
+    const renderer = new THREE_LIB.WebGLRenderer({ antialias: false, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(mountElem.clientWidth, mountElem.clientHeight);
     mountElem.appendChild(renderer.domElement);
 
-    // Particles creation - optimized count
-    const particleCount = isMobileDevice ? 150 : 800;
+    // Particles creation - highly optimized count (reduced by 75%)
+    const particleCount = 500;
     const geometry = new THREE_LIB.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
