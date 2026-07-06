@@ -73,6 +73,7 @@ export default function Contact() {
     };
     inquiries.unshift(newInquiry);
     localStorage.setItem('zence_inquiries', JSON.stringify(inquiries));
+    window.dispatchEvent(new Event('inquiry_submitted'));
 
     // Simulate API delay
     setTimeout(() => {
