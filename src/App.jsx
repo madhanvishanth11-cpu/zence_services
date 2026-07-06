@@ -57,7 +57,12 @@ export default function App() {
 
       {/* Main Page Layout Wrapper */}
       {!isLoading && (
-        <div className="relative w-full">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative w-full"
+        >
           {/* Header Navbar */}
           <Navbar />
 
@@ -81,7 +86,7 @@ export default function App() {
 
           {/* Admin Portal Dashboard Modal */}
           <AdminDashboard isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
-        </div>
+        </motion.div>
       )}
     </div>
   );
