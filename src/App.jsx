@@ -42,52 +42,44 @@ function InfiniteMarquee() {
 }
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+
+  // Force scroll-lock release to make page scrollable immediately
+  React.useEffect(() => {
+    document.body.style.overflow = '';
+  }, []);
 
   return (
     <div className="bg-[#0B1120] min-h-screen text-white antialiased relative selection:bg-accent-cyan selection:text-black overflow-x-hidden w-full max-w-full">
       {/* Premium custom cursor followers */}
       <CustomCursor />
 
-      {/* GSAP Page Loader Screen */}
-      {isLoading && (
-        <LoadingScreen onComplete={() => setIsLoading(false)} />
-      )}
+      {/* Main Page Layout Wrapper - Visible Immediately */}
+      <div className="relative w-full opacity-100 block">
+        {/* Header Navbar */}
+        <Navbar />
 
-      {/* Main Page Layout Wrapper */}
-      {!isLoading && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative w-full"
-        >
-          {/* Header Navbar */}
-          <Navbar />
+        {/* Sections Stack */}
+        <main className="w-full">
+          <Hero />
+          <WhyChooseZence />
+          <InfiniteMarquee />
+          <Services />
+          <Packages />
+          <WhyChooseUs />
+          <Portfolio />
+          <Process />
+          <Testimonials />
+          <Faq />
+          <Contact />
+        </main>
 
-          {/* Sections Stack */}
-          <main className="w-full">
-            <Hero />
-            <WhyChooseZence />
-            <InfiniteMarquee />
-            <Services />
-            <Packages />
-            <WhyChooseUs />
-            <Portfolio />
-            <Process />
-            <Testimonials />
-            <Faq />
-            <Contact />
-          </main>
+        {/* Brand Footer */}
+        <Footer onAdminOpen={() => setIsAdminOpen(true)} />
 
-          {/* Brand Footer */}
-          <Footer onAdminOpen={() => setIsAdminOpen(true)} />
-
-          {/* Admin Portal Dashboard Modal */}
-          <AdminDashboard isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
-        </motion.div>
-      )}
+        {/* Admin Portal Dashboard Modal */}
+        <AdminDashboard isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
+      </div>
     </div>
   );
 }
