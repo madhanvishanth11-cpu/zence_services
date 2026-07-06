@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE_LIB from 'three';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, TrendingUp, BarChart3 } from 'lucide-react';
@@ -8,13 +7,24 @@ import { useAudio } from '../hooks/useAudio';
 export default function Hero() {
   const mountRef = useRef(null);
   const { playHover, playClick } = useAudio();
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile viewports dynamically
+  useEffect(() => {
+    const handleViewportCheck = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleViewportCheck();
+    window.addEventListener('resize', handleViewportCheck);
+    return () => window.removeEventListener('resize', handleViewportCheck);
+  }, []);
 
   // Three.js interactive particle background
   useEffect(() => {
     const mountElem = mountRef.current;
     if (!mountElem) return;
 
-    const isMobile = window.innerWidth < 768;
+    const isMobileDevice = window.innerWidth < 768;
 
     // Scene setup
     const scene = new THREE_LIB.Scene();
@@ -23,13 +33,13 @@ export default function Hero() {
     camera.position.y = 80;
     camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE_LIB.WebGLRenderer({ antialias: !isMobile, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
+    const renderer = new THREE_LIB.WebGLRenderer({ antialias: !isMobileDevice, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobileDevice ? 1 : 2));
     renderer.setSize(mountElem.clientWidth, mountElem.clientHeight);
     mountElem.appendChild(renderer.domElement);
 
     // Particles creation - optimized count
-    const particleCount = isMobile ? 150 : 800;
+    const particleCount = isMobileDevice ? 150 : 800;
     const geometry = new THREE_LIB.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -39,9 +49,9 @@ export default function Hero() {
     const color3 = new THREE_LIB.Color('#8B5CF6'); // Purple Glow
 
     // Position particles in a digital grid wave
-    const rows = isMobile ? 10 : 25;
-    const cols = isMobile ? 15 : 32;
-    const spacing = isMobile ? 25 : 18;
+    const rows = isMobileDevice ? 10 : 25;
+    const cols = isMobileDevice ? 15 : 32;
+    const spacing = isMobileDevice ? 25 : 18;
     const startX = -(cols * spacing) / 2;
     const startZ = -(rows * spacing) / 2;
 
@@ -91,7 +101,7 @@ export default function Hero() {
     const texture = new THREE_LIB.CanvasTexture(canvas);
 
     const material = new THREE_LIB.PointsMaterial({
-      size: isMobile ? 6 : 4.5,
+      size: isMobileDevice ? 6 : 4.5,
       vertexColors: true,
       map: texture,
       transparent: true,
@@ -109,12 +119,12 @@ export default function Hero() {
     let targetMouseY = 0;
 
     const handleMouseMove = (event) => {
-      if (isMobile) return;
+      if (isMobileDevice) return;
       targetMouseX = (event.clientX - window.innerWidth / 2) * 0.08;
       targetMouseY = (event.clientY - window.innerHeight / 2) * 0.08;
     };
 
-    if (!isMobile) {
+    if (!isMobileDevice) {
       window.addEventListener('mousemove', handleMouseMove);
     }
 
@@ -124,10 +134,12 @@ export default function Hero() {
 
     const animate = () => {
       animationId = requestAnimationFrame(animate);
-      time += 0.015;
+      
+      // Speed up wave movement slightly on mobile devices
+      time += isMobileDevice ? 0.025 : 0.015;
 
       // Smooth mouse follow
-      if (!isMobile) {
+      if (!isMobileDevice) {
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
       }
@@ -148,7 +160,7 @@ export default function Hero() {
             Math.sin(x * 0.02 + time) * 12 +
             Math.cos(z * 0.02 + time) * 12 +
             Math.sin((x + z) * 0.01 + time) * 6 +
-            (!isMobile ? (Math.sin(time + particleIdx) * (Math.abs(mouseX) * 0.1)) : 0);
+            (!isMobileDevice ? (Math.sin(time + particleIdx) * (Math.abs(mouseX) * 0.1)) : 0);
 
           particleIdx++;
         }
@@ -157,7 +169,7 @@ export default function Hero() {
       geometry.attributes.position.needsUpdate = true;
 
       // Slow camera orbits based on mouse / subtle motion
-      if (!isMobile) {
+      if (!isMobileDevice) {
         camera.position.x = mouseX * 1.5;
         camera.position.y = 80 + (mouseY * 0.8);
       } else {
@@ -185,7 +197,7 @@ export default function Hero() {
     window.addEventListener('resize', handleResize);
 
     return () => {
-      if (!isMobile) {
+      if (!isMobileDevice) {
         window.removeEventListener('mousemove', handleMouseMove);
       }
       window.removeEventListener('resize', handleResize);
@@ -204,6 +216,21 @@ export default function Hero() {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
+
+  // Dynamic animation speeds:
+  // Desktop delay aligns with GSAP loader (3.0s - 4.0s)
+  // Mobile delay runs immediately on load (0.1s - 0.3s) with 40-50% reduced durations
+  const badgeDelay = isMobile ? 0.1 : 3.0;
+  const badgeDuration = isMobile ? 0.35 : 0.6;
+
+  const headlineDelay = isMobile ? 0.1 : 3.2; // Visible within first 0.5s of mobile load
+  const headlineDuration = isMobile ? 0.4 : 0.8;
+
+  const descDelay = isMobile ? 0.2 : 3.4; // Fades in subtitle after 0.2s on mobile
+  const descDuration = isMobile ? 0.4 : 0.8;
+
+  const ctaDelay = isMobile ? 0.3 : 3.6; // Fades in CTAs after 0.3s on mobile
+  const ctaDuration = isMobile ? 0.4 : 0.8;
 
   return (
     <section id="home" className="relative min-h-[80vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0B1120] pt-24 pb-16 lg:py-0">
@@ -225,8 +252,9 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent-blue/20 bg-accent-blue/5 w-fit mb-6 glassmorphism-light"
+            transition={{ duration: badgeDuration, delay: badgeDelay }}
+            style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent-blue/20 bg-accent-blue/5 w-fit mb-6 glassmorphism-light will-change-transform transform-gpu"
           >
             <Sparkles size={14} className="text-accent-cyan animate-pulse" />
             <span className="font-poppins text-xs font-semibold tracking-wider text-accent-cyan uppercase">
@@ -234,12 +262,13 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          {/* Headline - simple static fade-up with 0.2s delay */}
+          {/* Headline - simple static fade-up with dynamic timing */}
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-3xl sm:text-5xl md:text-6xl font-sora font-extrabold text-white leading-tight"
+            transition={{ duration: headlineDuration, delay: headlineDelay }}
+            style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
+            className="text-3xl sm:text-5xl md:text-6xl font-sora font-extrabold text-white leading-tight will-change-transform transform-gpu"
           >
             We Build Businesses That <span className="text-gradient-blue-cyan neon-text-blue">Grow.</span>
           </motion.h1>
@@ -247,8 +276,9 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-6 text-base sm:text-lg text-white/60 font-poppins max-w-xl font-light leading-relaxed"
+            transition={{ duration: descDuration, delay: descDelay }}
+            style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
+            className="mt-6 text-base sm:text-lg text-white/60 font-poppins max-w-xl font-light leading-relaxed will-change-transform transform-gpu"
           >
             ZENCE combines high-converting Meta Ads, cutting-edge customized web platforms, and automated AI Voice Agents to build luxury businesses that scale to millions.
           </motion.p>
@@ -257,8 +287,9 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-10 flex flex-wrap gap-4"
+            transition={{ duration: ctaDuration, delay: ctaDelay }}
+            style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
+            className="mt-10 flex flex-wrap gap-4 will-change-transform transform-gpu"
           >
             {/* Primary button */}
             <button
@@ -287,7 +318,7 @@ export default function Hero() {
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 1.2, delay: 3.2 }}
             className="absolute w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-accent-blue/20 to-accent-purple/20 blur-xl animate-pulse"
           />
 
@@ -295,7 +326,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 40, x: -30 }}
             animate={{ opacity: 1, y: 0, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.8, delay: 3.8 }}
             className="absolute top-1/10 left-1/10 sm:left-0 glassmorphism p-5 rounded-2xl shadow-2xl flex flex-col items-start gap-2 border-l-4 border-l-accent-cyan max-w-[200px] hover:translate-y-[-5px] transition-transform pointer-events-auto"
             style={{ animation: 'float-anim 6s ease-in-out infinite' }}
           >
@@ -311,7 +342,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: -40, x: 30 }}
             animate={{ opacity: 1, y: 0, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 4.0 }}
             className="absolute bottom-1/10 right-1/10 sm:right-0 glassmorphism p-5 rounded-2xl shadow-2xl flex flex-col items-start gap-2 border-l-4 border-l-accent-purple max-w-[200px] hover:translate-y-[-5px] transition-transform pointer-events-auto"
             style={{ animation: 'float-anim 6s ease-in-out infinite', animationDelay: '-2s' }}
           >
