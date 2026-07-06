@@ -53,6 +53,27 @@ export default function Contact() {
     playClick();
     setIsSubmitting(true);
 
+    const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
+    const submissionDate = new Date().toLocaleString();
+
+    // 1. Save data locally
+    const savedInquiries = localStorage.getItem('zence_inquiries');
+    let inquiries = [];
+    if (savedInquiries) {
+      try { inquiries = JSON.parse(savedInquiries); } catch(e) {}
+    }
+    const newInquiry = {
+      id: Date.now().toString(),
+      name: formState.name,
+      email: formState.email,
+      service: serviceLabel,
+      scope: formState.message,
+      date: submissionDate,
+      status: 'New'
+    };
+    inquiries.unshift(newInquiry);
+    localStorage.setItem('zence_inquiries', JSON.stringify(inquiries));
+
     // Simulate API delay
     setTimeout(() => {
       setIsSubmitting(false);
@@ -65,6 +86,11 @@ export default function Contact() {
         origin: { y: 0.6 },
         colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
       });
+
+      // 3. Send the details to zenceservice@gmail.com
+      const subject = encodeURIComponent(`New ZENCE Inquiry from ${formState.name}`);
+      const body = encodeURIComponent(`New ZENCE Inquiry Details:\n\nName: ${formState.name}\nEmail: ${formState.email}\nService: ${serviceLabel}\nProject Scope: ${formState.message}\nDate/Time: ${submissionDate}`);
+      window.location.href = `mailto:zenceservice@gmail.com?subject=${subject}&body=${body}`;
     }, 1800);
   };
 
@@ -311,11 +337,11 @@ export default function Contact() {
                     </div>
                     
                     <h4 className="font-sora font-extrabold text-2xl text-white">
-                      Request Dispatched!
+                      Submitted!
                     </h4>
                     
                     <p className="mt-3 font-poppins text-sm text-white/50 leading-relaxed font-light max-w-md">
-                      Thank you, <span className="text-accent-cyan font-bold">{formState.name}</span>. Our growth architects will analyze your site and reach out to scheduling a briefing call within 12 hours.
+                      Thank you! Your request has been submitted successfully.
                     </p>
 
                     <button
