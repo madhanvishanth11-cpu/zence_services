@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, Search, Shield, Download, RefreshCw, Lock, User, LogOut, Check } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
-import { db } from '../utils/db';
+import { supabase } from '../utils/supabase';
 
 export default function AdminDashboard({ isOpen, onClose }) {
   const { playClick, playHover } = useAudio();
@@ -10,34 +10,51 @@ export default function AdminDashboard({ isOpen, onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
+  // Loading and Error states
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
   // Authentication states
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState('');
 
-  // Load inquiries from database
+  // Load inquiries from Supabase
   const loadInquiries = () => {
-    db.getInquiries().then((data) => {
-      setInquiries(data);
-    });
+    if (!supabase.isEnabled()) {
+      setErrorMsg("Supabase credentials not configured in the .env file. Please check settings.");
+      return;
+    }
+    setIsLoading(true);
+    setErrorMsg('');
+    supabase.getInquiries()
+      .then((data) => {
+        setInquiries(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load inquiries from Supabase:", err);
+        setErrorMsg("Failed to load inquiries from Supabase database. Please check your network or .env settings.");
+        setIsLoading(false);
+      });
   };
 
   // Synchronize dynamic updates instantly
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && isLoggedIn) {
       loadInquiries();
     }
     
     const handleInstantUpdate = () => {
-      loadInquiries();
+      if (isLoggedIn) loadInquiries();
     };
 
     window.addEventListener('inquiry_submitted', handleInstantUpdate);
     return () => {
       window.removeEventListener('inquiry_submitted', handleInstantUpdate);
     };
-  }, [isOpen]);
+  }, [isOpen, isLoggedIn]);
 
   // Handle Login submission
   const handleLoginSubmit = (e) => {
@@ -46,7 +63,6 @@ export default function AdminDashboard({ isOpen, onClose }) {
       playClick();
       setIsLoggedIn(true);
       setLoginError('');
-      loadInquiries();
     } else {
       playClick();
       setLoginError("Incorrect username or password.");
@@ -64,6 +80,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
 
   const handleStatusChange = (id, newStatus) => {
     playClick();
+    // Optimistically update local UI state
     const updated = inquiries.map(item => {
       if (item.id === id) {
         return { ...item, status: newStatus };
@@ -71,23 +88,47 @@ export default function AdminDashboard({ isOpen, onClose }) {
       return item;
     });
     setInquiries(updated);
-    db.saveInquiries(updated);
+
+    // Sync status back to Supabase
+    supabase.updateStatus(id, newStatus).catch(err => {
+      console.error("Failed to update status in Supabase:", err);
+      setErrorMsg("Failed to update status. Synced database version restored.");
+      loadInquiries();
+    });
   };
 
   const handleDelete = (id) => {
     playClick();
     if (window.confirm("Are you sure you want to delete this inquiry?")) {
+      // Optimistically remove locally
       const updated = inquiries.filter(item => item.id !== id);
       setInquiries(updated);
-      db.saveInquiries(updated);
+
+      // Sync deletion back to Supabase
+      supabase.deleteInquiry(id).catch(err => {
+        console.error("Failed to delete inquiry in Supabase:", err);
+        setErrorMsg("Failed to delete entry. Synced database version restored.");
+        loadInquiries();
+      });
     }
   };
 
-  const handleClearAll = () => {
+  const handleClearAll = async () => {
     playClick();
-    if (window.confirm("WARNING: This will permanently delete ALL inquiries. Are you sure?")) {
+    if (window.confirm("WARNING: This will permanently delete ALL inquiries from Supabase. Are you sure?")) {
+      const originalInquiries = [...inquiries];
       setInquiries([]);
-      db.saveInquiries([]);
+      setIsLoading(true);
+      try {
+        for (const item of originalInquiries) {
+          await supabase.deleteInquiry(item.id);
+        }
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Failed to clear inquiries in Supabase:", err);
+        setErrorMsg("Failed to delete all items. Synced database version restored.");
+        loadInquiries();
+      }
     }
   };
 
@@ -95,14 +136,15 @@ export default function AdminDashboard({ isOpen, onClose }) {
     playClick();
     if (inquiries.length === 0) return;
     
-    const headers = ["Name", "Email", "Service", "Project Scope", "Date", "Status"];
+    const headers = ["Name", "Email", "Phone", "Service", "Project Scope", "Date", "Status"];
     const rows = inquiries.map(item => [
-      `"${item.name.replace(/"/g, '""')}"`,
-      `"${item.email.replace(/"/g, '""')}"`,
-      `"${item.service.replace(/"/g, '""')}"`,
-      `"${item.scope.replace(/"/g, '""')}"`,
-      `"${item.date.replace(/"/g, '""')}"`,
-      `"${item.status.replace(/"/g, '""')}"`
+      `"${(item.full_name || '').replace(/"/g, '""')}"`,
+      `"${(item.email || '').replace(/"/g, '""')}"`,
+      `"${(item.phone || '').replace(/"/g, '""')}"`,
+      `"${(item.selected_service || '').replace(/"/g, '""')}"`,
+      `"${(item.project_scope || '').replace(/"/g, '""')}"`,
+      `"${new Date(item.created_at || Date.now()).toLocaleString().replace(/"/g, '""')}"`,
+      `"${(item.status || '').replace(/"/g, '""')}"`
     ]);
 
     const csvContent = "data:text/csv;charset=utf-8," 
@@ -118,10 +160,16 @@ export default function AdminDashboard({ isOpen, onClose }) {
   };
 
   const filteredInquiries = inquiries.filter(item => {
+    const name = item.full_name || '';
+    const email = item.email || '';
+    const scope = item.project_scope || '';
+    const phone = item.phone || '';
+
     const matchesSearch = 
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.scope.toLowerCase().includes(searchQuery.toLowerCase());
+      name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      scope.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      phone.toLowerCase().includes(searchQuery.toLowerCase());
       
     const matchesStatus = 
       statusFilter === 'all' || 
@@ -206,96 +254,107 @@ export default function AdminDashboard({ isOpen, onClose }) {
                 className="w-full bg-gradient-to-r from-accent-blue to-accent-cyan text-white py-3 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all cursor-pointer"
                 onMouseEnter={playHover}
               >
-                Sign In
+                Authenticate Session
               </button>
             </form>
           </motion.div>
         )}
 
-        {/* LOGGED IN DASHBOARD PANEL */}
+        {/* ADMIN DASHBOARD PORTAL */}
         {isLoggedIn && (
-          <motion.div 
-            key="dashboard-panel"
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-6xl h-[85vh] bg-[#0d1322] border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col z-10"
+          <motion.div
+            key="dashboard-portal"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="relative w-full max-w-6xl h-[85vh] glassmorphism border border-white/10 rounded-3xl shadow-2xl z-10 flex flex-col overflow-hidden"
           >
-            {/* Modal Header */}
-            <div className="p-6 border-b border-white/5 flex items-center justify-between bg-slate-950/40">
+            {/* Header section */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 border-b border-white/5 bg-slate-950/40">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-accent-blue/10 text-accent-cyan border border-accent-blue/20">
+                <div className="p-2.5 bg-accent-blue/10 border border-accent-blue/20 rounded-xl text-accent-cyan">
                   <Shield size={20} />
                 </div>
-                <div>
-                  <h3 className="font-sora font-extrabold text-xl text-white">
-                    ZENCE Admin Panel
-                  </h3>
-                  <p className="font-poppins text-xs text-white/40 font-light mt-0.5">
-                    Manage and track website inquiry bookings.
+                <div className="text-left">
+                  <h2 className="font-sora font-extrabold text-lg text-white flex items-center gap-2">
+                    ZENCE Admin Dashboard
+                    {isLoading && (
+                      <RefreshCw size={14} className="animate-spin text-accent-cyan" />
+                    )}
+                  </h2>
+                  <p className="font-poppins text-[10px] text-white/40 tracking-wider uppercase font-semibold">
+                    Inquiry Database Management
                   </p>
                 </div>
               </div>
-              
-              <div className="flex items-center gap-2">
-                {/* Logout Button */}
+
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <button
+                  onClick={loadInquiries}
+                  title="Reload DB Entries"
+                  onMouseEnter={playHover}
+                  className="p-2.5 bg-white/5 border border-white/10 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-all cursor-pointer"
+                >
+                  <RefreshCw size={15} className={isLoading ? "animate-spin" : ""} />
+                </button>
                 <button
                   onClick={handleLogout}
                   onMouseEnter={playHover}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 text-rose-400 font-poppins text-xs font-bold transition-all cursor-pointer"
+                  className="flex items-center gap-2 bg-white/5 border border-white/10 text-white/80 hover:text-white hover:bg-rose-500/10 hover:border-rose-500/20 px-4 py-2.5 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                 >
                   <LogOut size={13} />
                   <span>Logout</span>
                 </button>
-
                 <button
                   onClick={onClose}
                   onMouseEnter={playHover}
-                  className="p-2 rounded-full bg-white/5 border border-white/10 hover:border-white/20 text-white/50 hover:text-white transition-colors cursor-pointer"
+                  className="p-2.5 text-white/50 hover:text-white rounded-xl hover:bg-white/5 transition-all cursor-pointer"
                 >
-                  <X size={20} />
+                  <X size={18} />
                 </button>
               </div>
             </div>
 
-            {/* Filters and Actions Bar */}
-            <div className="p-6 border-b border-white/5 flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-slate-950/20">
-              {/* Search and filter inputs */}
-              <div className="flex flex-col sm:flex-row gap-3 flex-grow max-w-xl">
-                <div className="relative flex-grow">
-                  <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-white/30" size={16} />
-                  <input
-                    type="text"
-                    placeholder="Search by name, email, or scope..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl pl-10 pr-4 py-2.5 text-white font-poppins text-xs outline-none transition-all focus:bg-white/10"
-                  />
-                </div>
+            {/* Error alerts */}
+            {errorMsg && (
+              <div className="mx-6 mt-4 p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl text-xs font-medium font-poppins text-left">
+                {errorMsg}
+              </div>
+            )}
 
-                <select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className="bg-white/5 border border-white/5 text-white/70 font-poppins text-xs rounded-xl px-4 py-2.5 outline-none focus:border-accent-cyan/40"
-                >
-                  <option value="all" className="bg-[#0d1322]">All Statuses</option>
-                  <option value="New" className="bg-[#0d1322]">New</option>
-                  <option value="Contacted" className="bg-[#0d1322]">Contacted</option>
-                  <option value="Converted" className="bg-[#0d1322]">Converted</option>
-                </select>
+            {/* Query Controls row */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4 border-b border-white/5 bg-slate-900/10">
+              {/* Search input field */}
+              <div className="relative w-full md:max-w-xs">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/30" size={14} />
+                <input
+                  type="text"
+                  placeholder="Search inquiries..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl pl-9 pr-4 py-2.5 text-white font-poppins text-xs outline-none transition-all focus:bg-white/10"
+                />
               </div>
 
-              {/* Database actions */}
-              <div className="flex gap-2 shrink-0">
-                <button
-                  onClick={loadInquiries}
-                  onMouseEnter={playHover}
-                  title="Refresh database"
-                  className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-white/60 hover:text-white transition-all cursor-pointer"
-                >
-                  <RefreshCw size={16} />
-                </button>
+              {/* Status filter selection tabs */}
+              <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                {['all', 'New', 'Contacted', 'Converted'].map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={() => { playClick(); setStatusFilter(filter); }}
+                    className={`px-3.5 py-2 rounded-lg font-poppins text-[10px] font-bold uppercase tracking-wider transition-all border cursor-pointer shrink-0 ${
+                      statusFilter === filter
+                        ? 'bg-accent-blue/10 border-accent-blue/20 text-accent-cyan'
+                        : 'bg-white/5 border-transparent text-white/40 hover:text-white hover:border-white/5'
+                    }`}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
 
+              {/* Actions container */}
+              <div className="flex items-center gap-2 w-full md:w-auto justify-end">
                 <button
                   onClick={handleExportCSV}
                   disabled={inquiries.length === 0}
@@ -323,19 +382,20 @@ export default function AdminDashboard({ isOpen, onClose }) {
               {filteredInquiries.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center">
                   <span className="text-white/20 font-sora font-semibold text-lg">
-                    No inquiries recorded.
+                    {isLoading ? "Fetching records..." : "No inquiries recorded."}
                   </span>
                   <p className="text-white/40 font-poppins text-xs font-light mt-1 max-w-xs">
-                    Inquiry submissions submitted via the frontend form will show up here.
+                    {isLoading ? "Querying Supabase cloud database..." : "Inquiry submissions submitted via the frontend form will show up here."}
                   </p>
                 </div>
               ) : (
                 <div className="overflow-x-auto rounded-xl border border-white/5">
-                  <table className="w-full text-left border-collapse min-w-[800px]">
+                  <table className="w-full text-left border-collapse min-w-[900px]">
                     <thead>
                       <tr className="bg-slate-950/40 border-b border-white/5 text-[10px] font-bold text-white/50 uppercase tracking-widest font-poppins">
                         <th className="py-4 px-5">Name</th>
                         <th className="py-4 px-5">Email</th>
+                        <th className="py-4 px-5">Phone</th>
                         <th className="py-4 px-5">Service</th>
                         <th className="py-4 px-5">Project Scope</th>
                         <th className="py-4 px-5">Date</th>
@@ -346,17 +406,20 @@ export default function AdminDashboard({ isOpen, onClose }) {
                     <tbody className="divide-y divide-white/5 font-poppins text-xs">
                       {filteredInquiries.map((item) => (
                         <tr key={item.id} className="hover:bg-white/2 transition-colors text-white/80">
-                          <td className="py-4 px-5 font-semibold text-white">{item.name}</td>
+                          <td className="py-4 px-5 font-semibold text-white">{item.full_name}</td>
                           <td className="py-4 px-5">{item.email}</td>
+                          <td className="py-4 px-5 text-white/60">{item.phone || '-'}</td>
                           <td className="py-4 px-5">
                             <span className="px-2.5 py-1 rounded-full font-bold text-[10px] text-accent-cyan bg-accent-cyan/10 border border-accent-cyan/20">
-                              {item.service}
+                              {item.selected_service}
                             </span>
                           </td>
-                          <td className="py-4 px-5 max-w-[250px] truncate" title={item.scope}>
-                            {item.scope}
+                          <td className="py-4 px-5 max-w-[200px] truncate" title={item.project_scope}>
+                            {item.project_scope}
                           </td>
-                          <td className="py-4 px-5 text-white/50">{item.date}</td>
+                          <td className="py-4 px-5 text-white/50">
+                            {new Date(item.created_at || Date.now()).toLocaleString()}
+                          </td>
                           <td className="py-4 px-5">
                             <select
                               value={item.status || 'New'}

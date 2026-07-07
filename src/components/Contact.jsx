@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, Send, MessageSquare, CheckCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAudio } from '../hooks/useAudio';
-import { db } from '../utils/db';
+import { supabase } from '../utils/supabase';
 
 const InstagramIcon = ({ size = 16, className = "" }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -32,6 +32,7 @@ export default function Contact() {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
+    phone: '',
     service: 'website',
     message: ''
   });
@@ -49,7 +50,7 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formState.name || !formState.email || !formState.message) return;
+    if (!formState.name || !formState.email || !formState.phone || !formState.message) return;
     
     playClick();
     setIsSubmitting(true);
@@ -57,19 +58,28 @@ export default function Contact() {
     const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
     const submissionDate = new Date().toLocaleString();
 
-    // 1. Save data locally & cloud sync
+    // 1. Save data directly to Supabase
     const newInquiry = {
-      id: Date.now().toString(),
       name: formState.name,
       email: formState.email,
+      phone: formState.phone,
       service: serviceLabel,
       scope: formState.message,
-      date: submissionDate,
       status: 'New'
     };
-    db.addInquiry(newInquiry).then(() => {
-      window.dispatchEvent(new Event('inquiry_submitted'));
-    });
+
+    const handleSync = async () => {
+      try {
+        if (supabase.isEnabled()) {
+          await supabase.addInquiry(newInquiry);
+          window.dispatchEvent(new Event('inquiry_submitted'));
+        }
+      } catch (err) {
+        console.error("Supabase insert failed:", err);
+      }
+    };
+
+    handleSync().then(() => {
 
     // Simulate API delay
     setTimeout(() => {
@@ -84,16 +94,17 @@ export default function Contact() {
         colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
       });
 
-      // 3. Send the details to zenceservice@gmail.com
-      const subject = encodeURIComponent(`New ZENCE Inquiry from ${formState.name}`);
-      const body = encodeURIComponent(`New ZENCE Inquiry Details:\n\nName: ${formState.name}\nEmail: ${formState.email}\nService: ${serviceLabel}\nProject Scope: ${formState.message}\nDate/Time: ${submissionDate}`);
-      window.location.href = `mailto:zenceservice@gmail.com?subject=${subject}&body=${body}`;
-    }, 1800);
+        // Send details to zenceservice@gmail.com
+        const subject = encodeURIComponent(`New ZENCE Inquiry from ${formState.name}`);
+        const body = encodeURIComponent(`New ZENCE Inquiry Details:\n\nName: ${formState.name}\nEmail: ${formState.email}\nPhone: ${formState.phone}\nService: ${serviceLabel}\nProject Scope: ${formState.message}\nDate/Time: ${submissionDate}`);
+        window.location.href = `mailto:zenceservice@gmail.com?subject=${subject}&body=${body}`;
+      }, 1500);
+    });
   };
 
   const resetForm = () => {
     playClick();
-    setFormState({ name: '', email: '', service: 'website', message: '' });
+    setFormState({ name: '', email: '', phone: '', service: 'website', message: '' });
     setIsSubmitted(false);
   };
 
@@ -255,6 +266,22 @@ export default function Contact() {
                         onChange={handleChange}
                         className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
                         placeholder="john@company.com"
+                      />
+                    </div>
+
+                    {/* Phone */}
+                    <div className="flex flex-col text-left">
+                      <label className="font-poppins text-xs font-semibold text-white/50 uppercase tracking-widest mb-2 ml-1">
+                        Business Phone
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        value={formState.phone}
+                        onChange={handleChange}
+                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
+                        placeholder="+91 98765 43210"
                       />
                     </div>
 
