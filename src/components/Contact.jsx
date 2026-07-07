@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, Send, MessageSquare, CheckCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAudio } from '../hooks/useAudio';
-
+import { supabase } from '../utils/supabase';
 
 const InstagramIcon = ({ size = 16, className = "" }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -49,7 +49,7 @@ export default function Contact() {
     setFormState({ ...formState, service: val });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.phone || !formState.message) return;
 
@@ -59,6 +59,23 @@ export default function Contact() {
 
     const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
     const submissionDate = new Date().toLocaleString();
+
+    const newInquiry = {
+      full_name: formState.name,
+      email: formState.email,
+      phone: formState.phone,
+      service: serviceLabel,
+      project_scope: formState.message,
+      status: 'New'
+    };
+
+    try {
+      if (supabase.isEnabled()) {
+        await supabase.addInquiry(newInquiry);
+      }
+    } catch (err) {
+      console.error("Supabase insert failed:", err);
+    }
 
     setTimeout(() => {
       setIsSubmitting(false);
