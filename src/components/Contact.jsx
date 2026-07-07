@@ -94,10 +94,10 @@ export default function Contact() {
         colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
       });
 
-        // Send details to zenceservice@gmail.com
+        // Send details to YOUR_NEW_EMAIL_ADDRESS
         const subject = encodeURIComponent(`New ZENCE Inquiry from ${formState.name}`);
         const body = encodeURIComponent(`New ZENCE Inquiry Details:\n\nName: ${formState.name}\nEmail: ${formState.email}\nPhone: ${formState.phone}\nService: ${serviceLabel}\nProject Scope: ${formState.message}\nDate/Time: ${submissionDate}`);
-        window.location.href = `mailto:zenceservice@gmail.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:YOUR_NEW_EMAIL_ADDRESS?subject=${subject}&body=${body}`;
       }, 1500);
     });
   };
@@ -149,7 +149,7 @@ export default function Contact() {
             <div className="hidden lg:block mt-8 space-y-6">
               {/* Email */}
               <motion.a
-                href="mailto:zenceservice@gmail.com"
+                href="mailto:YOUR_NEW_EMAIL_ADDRESS"
                 className="flex items-center gap-4 group cursor-pointer"
                 onMouseEnter={playHover}
               >
@@ -158,7 +158,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Email Us</p>
-                  <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">zenceservice@gmail.com</p>
+                  <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">YOUR_NEW_EMAIL_ADDRESS</p>
                 </div>
               </motion.a>
 
@@ -385,7 +385,7 @@ export default function Contact() {
           <div className="lg:hidden order-3 flex flex-col items-center gap-6 mt-8 w-full">
             {/* Email */}
             <motion.a
-              href="mailto:zenceservice@gmail.com"
+              href="mailto:YOUR_NEW_EMAIL_ADDRESS"
               className="flex items-center gap-4 group cursor-pointer text-left w-fit"
               onMouseEnter={playHover}
             >
@@ -394,7 +394,7 @@ export default function Contact() {
               </div>
               <div>
                 <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Email Us</p>
-                <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">zenceservice@gmail.com</p>
+                <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">YOUR_NEW_EMAIL_ADDRESS</p>
               </div>
             </motion.a>
 
