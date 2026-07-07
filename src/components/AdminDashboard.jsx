@@ -11,14 +11,10 @@ export default function AdminDashboard({ isOpen, onClose }) {
   const [statusFilter, setStatusFilter] = useState('all');
 
   // Authentication states
-  const [hasPasswordSet, setHasPasswordSet] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [setupError, setSetupError] = useState('');
 
   // Load inquiries from database
   const loadInquiries = () => {
@@ -30,10 +26,6 @@ export default function AdminDashboard({ isOpen, onClose }) {
   // Synchronize dynamic updates instantly
   useEffect(() => {
     if (isOpen) {
-      // Check password configuration status from central DB
-      db.getPassword().then(pass => {
-        setHasPasswordSet(!!pass);
-      });
       loadInquiries();
     }
     
@@ -47,40 +39,18 @@ export default function AdminDashboard({ isOpen, onClose }) {
     };
   }, [isOpen]);
 
-  // Handle setting password for the first time
-  const handleSetupPassword = (e) => {
-    e.preventDefault();
-    if (!newPassword) {
-      setSetupError("Password cannot be empty.");
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setSetupError("Passwords do not match.");
-      return;
-    }
-    playClick();
-    db.setPassword(newPassword).then(() => {
-      setHasPasswordSet(true);
-      setSetupError('');
-      // Auto login after setting password
-      setIsLoggedIn(true);
-    });
-  };
-
   // Handle Login submission
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    db.getPassword().then((savedPassword) => {
-      if (usernameInput === 'admin' && passwordInput === savedPassword) {
-        playClick();
-        setIsLoggedIn(true);
-        setLoginError('');
-        loadInquiries();
-      } else {
-        playClick();
-        setLoginError("Incorrect username or password.");
-      }
-    });
+    if (usernameInput === 'admin' && passwordInput === 'Zence@2026') {
+      playClick();
+      setIsLoggedIn(true);
+      setLoginError('');
+      loadInquiries();
+    } else {
+      playClick();
+      setLoginError("Incorrect username or password.");
+    }
   };
 
   // Handle Logout
@@ -171,73 +141,8 @@ export default function AdminDashboard({ isOpen, onClose }) {
       />
 
       <AnimatePresence mode="wait">
-        {/* SETUP SCREEN */}
-        {!hasPasswordSet && (
-          <motion.div
-            key="setup-screen"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="relative w-full max-w-md glassmorphism border border-white/10 rounded-3xl p-8 shadow-2xl z-10 text-center flex flex-col items-center"
-          >
-            <button
-              onClick={onClose}
-              className="absolute top-5 right-5 p-1.5 rounded-full hover:bg-white/5 text-white/50 hover:text-white transition-colors cursor-pointer"
-            >
-              <X size={18} />
-            </button>
-
-            <div className="p-3 bg-accent-blue/10 border border-accent-blue/20 rounded-2xl text-accent-cyan mb-5">
-              <Lock size={28} />
-            </div>
-
-            <h3 className="font-sora font-extrabold text-xl text-white">Create Admin Password</h3>
-            <p className="font-poppins text-xs text-white/40 mt-1 max-w-[280px]">
-              Set a master password for your secure ZENCE administrator session.
-            </p>
-
-            <form onSubmit={handleSetupPassword} className="w-full mt-6 space-y-4 text-left">
-              <div className="flex flex-col gap-1.5">
-                <label className="font-poppins text-[10px] font-bold text-white/50 uppercase tracking-widest ml-1">New Password</label>
-                <input
-                  type="password"
-                  required
-                  placeholder="••••••••"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-4 py-3 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="font-poppins text-[10px] font-bold text-white/50 uppercase tracking-widest ml-1">Confirm Password</label>
-                <input
-                  type="password"
-                  required
-                  placeholder="••••••••"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-4 py-3 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
-                />
-              </div>
-
-              {setupError && (
-                <p className="text-rose-400 font-poppins text-xs font-medium ml-1">{setupError}</p>
-              )}
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-accent-blue to-accent-cyan text-white py-3 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all cursor-pointer"
-                onMouseEnter={playHover}
-              >
-                Set Password & Enter
-              </button>
-            </form>
-          </motion.div>
-        )}
-
         {/* LOGIN SCREEN */}
-        {hasPasswordSet && !isLoggedIn && (
+        {!isLoggedIn && (
           <motion.div
             key="login-screen"
             initial={{ opacity: 0, scale: 0.95 }}

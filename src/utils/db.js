@@ -23,43 +23,7 @@ async function fetchWithTimeout(url, options = {}, timeout = 5000) {
 }
 
 export const db = {
-  // 1. Get Admin Password
-  async getPassword() {
-    try {
-      const res = await fetchWithTimeout(`${BASE_URL}/admin_password`);
-      if (res.status === 404) {
-        // No password set yet in cloud
-        return null;
-      }
-      if (res.ok) {
-        const password = await res.text();
-        if (password) {
-          localStorage.setItem('zence_admin_password', password);
-          return password;
-        }
-      }
-    } catch (err) {
-      console.warn("Cloud DB getPassword failed, using local storage:", err);
-    }
-    // Fallback to local storage
-    return localStorage.getItem('zence_admin_password');
-  },
 
-  // 2. Set Admin Password
-  async setPassword(password) {
-    // Save to local storage first
-    localStorage.setItem('zence_admin_password', password);
-    try {
-      await fetchWithTimeout(`${BASE_URL}/admin_password`, {
-        method: 'POST',
-        body: password
-      });
-      return true;
-    } catch (err) {
-      console.warn("Cloud DB setPassword failed, saved locally only:", err);
-      return false;
-    }
-  },
 
   // 3. Get Inquiries
   async getInquiries() {
