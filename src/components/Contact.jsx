@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, Send, MessageSquare, CheckCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAudio } from '../hooks/useAudio';
-import { supabase } from '../utils/supabase';
+
 
 const InstagramIcon = ({ size = 16, className = "" }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -38,6 +38,7 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -51,42 +52,18 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.phone || !formState.message) return;
-    
+
     playClick();
     setIsSubmitting(true);
+    setSubmitError('');
 
     const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
     const submissionDate = new Date().toLocaleString();
 
-    // 1. Save data directly to Supabase
-    const newInquiry = {
-      name: formState.name,
-      email: formState.email,
-      phone: formState.phone,
-      service: serviceLabel,
-      scope: formState.message,
-      status: 'New'
-    };
-
-    const handleSync = async () => {
-      try {
-        if (supabase.isEnabled()) {
-          await supabase.addInquiry(newInquiry);
-          window.dispatchEvent(new Event('inquiry_submitted'));
-        }
-      } catch (err) {
-        console.error("Supabase insert failed:", err);
-      }
-    };
-
-    handleSync().then(() => {
-
-    // Simulate API delay
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      
-      // Celebrate with confetti!
+
       confetti({
         particleCount: 150,
         spread: 80,
@@ -94,18 +71,17 @@ export default function Contact() {
         colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
       });
 
-        // Send details to YOUR_NEW_EMAIL_ADDRESS
-        const subject = encodeURIComponent(`New ZENCE Inquiry from ${formState.name}`);
-        const body = encodeURIComponent(`New ZENCE Inquiry Details:\n\nName: ${formState.name}\nEmail: ${formState.email}\nPhone: ${formState.phone}\nService: ${serviceLabel}\nProject Scope: ${formState.message}\nDate/Time: ${submissionDate}`);
-        window.location.href = `mailto:YOUR_NEW_EMAIL_ADDRESS?subject=${subject}&body=${body}`;
-      }, 1500);
-    });
+      const subject = encodeURIComponent(`New ZENCE Inquiry from ${formState.name}`);
+      const body = encodeURIComponent(`New ZENCE Inquiry Details:\n\nName: ${formState.name}\nEmail: ${formState.email}\nPhone: ${formState.phone}\nService: ${serviceLabel}\nProject Scope: ${formState.message}\nDate/Time: ${submissionDate}`);
+      window.location.href = `mailto:YOUR_NEW_EMAIL_ADDRESS?subject=${subject}&body=${body}`;
+    }, 1500);
   };
 
   const resetForm = () => {
     playClick();
     setFormState({ name: '', email: '', phone: '', service: 'website', message: '' });
     setIsSubmitted(false);
+    setSubmitError('');
   };
 
   const socialLinks = [
@@ -327,6 +303,12 @@ export default function Contact() {
                         placeholder="Describe what you would like to build..."
                       />
                     </div>
+
+                    {submitError && (
+                      <div className="rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-left text-xs font-medium text-rose-300">
+                        {submitError}
+                      </div>
+                    )}
 
                     {/* Submit Button */}
                     <button

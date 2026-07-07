@@ -14,7 +14,6 @@ import Process from './components/Process';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import AdminDashboard from './components/AdminDashboard';
 
 function InfiniteMarquee() {
   const tags = [
@@ -44,25 +43,6 @@ function InfiniteMarquee() {
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
-
-  useEffect(() => {
-    const checkAdminRoute = () => {
-      const isHashAdmin = window.location.hash === '#admin';
-      const isPathAdmin = window.location.pathname === '/admin' || window.location.pathname.endsWith('/admin') || window.location.pathname.endsWith('/admin/');
-      if (isHashAdmin || isPathAdmin) {
-        setIsAdminOpen(true);
-      }
-    };
-    checkAdminRoute();
-    
-    window.addEventListener('hashchange', checkAdminRoute);
-    window.addEventListener('popstate', checkAdminRoute);
-    return () => {
-      window.removeEventListener('hashchange', checkAdminRoute);
-      window.removeEventListener('popstate', checkAdminRoute);
-    };
-  }, []);
 
   return (
     <div className="bg-[#0B1120] min-h-screen text-white antialiased relative selection:bg-accent-cyan selection:text-black overflow-x-hidden w-full max-w-full">
@@ -101,10 +81,7 @@ export default function App() {
           </main>
 
           {/* Brand Footer */}
-          <Footer onAdminOpen={() => setIsAdminOpen(true)} />
-
-          {/* Admin Portal Dashboard Modal */}
-          <AdminDashboard isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
+          <Footer />
         </motion.div>
       )}
     </div>

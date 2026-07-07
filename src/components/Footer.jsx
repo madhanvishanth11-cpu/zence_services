@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Sparkles } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
 
-export default function Footer({ onAdminOpen }) {
+export default function Footer() {
   const { playClick, playHover } = useAudio();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -119,14 +119,7 @@ export default function Footer({ onAdminOpen }) {
         <div className="flex items-center gap-6">
           <a href="#" className="font-poppins text-xs text-white/30 hover:text-white transition-colors">Privacy Policy</a>
           <a href="#" className="font-poppins text-xs text-white/30 hover:text-white transition-colors">Terms of Service</a>
-          {onAdminOpen && (
-            <button 
-              onClick={onAdminOpen} 
-              className="font-poppins text-xs text-white/30 hover:text-white transition-colors cursor-pointer bg-transparent border-none p-0 outline-none"
-            >
-              Admin Portal
-            </button>
-          )}        </div>
+        </div>
       </div>
     </footer>
   );
