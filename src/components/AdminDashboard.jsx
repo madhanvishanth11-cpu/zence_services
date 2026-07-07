@@ -20,10 +20,11 @@ export default function AdminDashboard({ isOpen, onClose }) {
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState('');
 
+  const isConfigured = supabase.isEnabled();
+
   // Load inquiries from Supabase
   const loadInquiries = () => {
-    if (!supabase.isEnabled()) {
-      setErrorMsg("Supabase credentials not configured in the .env file. Please check settings.");
+    if (!isConfigured) {
       return;
     }
     setIsLoading(true);
@@ -278,7 +279,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
                 <div className="text-left">
                   <h2 className="font-sora font-extrabold text-lg text-white flex items-center gap-2">
                     ZENCE Admin Dashboard
-                    {isLoading && (
+                    {isLoading && isConfigured && (
                       <RefreshCw size={14} className="animate-spin text-accent-cyan" />
                     )}
                   </h2>
@@ -289,14 +290,16 @@ export default function AdminDashboard({ isOpen, onClose }) {
               </div>
 
               <div className="flex items-center gap-3 w-full sm:w-auto">
-                <button
-                  onClick={loadInquiries}
-                  title="Reload DB Entries"
-                  onMouseEnter={playHover}
-                  className="p-2.5 bg-white/5 border border-white/10 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-all cursor-pointer"
-                >
-                  <RefreshCw size={15} className={isLoading ? "animate-spin" : ""} />
-                </button>
+                {isConfigured && (
+                  <button
+                    onClick={loadInquiries}
+                    title="Reload DB Entries"
+                    onMouseEnter={playHover}
+                    className="p-2.5 bg-white/5 border border-white/10 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-all cursor-pointer"
+                  >
+                    <RefreshCw size={15} className={isLoading ? "animate-spin" : ""} />
+                  </button>
+                )}
                 <button
                   onClick={handleLogout}
                   onMouseEnter={playHover}
@@ -322,138 +325,166 @@ export default function AdminDashboard({ isOpen, onClose }) {
               </div>
             )}
 
-            {/* Query Controls row */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4 border-b border-white/5 bg-slate-900/10">
-              {/* Search input field */}
-              <div className="relative w-full md:max-w-xs">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/30" size={14} />
-                <input
-                  type="text"
-                  placeholder="Search inquiries..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl pl-9 pr-4 py-2.5 text-white font-poppins text-xs outline-none transition-all focus:bg-white/10"
-                />
-              </div>
-
-              {/* Status filter selection tabs */}
-              <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-                {['all', 'New', 'Contacted', 'Converted'].map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => { playClick(); setStatusFilter(filter); }}
-                    className={`px-3.5 py-2 rounded-lg font-poppins text-[10px] font-bold uppercase tracking-wider transition-all border cursor-pointer shrink-0 ${
-                      statusFilter === filter
-                        ? 'bg-accent-blue/10 border-accent-blue/20 text-accent-cyan'
-                        : 'bg-white/5 border-transparent text-white/40 hover:text-white hover:border-white/5'
-                    }`}
-                  >
-                    {filter}
-                  </button>
-                ))}
-              </div>
-
-              {/* Actions container */}
-              <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-                <button
-                  onClick={handleExportCSV}
-                  disabled={inquiries.length === 0}
-                  onMouseEnter={playHover}
-                  className="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-accent-cyan/20 hover:text-accent-cyan disabled:opacity-50 text-white px-4 py-2.5 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
-                >
-                  <Download size={14} />
-                  <span>Export CSV</span>
-                </button>
-
-                <button
-                  onClick={handleClearAll}
-                  disabled={inquiries.length === 0}
-                  onMouseEnter={playHover}
-                  className="flex items-center gap-2 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 text-rose-400 disabled:opacity-50 px-4 py-2.5 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
-                >
-                  <Trash2 size={14} />
-                  <span>Clear All</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Data Table */}
-            <div className="flex-grow overflow-auto p-6">
-              {filteredInquiries.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center">
-                  <span className="text-white/20 font-sora font-semibold text-lg">
-                    {isLoading ? "Fetching records..." : "No inquiries recorded."}
-                  </span>
-                  <p className="text-white/40 font-poppins text-xs font-light mt-1 max-w-xs">
-                    {isLoading ? "Querying Supabase cloud database..." : "Inquiry submissions submitted via the frontend form will show up here."}
-                  </p>
+            {!isConfigured ? (
+              /* Setup Instructions Card if Supabase is unconfigured */
+              <div className="flex-grow overflow-auto flex flex-col items-center justify-center text-center p-8 max-w-lg mx-auto">
+                <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-rose-400 mb-5 animate-pulse">
+                  <Shield size={32} />
                 </div>
-              ) : (
-                <div className="overflow-x-auto rounded-xl border border-white/5">
-                  <table className="w-full text-left border-collapse min-w-[900px]">
-                    <thead>
-                      <tr className="bg-slate-950/40 border-b border-white/5 text-[10px] font-bold text-white/50 uppercase tracking-widest font-poppins">
-                        <th className="py-4 px-5">Name</th>
-                        <th className="py-4 px-5">Email</th>
-                        <th className="py-4 px-5">Phone</th>
-                        <th className="py-4 px-5">Service</th>
-                        <th className="py-4 px-5">Project Scope</th>
-                        <th className="py-4 px-5">Date</th>
-                        <th className="py-4 px-5">Status</th>
-                        <th className="py-4 px-5 text-right">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5 font-poppins text-xs">
-                      {filteredInquiries.map((item) => (
-                        <tr key={item.id} className="hover:bg-white/2 transition-colors text-white/80">
-                          <td className="py-4 px-5 font-semibold text-white">{item.full_name}</td>
-                          <td className="py-4 px-5">{item.email}</td>
-                          <td className="py-4 px-5 text-white/60">{item.phone || '-'}</td>
-                          <td className="py-4 px-5">
-                            <span className="px-2.5 py-1 rounded-full font-bold text-[10px] text-accent-cyan bg-accent-cyan/10 border border-accent-cyan/20">
-                              {item.selected_service}
-                            </span>
-                          </td>
-                          <td className="py-4 px-5 max-w-[200px] truncate" title={item.project_scope}>
-                            {item.project_scope}
-                          </td>
-                          <td className="py-4 px-5 text-white/50">
-                            {new Date(item.created_at || Date.now()).toLocaleString()}
-                          </td>
-                          <td className="py-4 px-5">
-                            <select
-                              value={item.status || 'New'}
-                              onChange={(e) => handleStatusChange(item.id, e.target.value)}
-                              className={`font-semibold text-xs rounded-lg px-2.5 py-1.5 outline-none border cursor-pointer ${
-                                item.status === 'Converted'
-                                  ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                                  : item.status === 'Contacted'
-                                  ? 'bg-accent-blue/10 border-accent-blue/20 text-accent-cyan'
-                                  : 'bg-white/5 border-white/10 text-white/60'
-                              }`}
-                            >
-                              <option value="New" className="bg-[#0d1322] text-white/80">New</option>
-                              <option value="Contacted" className="bg-[#0d1322] text-white/80">Contacted</option>
-                              <option value="Converted" className="bg-[#0d1322] text-white/80">Converted</option>
-                            </select>
-                          </td>
-                          <td className="py-4 px-5 text-right">
-                            <button
-                              onClick={() => handleDelete(item.id)}
-                              onMouseEnter={playHover}
-                              className="p-2 rounded-lg bg-white/3 border border-white/5 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all cursor-pointer"
-                              title="Delete entry"
-                            >
-                              <Trash2 size={13} />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <h3 className="font-sora font-extrabold text-xl text-white">Supabase Credentials Required</h3>
+                <p className="font-poppins text-xs text-white/60 mt-2 leading-relaxed max-w-sm">
+                  To securely sync and view inquiry records in the cloud, please configure your Supabase variables inside your project's root <code className="bg-white/10 px-1.5 py-0.5 rounded text-accent-cyan">.env</code> file:
+                </p>
+
+                <div className="bg-slate-950 border border-white/5 rounded-xl p-4 mt-6 w-full text-left font-mono text-xs text-white/80 overflow-x-auto relative group">
+                  <span className="absolute top-2 right-2 text-[9px] uppercase tracking-widest text-white/20 select-none">.env Template</span>
+                  <pre className="select-all leading-relaxed">
+{`VITE_SUPABASE_URL=YOUR_SUPABASE_PROJECT_URL
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY`}
+                  </pre>
                 </div>
-              )}
-            </div>
+
+                <p className="text-white/40 font-poppins text-[10px] mt-6 max-w-xs leading-relaxed">
+                  Note: Remember to restart your local development server (<code className="bg-white/5 px-1 py-0.5 rounded text-white/70">npm run dev</code>) after adding your database parameters.
+                </p>
+              </div>
+            ) : (
+              /* Real dashboard content */
+              <>
+                {/* Query Controls row */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-4 border-b border-white/5 bg-slate-900/10">
+                  {/* Search input field */}
+                  <div className="relative w-full md:max-w-xs">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/30" size={14} />
+                    <input
+                      type="text"
+                      placeholder="Search inquiries..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl pl-9 pr-4 py-2.5 text-white font-poppins text-xs outline-none transition-all focus:bg-white/10"
+                    />
+                  </div>
+
+                  {/* Status filter selection tabs */}
+                  <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                    {['all', 'New', 'Contacted', 'Converted'].map((filter) => (
+                      <button
+                        key={filter}
+                        onClick={() => { playClick(); setStatusFilter(filter); }}
+                        className={`px-3.5 py-2 rounded-lg font-poppins text-[10px] font-bold uppercase tracking-wider transition-all border cursor-pointer shrink-0 ${
+                          statusFilter === filter
+                            ? 'bg-accent-blue/10 border-accent-blue/20 text-accent-cyan'
+                            : 'bg-white/5 border-transparent text-white/40 hover:text-white hover:border-white/5'
+                        }`}
+                      >
+                        {filter}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Actions container */}
+                  <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+                    <button
+                      onClick={handleExportCSV}
+                      disabled={inquiries.length === 0}
+                      onMouseEnter={playHover}
+                      className="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-accent-cyan/20 hover:text-accent-cyan disabled:opacity-50 text-white px-4 py-2.5 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                    >
+                      <Download size={14} />
+                      <span>Export CSV</span>
+                    </button>
+
+                    <button
+                      onClick={handleClearAll}
+                      disabled={inquiries.length === 0}
+                      onMouseEnter={playHover}
+                      className="flex items-center gap-2 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 text-rose-400 disabled:opacity-50 px-4 py-2.5 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                    >
+                      <Trash2 size={14} />
+                      <span>Clear All</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Data Table */}
+                <div className="flex-grow overflow-auto p-6">
+                  {filteredInquiries.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center text-center">
+                      <span className="text-white/20 font-sora font-semibold text-lg">
+                        {isLoading ? "Fetching records..." : "No inquiries recorded."}
+                      </span>
+                      <p className="text-white/40 font-poppins text-xs font-light mt-1 max-w-xs">
+                        {isLoading ? "Querying Supabase cloud database..." : "Inquiry submissions submitted via the frontend form will show up here."}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto rounded-xl border border-white/5">
+                      <table className="w-full text-left border-collapse min-w-[900px]">
+                        <thead>
+                          <tr className="bg-slate-950/40 border-b border-white/5 text-[10px] font-bold text-white/50 uppercase tracking-widest font-poppins">
+                            <th className="py-4 px-5">Name</th>
+                            <th className="py-4 px-5">Email</th>
+                            <th className="py-4 px-5">Phone</th>
+                            <th className="py-4 px-5">Service</th>
+                            <th className="py-4 px-5">Project Scope</th>
+                            <th className="py-4 px-5">Date</th>
+                            <th className="py-4 px-5">Status</th>
+                            <th className="py-4 px-5 text-right">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5 font-poppins text-xs">
+                          {filteredInquiries.map((item) => (
+                            <tr key={item.id} className="hover:bg-white/2 transition-colors text-white/80">
+                              <td className="py-4 px-5 font-semibold text-white">{item.full_name}</td>
+                              <td className="py-4 px-5">{item.email}</td>
+                              <td className="py-4 px-5 text-white/60">{item.phone || '-'}</td>
+                              <td className="py-4 px-5">
+                                <span className="px-2.5 py-1 rounded-full font-bold text-[10px] text-accent-cyan bg-accent-cyan/10 border border-accent-cyan/20">
+                                  {item.selected_service}
+                                </span>
+                              </td>
+                              <td className="py-4 px-5 max-w-[200px] truncate" title={item.project_scope}>
+                                {item.project_scope}
+                              </td>
+                              <td className="py-4 px-5 text-white/50">
+                                {new Date(item.created_at || Date.now()).toLocaleString()}
+                              </td>
+                              <td className="py-4 px-5">
+                                <select
+                                  value={item.status || 'New'}
+                                  onChange={(e) => handleStatusChange(item.id, e.target.value)}
+                                  className={`font-semibold text-xs rounded-lg px-2.5 py-1.5 outline-none border cursor-pointer ${
+                                    item.status === 'Converted'
+                                      ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                                      : item.status === 'Contacted'
+                                      ? 'bg-accent-blue/10 border-accent-blue/20 text-accent-cyan'
+                                      : 'bg-white/5 border-white/10 text-white/60'
+                                  }`}
+                                >
+                                  <option value="New" className="bg-[#0d1322] text-white/80">New</option>
+                                  <option value="Contacted" className="bg-[#0d1322] text-white/80">Contacted</option>
+                                  <option value="Converted" className="bg-[#0d1322] text-white/80">Converted</option>
+                                </select>
+                              </td>
+                              <td className="py-4 px-5 text-right">
+                                <button
+                                  onClick={() => handleDelete(item.id)}
+                                  onMouseEnter={playHover}
+                                  className="p-2 rounded-lg bg-white/3 border border-white/5 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all cursor-pointer"
+                                  title="Delete entry"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
