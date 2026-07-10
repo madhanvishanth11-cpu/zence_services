@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, Send, MessageSquare, CheckCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAudio } from '../hooks/useAudio';
-import { supabase } from '../utils/supabase';
 
 const InstagramIcon = ({ size = 16, className = "" }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -58,28 +57,29 @@ export default function Contact() {
     setSubmitError('');
 
     const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
-    const submissionDate = new Date().toLocaleString();
-
-    const newInquiry = {
-      full_name: formState.name,
-      email: formState.email,
-      phone: formState.phone,
-      service: serviceLabel,
-      project_scope: formState.message,
-      status: 'New'
-    };
 
     try {
-      if (supabase.isEnabled()) {
-        await supabase.addInquiry(newInquiry);
-      }
-    } catch (err) {
-      console.error("Supabase insert failed:", err);
-    }
+      const response = await fetch('https://zence.app.n8n.cloud/webhook/zence-leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          fullName: formState.name,
+          businessEmail: formState.email,
+          businessPhone: formState.phone,
+          service: serviceLabel,
+          "Project scope": formState.message
+        })
+      });
 
-    setTimeout(() => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       setIsSubmitting(false);
       setIsSubmitted(true);
+      setFormState({ name: '', email: '', phone: '', service: 'website', message: '' });
 
       confetti({
         particleCount: 150,
@@ -88,10 +88,11 @@ export default function Contact() {
         colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
       });
 
-      const subject = encodeURIComponent(`New ZENCE Inquiry from ${formState.name}`);
-      const body = encodeURIComponent(`New ZENCE Inquiry Details:\n\nName: ${formState.name}\nEmail: ${formState.email}\nPhone: ${formState.phone}\nService: ${serviceLabel}\nProject Scope: ${formState.message}\nDate/Time: ${submissionDate}`);
-      window.location.href = `mailto:zenceservice@gmail.com?subject=${subject}&body=${body}`;
-    }, 1500);
+    } catch (err) {
+      console.error('Webhook submission error:', err);
+      setSubmitError('Something went wrong. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   const resetForm = () => {
@@ -364,7 +365,7 @@ export default function Contact() {
                     </h4>
                     
                     <p className="mt-3 font-poppins text-sm text-white/50 leading-relaxed font-light max-w-md">
-                      Thank you! Your request has been submitted successfully.
+                      Thank you! Your inquiry has been received.
                     </p>
 
                     <button
