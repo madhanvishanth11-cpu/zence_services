@@ -79,7 +79,10 @@ export default function Contact() {
       return;
     }
 
+    const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5";
+
     const payload = {
+      date: new Date().toISOString(),
       fullName,
       businessEmail,
       businessPhone,
@@ -87,37 +90,32 @@ export default function Contact() {
       projectScope
     };
 
+    console.log("Submitting contact form payload:", payload);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     try {
       setIsSubmitting(true);
       playClick();
 
-      const response = await fetch("/api/contact", {
+      const response = await fetch(MAKE_WEBHOOK_URL, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain;charset=UTF-8"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
 
-      const responseText = await response.text();
+      const responseBody = await response.text();
 
-      console.log("API status:", response.status);
-      console.log("API response:", responseText);
+      console.log("Webhook response status:", response.status);
+      console.log("Webhook response body:", responseBody);
 
-      let result = {};
-
-      try {
-        result = JSON.parse(responseText);
-      } catch {
-        result = {
-          success: false,
-          message: responseText || "Invalid server response."
-        };
-      }
-
-      if (!response.ok || !result.success) {
+      if (!response.ok) {
         throw new Error(
-          result.message || `Submission failed with status ${response.status}`
+          `Webhook request failed: ${response.status} ${responseBody}`
         );
       }
 
@@ -138,9 +136,15 @@ export default function Contact() {
       });
 
     } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitError(error.message || "Something went wrong. Please try again.");
+      console.error("Contact form submission failed:", error);
+
+      if (error.name === "AbortError") {
+        setSubmitError("The request took too long. Please try again.");
+      } else {
+        setSubmitError("Something went wrong. Please try again.");
+      }
     } finally {
+      clearTimeout(timeoutId);
       setIsSubmitting(false);
     }
   };
