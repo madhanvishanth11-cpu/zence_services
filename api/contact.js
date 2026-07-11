@@ -1,4 +1,6 @@
 export default async function handler(req, res) {
+  res.setHeader("Content-Type", "application/json");
+
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
@@ -6,40 +8,39 @@ export default async function handler(req, res) {
     });
   }
 
-  const {
-    fullName,
-    businessEmail,
-    businessPhone,
-    coreService,
-    projectScope
-  } = req.body || {};
-
-  if (
-    !fullName?.trim() ||
-    !businessEmail?.trim() ||
-    !businessPhone?.trim() ||
-    !coreService?.trim() ||
-    !projectScope?.trim()
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: "Please complete all required fields."
-    });
-  }
-
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!emailPattern.test(businessEmail.trim())) {
-    return res.status(400).json({
-      success: false,
-      message: "Please enter a valid business email."
-    });
-  }
-
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15000);
-
   try {
+    const {
+      fullName,
+      businessEmail,
+      businessPhone,
+      coreService,
+      projectScope
+    } = req.body || {};
+
+    if (
+      !fullName?.trim() ||
+      !businessEmail?.trim() ||
+      !businessPhone?.trim() ||
+      !coreService?.trim() ||
+      !projectScope?.trim()
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Please complete all required fields."
+      });
+    }
+
+    const payload = {
+      date: new Date().toISOString(),
+      fullName: fullName.trim(),
+      businessEmail: businessEmail.trim(),
+      businessPhone: businessPhone.trim(),
+      coreService: coreService.trim(),
+      projectScope: projectScope.trim()
+    };
+
+    console.log("Sending payload to Make:", payload);
+
     const makeResponse = await fetch(
       "https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5",
       {
@@ -47,27 +48,21 @@ export default async function handler(req, res) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          date: new Date().toISOString(),
-          fullName: fullName.trim(),
-          businessEmail: businessEmail.trim(),
-          businessPhone: businessPhone.trim(),
-          coreService: coreService.trim(),
-          projectScope: projectScope.trim()
-        }),
-        signal: controller.signal
+        body: JSON.stringify(payload)
       }
     );
 
     const makeResponseText = await makeResponse.text();
 
-    console.log("Make status:", makeResponse.status);
-    console.log("Make response:", makeResponseText);
+    console.log("Make response status:", makeResponse.status);
+    console.log("Make response body:", makeResponseText);
 
     if (!makeResponse.ok) {
-      throw new Error(
-        `Make webhook failed with status ${makeResponse.status}`
-      );
+      return res.status(502).json({
+        success: false,
+        message: "Make webhook rejected the request.",
+        makeStatus: makeResponse.status
+      });
     }
 
     return res.status(200).json({
@@ -75,13 +70,11 @@ export default async function handler(req, res) {
       message: "Your details were submitted successfully."
     });
   } catch (error) {
-    console.error("Contact API error:", error);
+    console.error("Contact API complete error:", error);
 
-    return res.status(502).json({
+    return res.status(500).json({
       success: false,
-      message: "Unable to submit your request."
+      message: "Server failed to process the request."
     });
-  } finally {
-    clearTimeout(timeoutId);
   }
 }

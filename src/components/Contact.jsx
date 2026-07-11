@@ -99,12 +99,26 @@ export default function Contact() {
         body: JSON.stringify(payload)
       });
 
-      const result = await response.json();
+      const responseText = await response.text();
 
-      console.log("Contact API response:", result);
+      console.log("API status:", response.status);
+      console.log("API response:", responseText);
+
+      let result = {};
+
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        result = {
+          success: false,
+          message: responseText || "Invalid server response."
+        };
+      }
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || "Submission failed");
+        throw new Error(
+          result.message || `Submission failed with status ${response.status}`
+        );
       }
 
       setIsSubmitted(true);
