@@ -79,34 +79,32 @@ export default function Contact() {
       return;
     }
 
-    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5';
-
-    const webhookData = new FormData();
-    webhookData.append("date", new Date().toISOString());
-    webhookData.append("fullName", fullName);
-    webhookData.append("businessEmail", businessEmail);
-    webhookData.append("businessPhone", businessPhone);
-    webhookData.append("coreService", coreService);
-    webhookData.append("projectScope", projectScope);
+    const payload = {
+      fullName,
+      businessEmail,
+      businessPhone,
+      coreService,
+      projectScope
+    };
 
     try {
       setIsSubmitting(true);
       playClick();
 
-      const response = await fetch(MAKE_WEBHOOK_URL, {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        body: webhookData
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
       });
 
-      const responseText = await response.text();
+      const result = await response.json();
 
-      console.log("Make webhook status:", response.status);
-      console.log("Make webhook response:", responseText);
+      console.log("Contact API response:", result);
 
-      if (!response.ok) {
-        throw new Error(
-          `Webhook failed with status ${response.status}: ${responseText}`
-        );
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Submission failed");
       }
 
       setIsSubmitted(true);
@@ -126,8 +124,8 @@ export default function Contact() {
       });
 
     } catch (error) {
-      console.error("Contact form webhook error:", error);
-      setSubmitError("Something went wrong. Please try again.");
+      console.error("Form submission error:", error);
+      setSubmitError(error.message || "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
