@@ -51,66 +51,72 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate all required fields are not empty after trimming
-    const trimmedName = formState.name.trim();
-    const trimmedEmail = formState.email.trim();
-    const trimmedPhone = formState.phone.trim();
-    const trimmedMessage = formState.message.trim();
-
-    if (!trimmedName || !trimmedEmail || !trimmedPhone || !trimmedMessage) {
-      setSubmitError('Please fill in all required fields.');
-      return;
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(trimmedEmail)) {
-      setSubmitError('Please enter a valid email address.');
-      return;
-    }
-
-    // Prevent duplicate submissions
     if (isSubmitting) return;
 
-    playClick();
-    setIsSubmitting(true);
     setSubmitError('');
 
-    const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
+    const fullName = formState.name?.trim();
+    const businessEmail = formState.email?.trim();
+    const businessPhone = formState.phone?.trim();
+    const coreService = (formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent')?.trim();
+    const projectScope = formState.message?.trim();
+
+    if (
+      !fullName ||
+      !businessEmail ||
+      !businessPhone ||
+      !coreService ||
+      !projectScope
+    ) {
+      setSubmitError("Please fill in all required fields.");
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(businessEmail)) {
+      setSubmitError("Please enter a valid business email.");
+      return;
+    }
 
     const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5';
 
-    const payload = {
-      date: new Date().toISOString(),
-      fullName: trimmedName,
-      businessEmail: trimmedEmail,
-      businessPhone: trimmedPhone,
-      coreService: serviceLabel,
-      projectScope: trimmedMessage
-    };
-
-    console.log('Sending webhook payload:', payload);
+    const webhookData = new FormData();
+    webhookData.append("date", new Date().toISOString());
+    webhookData.append("fullName", fullName);
+    webhookData.append("businessEmail", businessEmail);
+    webhookData.append("businessPhone", businessPhone);
+    webhookData.append("coreService", coreService);
+    webhookData.append("projectScope", projectScope);
 
     try {
+      setIsSubmitting(true);
+      playClick();
+
       const response = await fetch(MAKE_WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
+        method: "POST",
+        body: webhookData
       });
 
       const responseText = await response.text();
 
-      console.log('Make webhook status:', response.status);
-      console.log('Make webhook response:', responseText);
+      console.log("Make webhook status:", response.status);
+      console.log("Make webhook response:", responseText);
 
       if (!response.ok) {
-        throw new Error(`Webhook failed with status ${response.status}: ${responseText}`);
+        throw new Error(
+          `Webhook failed with status ${response.status}: ${responseText}`
+        );
       }
 
       setIsSubmitted(true);
-      setFormState({ name: '', email: '', phone: '', service: 'website', message: '' });
+      setFormState({
+        name: "",
+        email: "",
+        phone: "",
+        service: "website",
+        message: ""
+      });
 
       confetti({
         particleCount: 150,
@@ -119,9 +125,9 @@ export default function Contact() {
         colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
       });
 
-    } catch (err) {
-      console.error('Make webhook submission error:', err);
-      setSubmitError('Something went wrong. Please try again.');
+    } catch (error) {
+      console.error("Contact form webhook error:", error);
+      setSubmitError("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
