@@ -44,8 +44,8 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     if (isSubmitting) return;
 
@@ -75,46 +75,39 @@ export default function Contact() {
       return;
     }
 
-    const submissionData = new FormData();
+    const payload = {
+      date: new Date().toISOString(),
+      fullName,
+      businessEmail,
+      businessPhone,
+      coreService,
+      projectScope
+    };
 
-    submissionData.append("Full Name", fullName);
-    submissionData.append("Business Email", businessEmail);
-    submissionData.append("Business Phone", businessPhone);
-    submissionData.append("Core Service", coreService);
-    submissionData.append("Project Scope", projectScope);
-
-    submissionData.append(
-      "_subject",
-      `New ZENCE Lead - ${coreService} - ${fullName}`
-    );
-
-    submissionData.append("_template", "table");
-    submissionData.append("_captcha", "false");
-    submissionData.append("_replyto", businessEmail);
+    console.log("Submitting contact form payload:", payload);
 
     try {
       setIsSubmitting(true);
       playClick();
 
       const response = await fetch(
-        "https://formsubmit.co/ajax/zenceservice@gmail.com",
+        "https://hook.us2.make.com/fqmek3mhgcgvcvo6922pexmpuwja1ztr",
         {
           method: "POST",
           headers: {
-            Accept: "application/json"
+            "Content-Type": "application/json"
           },
-          body: submissionData
+          body: JSON.stringify(payload)
         }
       );
 
-      const result = await response.json();
+      const responseText = await response.text();
 
-      console.log("Contact form response:", result);
+      console.log("Response status:", response.status);
+      console.log("Response body:", responseText);
 
-      if (!response.ok || result.success === false) {
-        throw new Error(
-          result.message || "Form submission failed."
-        );
+      if (!response.ok) {
+        throw new Error(responseText || `Error status ${response.status}`);
       }
 
       setIsSubmitted(true);
@@ -134,9 +127,9 @@ export default function Contact() {
         colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
       });
     } catch (error) {
-      console.error("Contact form submission error:", error);
+      console.error("Contact form submission complete error:", error);
       setError(
-        "Something went wrong. Please try again."
+        error.message || "Something went wrong. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -424,7 +417,7 @@ export default function Contact() {
                     </h4>
                     
                     <p className="mt-3 font-poppins text-sm text-white/50 leading-relaxed font-light max-w-md">
-                      Thank you! Your details have been submitted successfully.
+                      Thank you! Your request has been submitted successfully.
                     </p>
 
                     <button
