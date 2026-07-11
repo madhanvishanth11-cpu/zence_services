@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     console.log("Sending payload to Make:", payload);
 
     const makeResponse = await fetch(
-      "https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5",
+      "https://madhanai.app.n8n.cloud/webhook-test/6713e165-cb66-4ee2-a5f8-c35f26627ee7",
       {
         method: "POST",
         headers: {
