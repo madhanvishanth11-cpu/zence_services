@@ -78,7 +78,7 @@ export default function Contact() {
 
     const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
 
-    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/y2eg20tk8tx3su28jffd194p1upna362';
+    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5';
 
     const payload = {
       date: new Date().toISOString(),
@@ -95,7 +95,7 @@ export default function Contact() {
       const response = await fetch(MAKE_WEBHOOK_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'text/plain;charset=UTF-8'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       });
