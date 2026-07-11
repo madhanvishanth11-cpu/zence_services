@@ -28,38 +28,34 @@ const FacebookIcon = ({ size = 16, className = "" }) => (
 
 export default function Contact() {
   const { playClick, playHover } = useAudio();
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    service: 'website',
-    message: ''
+  const [formData, setFormData] = useState({
+    fullName: '',
+    businessEmail: '',
+    businessPhone: '',
+    coreService: 'Web Development',
+    projectScope: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState('');
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleServiceSelect = (val) => {
-    playClick();
-    setFormState({ ...formState, service: val });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     if (isSubmitting) return;
 
-    setSubmitError('');
+    setError("");
 
-    const fullName = formState.name?.trim();
-    const businessEmail = formState.email?.trim();
-    const businessPhone = formState.phone?.trim();
-    const coreService = (formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent')?.trim();
-    const projectScope = formState.message?.trim();
+    const fullName = formData.fullName?.trim();
+    const businessEmail = formData.businessEmail?.trim();
+    const businessPhone = formData.businessPhone?.trim();
+    const coreService = formData.coreService?.trim();
+    const projectScope = formData.projectScope?.trim();
 
     if (
       !fullName ||
@@ -68,64 +64,67 @@ export default function Contact() {
       !coreService ||
       !projectScope
     ) {
-      setSubmitError("Please fill in all required fields.");
+      setError("Please fill in all required fields.");
       return;
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(businessEmail)) {
-      setSubmitError("Please enter a valid business email.");
+      setError("Please enter a valid email address.");
       return;
     }
 
-    const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5";
+    const submissionData = new FormData();
 
-    const payload = {
-      date: new Date().toISOString(),
-      fullName,
-      businessEmail,
-      businessPhone,
-      coreService,
-      projectScope
-    };
+    submissionData.append("Full Name", fullName);
+    submissionData.append("Business Email", businessEmail);
+    submissionData.append("Business Phone", businessPhone);
+    submissionData.append("Core Service", coreService);
+    submissionData.append("Project Scope", projectScope);
 
-    console.log("Submitting contact form payload:", payload);
+    submissionData.append(
+      "_subject",
+      `New ZENCE Lead - ${coreService} - ${fullName}`
+    );
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    submissionData.append("_template", "table");
+    submissionData.append("_captcha", "false");
+    submissionData.append("_replyto", businessEmail);
 
     try {
       setIsSubmitting(true);
       playClick();
 
-      const response = await fetch(MAKE_WEBHOOK_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=UTF-8"
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
+      const response = await fetch(
+        "https://formsubmit.co/ajax/zenceservice@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json"
+          },
+          body: submissionData
+        }
+      );
 
-      const responseBody = await response.text();
+      const result = await response.json();
 
-      console.log("Webhook response status:", response.status);
-      console.log("Webhook response body:", responseBody);
+      console.log("Contact form response:", result);
 
-      if (!response.ok) {
+      if (!response.ok || result.success === false) {
         throw new Error(
-          `Webhook request failed: ${response.status} ${responseBody}`
+          result.message || "Form submission failed."
         );
       }
 
       setIsSubmitted(true);
-      setFormState({
-        name: "",
-        email: "",
-        phone: "",
-        service: "website",
-        message: ""
+
+      setFormData({
+        fullName: "",
+        businessEmail: "",
+        businessPhone: "",
+        coreService: "",
+        projectScope: ""
       });
 
       confetti({
@@ -134,26 +133,27 @@ export default function Contact() {
         origin: { y: 0.6 },
         colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
       });
-
     } catch (error) {
-      console.error("Contact form submission failed:", error);
-
-      if (error.name === "AbortError") {
-        setSubmitError("The request took too long. Please try again.");
-      } else {
-        setSubmitError("Something went wrong. Please try again.");
-      }
+      console.error("Contact form submission error:", error);
+      setError(
+        "Something went wrong. Please try again."
+      );
     } finally {
-      clearTimeout(timeoutId);
       setIsSubmitting(false);
     }
   };
 
   const resetForm = () => {
     playClick();
-    setFormState({ name: '', email: '', phone: '', service: 'website', message: '' });
+    setFormData({
+      fullName: '',
+      businessEmail: '',
+      businessPhone: '',
+      coreService: 'Web Development',
+      projectScope: ''
+    });
     setIsSubmitted(false);
-    setSubmitError('');
+    setError('');
   };
 
   const socialLinks = [
@@ -292,9 +292,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="text"
-                        name="name"
+                        name="fullName"
                         required
-                        value={formState.name}
+                        value={formData.fullName}
                         onChange={handleChange}
                         className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
                         placeholder="John Doe"
@@ -308,9 +308,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="email"
-                        name="email"
+                        name="businessEmail"
                         required
-                        value={formState.email}
+                        value={formData.businessEmail}
                         onChange={handleChange}
                         className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
                         placeholder="john@company.com"
@@ -324,9 +324,9 @@ export default function Contact() {
                       </label>
                       <input
                         type="tel"
-                        name="phone"
+                        name="businessPhone"
                         required
-                        value={formState.phone}
+                        value={formData.businessPhone}
                         onChange={handleChange}
                         className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
                         placeholder="+91 98765 43210"
@@ -340,16 +340,21 @@ export default function Contact() {
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         {[
-                          { id: 'ads', label: 'Meta Ads' },
-                          { id: 'website', label: 'Web Development' },
-                          { id: 'ai', label: 'AI Voice Agent' }
+                          { id: 'Meta Ads', label: 'Meta Ads' },
+                          { id: 'Web Development', label: 'Web Development' },
+                          { id: 'AI Voice Agent', label: 'AI Voice Agent' }
                         ].map((srv) => (
                           <button
                             key={srv.id}
                             type="button"
-                            onClick={() => handleServiceSelect(srv.id)}
+                            onClick={() =>
+                              setFormData((previousData) => ({
+                                ...previousData,
+                                coreService: srv.id
+                              }))
+                            }
                             className={`py-3.5 px-4 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer ${
-                              formState.service === srv.id
+                              formData.coreService === srv.id
                                 ? 'bg-gradient-to-r from-accent-blue to-accent-cyan border-transparent text-white shadow-md'
                                 : 'bg-white/5 border-white/5 text-white/50 hover:border-white/10 hover:text-white'
                             }`}
@@ -366,19 +371,19 @@ export default function Contact() {
                         Brief Project Scope
                       </label>
                       <textarea
-                        name="message"
+                        name="projectScope"
                         required
                         rows="4"
-                        value={formState.message}
+                        value={formData.projectScope}
                         onChange={handleChange}
                         className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10 resize-none"
                         placeholder="Describe what you would like to build..."
                       />
                     </div>
 
-                    {submitError && (
+                    {error && (
                       <div className="rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-left text-xs font-medium text-rose-300">
-                        {submitError}
+                        {error}
                       </div>
                     )}
 
