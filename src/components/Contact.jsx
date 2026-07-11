@@ -78,7 +78,7 @@ export default function Contact() {
 
     const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
 
-    const webhookUrl = 'https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5';
+    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5';
 
     const payload = {
       date: new Date().toISOString(),
@@ -89,24 +89,24 @@ export default function Contact() {
       projectScope: trimmedMessage
     };
 
-    // AbortController for 15-second timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    console.log('Sending webhook payload:', payload);
 
     try {
-      const response = await fetch(webhookUrl, {
+      const response = await fetch(MAKE_WEBHOOK_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'text/plain;charset=UTF-8'
         },
-        body: JSON.stringify(payload),
-        signal: controller.signal
+        body: JSON.stringify(payload)
       });
 
-      clearTimeout(timeoutId);
+      const responseText = await response.text();
+
+      console.log('Make webhook status:', response.status);
+      console.log('Make webhook response:', responseText);
 
       if (!response.ok) {
-        throw new Error('Webhook submission failed');
+        throw new Error(`Webhook failed with status ${response.status}: ${responseText}`);
       }
 
       setIsSubmitted(true);
@@ -120,13 +120,8 @@ export default function Contact() {
       });
 
     } catch (err) {
-      clearTimeout(timeoutId);
-      console.error('Webhook submission error:', err);
-      if (err.name === 'AbortError') {
-        setSubmitError('Request timed out. Please try again.');
-      } else {
-        setSubmitError('Submission failed. Please try again.');
-      }
+      console.error('Make webhook submission error:', err);
+      setSubmitError('Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
