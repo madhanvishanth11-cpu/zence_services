@@ -50,7 +50,27 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formState.name || !formState.email || !formState.phone || !formState.message) return;
+
+    // Validate all required fields are not empty after trimming
+    const trimmedName = formState.name.trim();
+    const trimmedEmail = formState.email.trim();
+    const trimmedPhone = formState.phone.trim();
+    const trimmedMessage = formState.message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedPhone || !trimmedMessage) {
+      setSubmitError('Please fill in all required fields.');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setSubmitError('Please enter a valid email address.');
+      return;
+    }
+
+    // Prevent duplicate submissions
+    if (isSubmitting) return;
 
     playClick();
     setIsSubmitting(true);
@@ -58,26 +78,37 @@ export default function Contact() {
 
     const serviceLabel = formState.service === 'ads' ? 'Meta Ads' : formState.service === 'website' ? 'Web Development' : 'AI Voice Agent';
 
+    const webhookUrl = 'https://hook.us2.make.com/fxokpggy2lnyy1q7jkgkeexek4nwx3g5';
+
+    const payload = {
+      date: new Date().toISOString(),
+      fullName: trimmedName,
+      businessEmail: trimmedEmail,
+      businessPhone: trimmedPhone,
+      coreService: serviceLabel,
+      projectScope: trimmedMessage
+    };
+
+    // AbortController for 15-second timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     try {
-      const response = await fetch('https://zence.app.n8n.cloud/webhook/zence-leads', {
+      const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          fullName: formState.name,
-          businessEmail: formState.email,
-          businessPhone: formState.phone,
-          service: serviceLabel,
-          "Project scope": formState.message
-        })
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Webhook submission failed');
       }
 
-      setIsSubmitting(false);
       setIsSubmitted(true);
       setFormState({ name: '', email: '', phone: '', service: 'website', message: '' });
 
@@ -89,8 +120,14 @@ export default function Contact() {
       });
 
     } catch (err) {
+      clearTimeout(timeoutId);
       console.error('Webhook submission error:', err);
-      setSubmitError('Something went wrong. Please try again.');
+      if (err.name === 'AbortError') {
+        setSubmitError('Request timed out. Please try again.');
+      } else {
+        setSubmitError('Submission failed. Please try again.');
+      }
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -338,7 +375,7 @@ export default function Contact() {
                       {isSubmitting ? (
                         <>
                           <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          <span>Routing Blueprint...</span>
+                          <span>Sending...</span>
                         </>
                       ) : (
                         <>
@@ -365,7 +402,7 @@ export default function Contact() {
                     </h4>
                     
                     <p className="mt-3 font-poppins text-sm text-white/50 leading-relaxed font-light max-w-md">
-                      Thank you! Your inquiry has been received.
+                      Thank you! Your details have been submitted successfully.
                     </p>
 
                     <button
