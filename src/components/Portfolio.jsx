@@ -216,6 +216,11 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
           
           {/* Hover overlay with cyan shadow and glow */}
           <div className="absolute inset-0 bg-[#0B1120]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+
+          {/* Demo Website Badge */}
+          <div className="absolute top-3 right-3 z-20 px-2 py-0.5 rounded-md bg-[#0F172A]/90 border border-accent-cyan/40 text-accent-cyan text-[9px] font-extrabold uppercase tracking-wider shadow-[0_0_8px_rgba(6,182,212,0.2)]">
+            DEMO WEBSITE
+          </div>
         </div>
       )}
 
@@ -355,9 +360,9 @@ export default function Portfolio() {
       case 'websites':
       default:
         return {
-          prefix: "Our Website ",
+          prefix: "Website Demo ",
           highlight: "Portfolio",
-          subtitle: "Explore our live website projects. Click any card to open the live demo and experience the quality of our work."
+          subtitle: "Explore four demo websites created by ZENCE to showcase our website design, UI/UX, responsiveness, animations, and development capabilities. These are demonstration projects and not completed client websites."
         };
     }
   };
@@ -372,7 +377,7 @@ export default function Portfolio() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 min-h-[150px] sm:min-h-[120px] flex flex-col justify-center">
+        <div className="text-center max-w-3xl mx-auto mb-16 min-h-[180px] sm:min-h-[150px] flex flex-col justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={filter}
@@ -380,7 +385,13 @@ export default function Portfolio() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="flex flex-col items-center"
             >
+              {filter === 'websites' && (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F172A]/80 border border-accent-cyan/30 text-accent-cyan text-[10px] font-extrabold uppercase tracking-widest shadow-[0_0_15px_rgba(6,182,212,0.15)] mb-4 mx-auto w-fit">
+                  DEMO PROJECTS
+                </div>
+              )}
               <h2 className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
                 {headerContent.prefix}
                 <span className="text-gradient-blue-cyan neon-text-blue">{headerContent.highlight}</span>
@@ -388,6 +399,11 @@ export default function Portfolio() {
               <p className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light leading-relaxed">
                 {headerContent.subtitle}
               </p>
+              {filter === 'websites' && (
+                <p className="mt-4 font-poppins text-xs text-accent-cyan/80 font-semibold tracking-wide">
+                  Note: All websites shown below are demo projects created for portfolio presentation purposes.
+                </p>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
