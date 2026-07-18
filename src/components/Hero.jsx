@@ -43,19 +43,19 @@ export default function Hero() {
     mountElem.appendChild(renderer.domElement);
 
     // Particles creation - highly optimized count (reduced by 75%)
-    const particleCount = 500;
+    const particleCount = 250;
     const geometry = new THREE_LIB.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    const color1 = new THREE_LIB.Color('#3B82F6'); // Electric Blue
-    const color2 = new THREE_LIB.Color('#06B6D4'); // Cyan
-    const color3 = new THREE_LIB.Color('#8B5CF6'); // Purple Glow
+    const color1 = new THREE_LIB.Color('#7C3AED'); // Purple
+    const color2 = new THREE_LIB.Color('#14B8A6'); // Teal
+    const color3 = new THREE_LIB.Color('#F8FAFC'); // Soft White
 
     // Position particles in a digital grid wave
-    const rows = isMobileDevice ? 10 : 25;
-    const cols = isMobileDevice ? 15 : 32;
-    const spacing = isMobileDevice ? 25 : 18;
+    const rows = isMobileDevice ? 8 : 16;
+    const cols = isMobileDevice ? 10 : 16;
+    const spacing = isMobileDevice ? 30 : 25;
     const startX = -(cols * spacing) / 2;
     const startZ = -(rows * spacing) / 2;
 
@@ -237,13 +237,13 @@ export default function Hero() {
   const ctaDuration = isMobile ? 0.4 : 0.8;
 
   return (
-    <section id="home" className="relative min-h-[80vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0B1120] pt-24 pb-16 lg:py-0">
+    <section id="home" className="relative min-h-[80vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-primary pt-24 pb-16 lg:py-0" style={{ background: 'radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.03) 0%, #090B14 80%)' }}>
       {/* 3D WebGL Canvas container */}
       <div ref={mountRef} className="absolute inset-0 z-0 opacity-80" />
 
       {/* Floating Glowing Ambient Blobs (hidden on mobile to save performance) */}
-      <div className="hidden md:block absolute top-1/4 left-1/10 w-80 h-80 bg-accent-blue/10 rounded-full blur-[100px] animate-blob-spin pointer-events-none" />
-      <div className="hidden md:block absolute bottom-1/4 right-1/10 w-96 h-96 bg-accent-purple/10 rounded-full blur-[120px] animate-blob-spin pointer-events-none" style={{ animationDelay: '-4s' }} />
+      <div className="hidden md:block absolute top-1/4 left-1/10 w-80 h-80 bg-accent-blue/3 rounded-full blur-[100px] animate-blob-spin pointer-events-none" />
+      <div className="hidden md:block absolute bottom-1/4 right-1/10 w-96 h-96 bg-accent-purple/3 rounded-full blur-[120px] animate-blob-spin pointer-events-none" style={{ animationDelay: '-4s' }} />
 
       {/* Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none z-1" />
@@ -258,7 +258,7 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: badgeDuration, delay: badgeDelay }}
             style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent-blue/20 bg-accent-blue/5 w-fit mb-6 glassmorphism-light will-change-transform transform-gpu"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent-blue/10 bg-accent-blue/2 w-fit mb-6 glassmorphism-light will-change-transform transform-gpu"
           >
             <Sparkles size={14} className="text-accent-cyan animate-pulse" />
             <span className="font-poppins text-xs font-semibold tracking-wider text-accent-cyan uppercase">
@@ -298,7 +298,7 @@ export default function Hero() {
             {/* Primary button */}
             <button
               onClick={() => scrollToSection('contact')}
-              className="group relative flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-purple hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] text-white px-7 py-4 rounded-2xl font-poppins text-sm md:text-base font-bold tracking-wide transition-all duration-300 cursor-pointer"
+              className="group relative flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan hover:shadow-[0_0_30px_rgba(124,58,237,0.15)] text-white px-7 py-4 rounded-2xl font-poppins text-sm md:text-base font-bold tracking-wide transition-all duration-300 cursor-pointer"
               onMouseEnter={playHover}
             >
               <span>Book Free Consultation</span>
@@ -308,7 +308,7 @@ export default function Hero() {
             {/* Secondary button */}
             <button
               onClick={() => scrollToSection('portfolio')}
-              className="group flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:border-accent-cyan/40 hover:bg-white/10 text-white px-7 py-4 rounded-2xl font-poppins text-sm md:text-base font-bold tracking-wide transition-all duration-300 cursor-pointer glassmorphism-light"
+              className="group flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:border-accent-cyan/15 hover:bg-white/10 text-white px-7 py-4 rounded-2xl font-poppins text-sm md:text-base font-bold tracking-wide transition-all duration-300 cursor-pointer glassmorphism-light"
               onMouseEnter={playHover}
             >
               <span>View Portfolio</span>
@@ -323,7 +323,7 @@ export default function Hero() {
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.2, delay: 3.2 }}
-            className="absolute w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-accent-blue/20 to-accent-purple/20 blur-xl animate-pulse"
+            className="absolute w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-accent-blue/20 to-accent-cyan/20 blur-xl animate-pulse"
           />
 
           {/* Floating Card 1: Revenue Card */}
@@ -334,7 +334,7 @@ export default function Hero() {
             className="absolute top-1/10 left-1/10 sm:left-0 glassmorphism p-5 rounded-2xl shadow-2xl flex flex-col items-start gap-2 border-l-4 border-l-accent-cyan max-w-[200px] hover:translate-y-[-5px] transition-transform pointer-events-auto"
             style={{ animation: 'float-anim 6s ease-in-out infinite' }}
           >
-            <div className="p-2 rounded-lg bg-accent-cyan/10 text-accent-cyan">
+            <div className="p-2 rounded-lg bg-accent-cyan/3 text-accent-cyan">
               <TrendingUp size={18} />
             </div>
             <span className="font-poppins text-xs font-semibold text-white/50 tracking-wide">ROAS average</span>
@@ -350,7 +350,7 @@ export default function Hero() {
             className="absolute bottom-1/10 right-1/10 sm:right-0 glassmorphism p-5 rounded-2xl shadow-2xl flex flex-col items-start gap-2 border-l-4 border-l-accent-purple max-w-[200px] hover:translate-y-[-5px] transition-transform pointer-events-auto"
             style={{ animation: 'float-anim 6s ease-in-out infinite', animationDelay: '-2s' }}
           >
-            <div className="p-2 rounded-lg bg-accent-purple/10 text-accent-purple">
+            <div className="p-2 rounded-lg bg-accent-purple/3 text-accent-purple">
               <BarChart3 size={18} />
             </div>
             <span className="font-poppins text-xs font-semibold text-white/50 tracking-wide">AI Conversational Agents</span>

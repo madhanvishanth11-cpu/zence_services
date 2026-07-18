@@ -76,14 +76,14 @@ function ProcessStepCard({ num, title, desc, delay }) {
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
-        background: 'radial-gradient(120% 120% at 0% 0%, rgba(37, 99, 235, 0.03) 0%, rgba(13, 18, 34, 0) 50%), #111827',
+        background: 'radial-gradient(120% 120% at 0% 0%, rgba(124, 58, 237, 0.009) 0%, rgba(13, 18, 34, 0) 50%), #151B2E',
         willChange: "transform"
       }}
-      className="relative p-6 sm:p-8 rounded-[24px] border border-white/5 shadow-xl flex flex-col items-start text-left cursor-pointer transition-all duration-300 backdrop-blur-md select-none group hover:border-accent-cyan/35 hover:shadow-[0_0_20px_rgba(6,182,212,0.1)]"
+      className="relative p-6 sm:p-8 rounded-[24px] border border-white/5 shadow-xl flex flex-col items-start text-left cursor-pointer transition-all duration-300 backdrop-blur-md select-none group hover:border-accent-cyan/15 hover:shadow-[0_0_20px_rgba(20,184,166,0.03)]"
     >
       {/* Node Marker & Number with pulsing border glow */}
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-9 h-9 rounded-full bg-[#0B1120] border-2 border-accent-cyan/40 group-hover:border-accent-cyan flex items-center justify-center shadow-[0_0_10px_rgba(6,182,212,0.15)] group-hover:shadow-[0_0_15px_rgba(6,182,212,0.35)] transition-all duration-300">
+        <div className="w-9 h-9 rounded-full bg-[#090B14] border-2 border-accent-cyan/15 group-hover:border-accent-cyan flex items-center justify-center shadow-[0_0_10px_rgba(20,184,166,0.045)] group-hover:shadow-[0_0_15px_rgba(20,184,166,0.105)] transition-all duration-300">
           <span className="font-sora font-extrabold text-xs text-accent-cyan animate-pulse">
             {num}
           </span>
@@ -122,7 +122,7 @@ export default function Process() {
   ];
 
   return (
-    <section id="process" className="relative bg-[#0B1120] py-24 border-t border-white/5 overflow-hidden">
+    <section id="process" className="relative bg-[#090B14] py-24 border-t border-white/5 overflow-hidden">
       
       {/* Animated Background Particles */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40">
@@ -149,8 +149,8 @@ export default function Process() {
       </div>
 
       {/* Background decoration glows */}
-      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/3 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-blue/2 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/2 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -197,7 +197,7 @@ export default function Process() {
                   onMouseEnter={playHover}
                   whileHover={{ y: -4, scale: 1.02 }}
                   style={{
-                    boxShadow: isActive ? '0 0 20px rgba(6,182,212,0.25)' : 'none'
+                    boxShadow: isActive ? '0 0 20px rgba(20,184,166,0.075)' : 'none'
                   }}
                   className={`relative p-5 rounded-2xl border flex items-center justify-center gap-3.5 font-poppins text-xs sm:text-sm font-bold tracking-wide uppercase transition-all duration-300 cursor-pointer ${
                     isActive
@@ -221,7 +221,7 @@ export default function Process() {
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1.2, ease: "easeInOut" }}
-                className="h-full bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-blue shadow-[0_0_8px_rgba(6,182,212,0.4)]"
+                className="h-full bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-blue shadow-[0_0_8px_rgba(20,184,166,0.12)]"
               />
             </div>
 

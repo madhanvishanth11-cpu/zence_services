@@ -127,7 +127,7 @@ export default function Navbar() {
               {/* Feedback Button */}
               <button
                 onClick={() => handleNavClick('feedback')}
-                className="relative overflow-hidden group flex items-center gap-2 bg-white/5 border border-white/10 text-white px-5 py-2.5 rounded-xl font-poppins text-sm font-semibold tracking-wide hover:border-accent-cyan/40 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 cursor-pointer"
+                className="relative overflow-hidden group flex items-center gap-2 bg-white/5 border border-white/10 text-white px-5 py-2.5 rounded-xl font-poppins text-sm font-semibold tracking-wide hover:border-accent-cyan/15 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(20,184,166,0.09)] transition-all duration-300 cursor-pointer"
                 onMouseEnter={playHover}
               >
                 <MessageSquare size={15} className="text-accent-cyan" />
@@ -136,7 +136,7 @@ export default function Navbar() {
 
               <button
                 onClick={handleContactClick}
-                className="relative overflow-hidden group flex items-center gap-2 bg-gradient-to-r from-accent-blue to-accent-purple text-white px-5 py-2.5 rounded-xl font-poppins text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all cursor-pointer"
+                className="relative overflow-hidden group flex items-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white px-5 py-2.5 rounded-xl font-poppins text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(124,58,237,0.12)] transition-all cursor-pointer"
                 onMouseEnter={playHover}
               >
                 <span>Let's Talk</span>
@@ -149,7 +149,7 @@ export default function Navbar() {
               {/* Feedback Button for Mobile */}
               <button
                 onClick={() => handleNavClick('feedback')}
-                className="flex items-center gap-1.5 bg-white/5 border border-white/10 text-white px-3 py-1.5 rounded-xl font-poppins text-xs font-semibold tracking-wide hover:border-accent-cyan/40 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all cursor-pointer"
+                className="flex items-center gap-1.5 bg-white/5 border border-white/10 text-white px-3 py-1.5 rounded-xl font-poppins text-xs font-semibold tracking-wide hover:border-accent-cyan/15 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(20,184,166,0.09)] transition-all cursor-pointer"
                 onMouseEnter={playHover}
               >
                 <MessageSquare size={13} className="text-accent-cyan" />
@@ -186,7 +186,7 @@ export default function Navbar() {
                   href={`#${link.id}`}
                   onClick={(e) => { e.preventDefault(); handleNavClick(link.id); }}
                   className={`font-poppins text-base font-semibold tracking-wide py-3 px-4 rounded-xl transition-colors hover:bg-white/5 ${
-                    activeSection === link.id ? 'text-accent-cyan bg-accent-cyan/5' : 'text-white/70'
+                    activeSection === link.id ? 'text-accent-cyan bg-accent-cyan/2' : 'text-white/70'
                   }`}
                 >
                   {link.label}
@@ -195,7 +195,7 @@ export default function Navbar() {
               <hr className="border-white/10 my-2" />
               <button
                 onClick={handleContactClick}
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-purple text-white py-3.5 rounded-xl font-poppins text-base font-semibold tracking-wide hover:shadow-lg"
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white py-3.5 rounded-xl font-poppins text-base font-semibold tracking-wide hover:shadow-lg"
               >
                 <span>Let's Talk</span>
                 <ArrowRight size={18} />

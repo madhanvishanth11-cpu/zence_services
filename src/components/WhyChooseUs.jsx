@@ -13,10 +13,10 @@ function BenefitCard({ icon: Icon, title, description, delay }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: delay }}
       onMouseEnter={playHover}
-      className="glassmorphism p-6 sm:p-8 rounded-2xl border border-white/5 shadow-lg flex flex-col items-start text-left relative overflow-hidden group hover:border-accent-cyan/20 hover:shadow-[0_0_30px_rgba(6,182,212,0.1)] hover:translate-y-[-5px] transition-all duration-300"
+      className="glassmorphism p-6 sm:p-8 rounded-2xl border border-white/5 shadow-lg flex flex-col items-start text-left relative overflow-hidden group hover:border-accent-cyan/10 hover:shadow-[0_0_30px_rgba(20,184,166,0.03)] hover:translate-y-[-5px] transition-all duration-300"
     >
       {/* Decorative Glow Spot */}
-      <div className="absolute top-0 left-0 w-16 h-16 bg-accent-cyan/5 rounded-full blur-2xl group-hover:bg-accent-cyan/15 transition-all" />
+      <div className="absolute top-0 left-0 w-16 h-16 bg-accent-cyan/2 rounded-full blur-2xl group-hover:bg-accent-cyan/15 transition-all" />
 
       {/* Icon */}
       <div className="p-3.5 bg-white/5 rounded-xl text-accent-cyan group-hover:text-accent-purple group-hover:bg-white/10 transition-all duration-300 mb-6">
@@ -77,10 +77,10 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section id="why-us" className="relative bg-[#0B1120] py-24 border-t border-white/5">
+    <section id="why-us" className="relative bg-[#090B14] py-24 border-t border-white/5">
       {/* Background glowing decorations */}
-      <div className="absolute top-1/2 left-1/10 w-96 h-96 bg-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/10 right-1/10 w-80 h-80 bg-accent-purple/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/10 w-96 h-96 bg-accent-blue/2 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/10 right-1/10 w-80 h-80 bg-accent-purple/2 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}

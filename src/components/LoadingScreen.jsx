@@ -61,10 +61,10 @@ export default function LoadingScreen({ onComplete }) {
       initial={{ opacity: 1 }}
       animate={{ opacity: isExiting ? 0 : 1 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0B1120] select-none"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#090B14] select-none"
     >
       {/* Soft background glow directly behind the text */}
-      <div className="absolute w-[350px] h-[350px] bg-accent-blue/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />
+      <div className="absolute w-[350px] h-[350px] bg-accent-blue/3 rounded-full blur-[100px] pointer-events-none animate-pulse" />
 
       {/* Main Container */}
       <div 

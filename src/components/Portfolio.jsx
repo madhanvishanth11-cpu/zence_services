@@ -194,7 +194,7 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
       onClick={handleClick}
       onMouseEnter={playHover}
       style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-      className="group relative rounded-2xl overflow-hidden bg-[#111827]/85 backdrop-blur-xl border border-white/5 hover:border-accent-cyan/30 transition-colors flex flex-col hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] shadow-xl cursor-pointer h-[420px] will-change-transform"
+      className="group relative rounded-2xl overflow-hidden bg-[#151B2E]/85 backdrop-blur-xl border border-white/5 hover:border-accent-cyan/15 transition-colors flex flex-col hover:shadow-[0_0_20px_rgba(124,58,237,0.08)] shadow-xl cursor-pointer h-[420px] will-change-transform"
       variants={{
         hidden: { opacity: 0, y: 30 },
         show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
@@ -215,10 +215,10 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
           />
           
           {/* Hover overlay with cyan shadow and glow */}
-          <div className="absolute inset-0 bg-[#0B1120]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+          <div className="absolute inset-0 bg-[#090B14]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
 
           {/* Demo Website Badge */}
-          <div className="absolute top-3 right-3 z-20 px-2 py-0.5 rounded-md bg-[#0F172A]/90 border border-accent-cyan/40 text-accent-cyan text-[9px] font-extrabold uppercase tracking-wider shadow-[0_0_8px_rgba(6,182,212,0.2)]">
+          <div className="absolute top-3 right-3 z-20 px-2 py-0.5 rounded-md bg-[#101522]/90 border border-accent-cyan/15 text-accent-cyan text-[9px] font-extrabold uppercase tracking-wider shadow-[0_0_8px_rgba(20,184,166,0.06)]">
             DEMO WEBSITE
           </div>
         </div>
@@ -228,14 +228,14 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
         <div className="relative w-full h-[52%] overflow-hidden bg-slate-950 flex items-center justify-center">
           {/* Glowing background */}
           <div className="absolute inset-0 bg-gradient-to-tr from-accent-blue/5 to-accent-cyan/5" />
-          <div className="absolute w-32 h-32 rounded-full bg-accent-cyan/10 blur-2xl" />
+          <div className="absolute w-32 h-32 rounded-full bg-accent-cyan/3 blur-2xl" />
 
           {/* Metric Display */}
           <div className="text-center z-10 flex flex-col items-center">
-            <span className="font-sora font-extrabold text-4xl sm:text-5xl text-white tracking-tight drop-shadow-[0_0_15px_rgba(6,182,212,0.3)] neon-text-blue">
+            <span className="font-sora font-extrabold text-4xl sm:text-5xl text-white tracking-tight drop-shadow-[0_0_15px_rgba(20,184,166,0.09)] neon-text-blue">
               {project.stat}
             </span>
-            <span className="font-poppins text-[10px] font-bold uppercase tracking-wider text-accent-cyan bg-accent-cyan/10 px-3 py-1 rounded-full border border-accent-cyan/20 mt-3">
+            <span className="font-poppins text-[10px] font-bold uppercase tracking-wider text-accent-cyan bg-accent-cyan/3 px-3 py-1 rounded-full border border-accent-cyan/10 mt-3">
               {project.substat}
             </span>
           </div>
@@ -246,10 +246,10 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
         <div className="relative w-full h-[52%] overflow-hidden bg-slate-950 flex items-center justify-center">
           {/* Floating background grids */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-20" />
-          <div className="absolute w-24 h-24 rounded-full bg-accent-blue/10 blur-xl animate-pulse" />
+          <div className="absolute w-24 h-24 rounded-full bg-accent-blue/3 blur-xl animate-pulse" />
           
           {/* Pulsing Voice Rings */}
-          <div className="absolute w-16 h-16 rounded-full border border-accent-cyan/20 animate-ping opacity-25" style={{ animationDuration: '3s' }} />
+          <div className="absolute w-16 h-16 rounded-full border border-accent-cyan/10 animate-ping opacity-25" style={{ animationDuration: '3s' }} />
           <div className="absolute w-28 h-28 rounded-full border border-accent-purple/10 animate-ping opacity-15" style={{ animationDuration: '4s' }} />
 
           {/* Audio Wave Visualizer */}
@@ -280,7 +280,7 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
       {/* CARD CONTENT INFO */}
       <div className="p-5 flex flex-col justify-between flex-grow z-20" style={{ transform: 'translateZ(30px)' }}>
         <div className="text-left">
-          <span className="inline-block px-2.5 py-1 rounded-full font-poppins text-[10px] font-bold text-accent-cyan bg-accent-cyan/10 border border-accent-cyan/20 uppercase tracking-widest">
+          <span className="inline-block px-2.5 py-1 rounded-full font-poppins text-[10px] font-bold text-accent-cyan bg-accent-cyan/3 border border-accent-cyan/10 uppercase tracking-widest">
             {project.categoryLabel}
           </span>
           <h3 className="font-sora font-extrabold text-lg text-white mt-3 group-hover:text-accent-cyan transition-colors">
@@ -296,7 +296,7 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
           <span className="font-poppins text-xs font-bold text-white group-hover:text-accent-cyan transition-colors flex items-center gap-1.5">
             {project.buttonText}
           </span>
-          <div className="p-2 rounded-lg bg-white/5 text-white/50 group-hover:text-white group-hover:bg-accent-cyan/10 transition-all duration-300">
+          <div className="p-2 rounded-lg bg-white/5 text-white/50 group-hover:text-white group-hover:bg-accent-cyan/3 transition-all duration-300">
             <ArrowUpRight size={16} />
           </div>
         </div>
@@ -370,10 +370,10 @@ export default function Portfolio() {
   const headerContent = getHeaderContent();
 
   return (
-    <section id="portfolio" className="relative bg-[#0B1120] py-24 border-t border-white/5">
+    <section id="portfolio" className="relative bg-[#090B14] py-24 border-t border-white/5">
       {/* Background glow decoration */}
-      <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-accent-blue/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent-purple/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-accent-blue/2 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent-purple/2 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
@@ -388,7 +388,7 @@ export default function Portfolio() {
               className="flex flex-col items-center"
             >
               {filter === 'websites' && (
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F172A]/80 border border-accent-cyan/30 text-accent-cyan text-[10px] font-extrabold uppercase tracking-widest shadow-[0_0_15px_rgba(6,182,212,0.15)] mb-4 mx-auto w-fit">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#101522]/80 border border-accent-cyan/15 text-accent-cyan text-[10px] font-extrabold uppercase tracking-widest shadow-[0_0_15px_rgba(20,184,166,0.045)] mb-4 mx-auto w-fit">
                   DEMO PROJECTS
                 </div>
               )}
@@ -417,7 +417,7 @@ export default function Portfolio() {
               onMouseEnter={playHover}
               className={`px-5 py-2.5 rounded-full font-poppins text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                 filter === tab.id
-                  ? 'bg-gradient-to-r from-accent-blue to-accent-cyan text-white shadow-[0_0_15px_rgba(6,182,212,0.35)]'
+                  ? 'bg-gradient-to-r from-accent-blue to-accent-cyan text-white shadow-[0_0_15px_rgba(20,184,166,0.105)]'
                   : 'bg-white/5 border border-white/10 hover:border-white/20 text-white/60 hover:text-white'
               }`}
             >
@@ -469,7 +469,7 @@ export default function Portfolio() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-[#0B1120]/85 backdrop-blur-md cursor-pointer"
+              className="absolute inset-0 bg-[#090B14]/85 backdrop-blur-md cursor-pointer"
             />
 
             {/* Modal Box */}
@@ -565,7 +565,7 @@ export default function Portfolio() {
                       <div className="space-y-4">
                         {activeProject.demoFlow.actions.map((act, idx) => (
                           <div key={idx} className="flex gap-4 items-start">
-                            <div className="w-6 h-6 rounded-full bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan font-sora font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                            <div className="w-6 h-6 rounded-full bg-accent-cyan/3 border border-accent-cyan/10 text-accent-cyan font-sora font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                               {idx + 1}
                             </div>
                             <p className="font-poppins text-sm text-white/70 leading-relaxed font-light">
@@ -587,7 +587,7 @@ export default function Portfolio() {
                         if (el) el.scrollIntoView({ behavior: 'smooth' });
                       }, 400);
                     }}
-                    className="flex items-center gap-2 bg-gradient-to-r from-accent-blue to-accent-purple text-white py-3 px-6 rounded-xl font-poppins text-sm font-bold tracking-wide hover:shadow-[0_0_15px_rgba(139,92,246,0.3)] transition-all cursor-pointer"
+                    className="flex items-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white py-3 px-6 rounded-xl font-poppins text-sm font-bold tracking-wide hover:shadow-[0_0_15px_rgba(124,58,237,0.09)] transition-all cursor-pointer"
                   >
                     <span>Request Similar System</span>
                     <ArrowUpRight size={16} />

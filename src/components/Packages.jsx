@@ -6,39 +6,39 @@ import { useAudio } from '../hooks/useAudio';
 
 const glowStyles = {
   blue: {
-    radial: 'radial-gradient(120% 120% at 0% 0%, rgba(59, 130, 246, 0.08) 0%, rgba(13, 18, 34, 0) 50%)',
-    border: 'rgba(59, 130, 246, 0.25)',
-    borderHover: 'rgba(59, 130, 246, 0.8)',
-    shadow: '0 0 30px rgba(59, 130, 246, 0.1)',
-    shadowHover: '0 0 45px rgba(59, 130, 246, 0.25)',
-    iconBg: 'rgba(59, 130, 246, 0.1)',
-    iconBorder: 'rgba(59, 130, 246, 0.3)',
-    iconColor: '#3B82F6',
-    btnBg: 'from-[#2563EB] to-[#0EA5E9] hover:from-[#0EA5E9] hover:to-[#2563EB] hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]',
+    radial: 'radial-gradient(120% 120% at 0% 0%, rgba(124, 58, 237, 0.024) 0%, rgba(13, 18, 34, 0) 50%)',
+    border: 'rgba(124, 58, 237, 0.075)',
+    borderHover: 'rgba(124, 58, 237, 0.24)',
+    shadow: '0 0 30px rgba(124, 58, 237, 0.03)',
+    shadowHover: '0 0 45px rgba(124, 58, 237, 0.075)',
+    iconBg: 'rgba(124, 58, 237, 0.03)',
+    iconBorder: 'rgba(124, 58, 237, 0.09)',
+    iconColor: '#7C3AED',
+    btnBg: 'from-[#7C3AED] to-[#0EA5E9] hover:from-[#0EA5E9] hover:to-[#7C3AED] hover:shadow-[0_0_20px_rgba(124,58,237,0.12)]',
     badgeText: 'text-accent-blue'
   },
   purple: {
-    radial: 'radial-gradient(120% 120% at 0% 0%, rgba(139, 92, 246, 0.05) 0%, rgba(13, 18, 34, 0) 50%)',
-    border: 'rgba(139, 92, 246, 0.35)',
-    borderHover: 'rgba(139, 92, 246, 0.8)',
-    shadow: '0 0 25px rgba(139, 92, 246, 0.1)',
-    shadowHover: '0 0 40px rgba(139, 92, 246, 0.25)',
-    iconBg: 'rgba(139, 92, 246, 0.1)',
-    iconBorder: 'rgba(139, 92, 246, 0.3)',
-    iconColor: '#8B5CF6',
-    btnBg: 'from-[#2563EB] to-[#0EA5E9] hover:from-[#0EA5E9] hover:to-[#2563EB] hover:shadow-[0_0_30px_rgba(37,99,235,0.55)]', // Matches left and right blue gradient but maintains a purple glow
+    radial: 'radial-gradient(120% 120% at 0% 0%, rgba(124, 58, 237, 0.015) 0%, rgba(13, 18, 34, 0) 50%)',
+    border: 'rgba(124, 58, 237, 0.105)',
+    borderHover: 'rgba(124, 58, 237, 0.24)',
+    shadow: '0 0 25px rgba(124, 58, 237, 0.03)',
+    shadowHover: '0 0 40px rgba(124, 58, 237, 0.075)',
+    iconBg: 'rgba(124, 58, 237, 0.03)',
+    iconBorder: 'rgba(124, 58, 237, 0.09)',
+    iconColor: '#7C3AED',
+    btnBg: 'from-[#7C3AED] to-[#0EA5E9] hover:from-[#0EA5E9] hover:to-[#7C3AED] hover:shadow-[0_0_30px_rgba(124,58,237,0.165)]', // Matches left and right blue gradient but maintains a purple glow
     badgeText: 'text-accent-purple'
   },
   cyan: {
-    radial: 'radial-gradient(120% 120% at 0% 0%, rgba(6, 182, 212, 0.08) 0%, rgba(13, 18, 34, 0) 50%)',
-    border: 'rgba(6, 182, 212, 0.25)',
-    borderHover: 'rgba(6, 182, 212, 0.8)',
-    shadow: '0 0 30px rgba(6, 182, 212, 0.1)',
-    shadowHover: '0 0 45px rgba(6, 182, 212, 0.25)',
-    iconBg: 'rgba(6, 182, 212, 0.1)',
-    iconBorder: 'rgba(6, 182, 212, 0.3)',
-    iconColor: '#06B6D4',
-    btnBg: 'from-[#0EA5E9] to-[#2563EB] hover:from-[#2563EB] hover:to-[#0EA5E9] hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]',
+    radial: 'radial-gradient(120% 120% at 0% 0%, rgba(20, 184, 166, 0.024) 0%, rgba(13, 18, 34, 0) 50%)',
+    border: 'rgba(20, 184, 166, 0.075)',
+    borderHover: 'rgba(20, 184, 166, 0.24)',
+    shadow: '0 0 30px rgba(20, 184, 166, 0.03)',
+    shadowHover: '0 0 45px rgba(20, 184, 166, 0.075)',
+    iconBg: 'rgba(20, 184, 166, 0.03)',
+    iconBorder: 'rgba(20, 184, 166, 0.09)',
+    iconColor: '#14B8A6',
+    btnBg: 'from-[#0EA5E9] to-[#7C3AED] hover:from-[#7C3AED] hover:to-[#0EA5E9] hover:shadow-[0_0_20px_rgba(20,184,166,0.12)]',
     badgeText: 'text-accent-cyan'
   }
 };
@@ -59,7 +59,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
       particleCount: 120,
       spread: 70,
       origin: { x, y: y - 0.1 },
-      colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
+      colors: ['#7C3AED', '#14B8A6', '#F8FAFC', '#94A3B8']
     });
 
     // Scroll to contact form
@@ -76,7 +76,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: delay }}
       style={{
-        background: `${style.radial}, #111827`,
+        background: `${style.radial}, #151B2E`,
         borderColor: style.border,
         boxShadow: style.shadow,
         willChange: "transform, box-shadow"
@@ -114,7 +114,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
             style={{
               backgroundColor: style.iconBg,
               borderColor: style.iconBorder,
-              boxShadow: popular ? '0 0 15px rgba(139, 92, 246, 0.3)' : 'none'
+              boxShadow: popular ? '0 0 15px rgba(124, 58, 237, 0.09)' : 'none'
             }}
             className="p-3 rounded-2xl border text-white transition-all duration-300"
           >
@@ -245,10 +245,10 @@ export default function Packages() {
   ];
 
   return (
-    <section id="packages" className="relative bg-[#0B1120] py-24 border-t border-white/5">
+    <section id="packages" className="relative bg-[#090B14] py-24 border-t border-white/5">
       {/* Background glowing decorations */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-blue/2 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-purple/2 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
@@ -262,9 +262,9 @@ export default function Packages() {
             className="mb-6"
           >
             <motion.div
-              animate={{ scale: [1, 1.05, 1], boxShadow: ["0 0 10px rgba(37,99,235,0.2)", "0 0 20px rgba(37,99,235,0.45)", "0 0 10px rgba(37,99,235,0.2)"] }}
+              animate={{ scale: [1, 1.05, 1], boxShadow: ["0 0 10px rgba(124,58,237,0.06)", "0 0 20px rgba(124,58,237,0.135)", "0 0 10px rgba(124,58,237,0.06)"] }}
               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-              className="px-4.5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold font-poppins bg-gradient-to-r from-accent-blue to-accent-cyan text-white tracking-widest uppercase shadow-[0_0_15px_rgba(37,99,235,0.3)] border border-white/10"
+              className="px-4.5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold font-poppins bg-gradient-to-r from-accent-blue to-accent-cyan text-white tracking-widest uppercase shadow-[0_0_15px_rgba(124,58,237,0.09)] border border-white/10"
             >
               🔥 LIMITED TO ONLY 5 CLIENTS
             </motion.div>
@@ -308,7 +308,7 @@ export default function Packages() {
             <motion.span
               animate={{ opacity: [0.6, 1, 0.6] }}
               transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-              className="flex items-center justify-center gap-1.5 drop-shadow-[0_0_8px_rgba(37,99,235,0.4)]"
+              className="flex items-center justify-center gap-1.5 drop-shadow-[0_0_8px_rgba(124,58,237,0.12)]"
             >
               ⚡ Only a few spots remaining.
             </motion.span>

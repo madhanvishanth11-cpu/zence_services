@@ -124,7 +124,7 @@ export default function Contact() {
         particleCount: 150,
         spread: 80,
         origin: { y: 0.6 },
-        colors: ['#3b82f6', '#8b5cf6', '#06b6d4', '#ffffff']
+        colors: ['#7C3AED', '#14B8A6', '#F8FAFC', '#94A3B8']
       });
     } catch (error) {
       console.error("Contact form submission complete error:", error);
@@ -156,10 +156,10 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative bg-[#0B1120] py-24 border-t border-white/5">
+    <section id="contact" className="relative bg-[#090B14] py-24 border-t border-white/5">
       {/* Background glowing decorations */}
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/5 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-accent-blue/2 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/2 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
@@ -194,7 +194,7 @@ export default function Contact() {
                 className="flex items-center gap-4 group cursor-pointer"
                 onMouseEnter={playHover}
               >
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-cyan group-hover:text-white group-hover:bg-accent-cyan/10 group-hover:border-accent-cyan/20 transition-all duration-300">
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-cyan group-hover:text-white group-hover:bg-accent-cyan/3 group-hover:border-accent-cyan/10 transition-all duration-300">
                   <Mail size={18} />
                 </div>
                 <div>
@@ -209,7 +209,7 @@ export default function Contact() {
                 className="flex items-center gap-4 group cursor-pointer"
                 onMouseEnter={playHover}
               >
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-purple group-hover:text-white group-hover:bg-accent-purple/10 group-hover:border-accent-purple/20 transition-all duration-300">
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-purple group-hover:text-white group-hover:bg-accent-purple/3 group-hover:border-accent-purple/10 transition-all duration-300">
                   <Phone size={18} />
                 </div>
                 <div>
@@ -230,7 +230,7 @@ export default function Contact() {
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/20 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
+                        className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/10 hover:shadow-[0_0_15px_rgba(124,58,237,0.06)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
                         title={social.label}
                         onMouseEnter={playHover}
                       >
@@ -289,7 +289,7 @@ export default function Contact() {
                         required
                         value={formData.fullName}
                         onChange={handleChange}
-                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
+                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/15 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
                         placeholder="John Doe"
                       />
                     </div>
@@ -305,7 +305,7 @@ export default function Contact() {
                         required
                         value={formData.businessEmail}
                         onChange={handleChange}
-                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
+                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/15 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
                         placeholder="john@company.com"
                       />
                     </div>
@@ -321,7 +321,7 @@ export default function Contact() {
                         required
                         value={formData.businessPhone}
                         onChange={handleChange}
-                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
+                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/15 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
                         placeholder="+91 98765 43210"
                       />
                     </div>
@@ -369,7 +369,7 @@ export default function Contact() {
                         rows="4"
                         value={formData.projectScope}
                         onChange={handleChange}
-                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/40 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10 resize-none"
+                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/15 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10 resize-none"
                         placeholder="Describe what you would like to build..."
                       />
                     </div>
@@ -384,7 +384,7 @@ export default function Contact() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-purple text-white py-4 rounded-xl font-poppins font-bold tracking-wide hover:shadow-[0_0_25px_rgba(139,92,246,0.35)] transition-all disabled:opacity-50 cursor-pointer"
+                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white py-4 rounded-xl font-poppins font-bold tracking-wide hover:shadow-[0_0_25px_rgba(124,58,237,0.105)] transition-all disabled:opacity-50 cursor-pointer"
                       onMouseEnter={playHover}
                     >
                       {isSubmitting ? (
@@ -441,7 +441,7 @@ export default function Contact() {
               className="flex items-center gap-4 group cursor-pointer text-left w-fit"
               onMouseEnter={playHover}
             >
-              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-cyan group-hover:text-white group-hover:bg-accent-cyan/10 group-hover:border-accent-cyan/20 transition-all duration-300">
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-cyan group-hover:text-white group-hover:bg-accent-cyan/3 group-hover:border-accent-cyan/10 transition-all duration-300">
                 <Mail size={18} />
               </div>
               <div>
@@ -456,7 +456,7 @@ export default function Contact() {
               className="flex items-center gap-4 group cursor-pointer text-left w-fit"
               onMouseEnter={playHover}
             >
-              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-purple group-hover:text-white group-hover:bg-accent-purple/10 group-hover:border-accent-purple/20 transition-all duration-300">
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-purple group-hover:text-white group-hover:bg-accent-purple/3 group-hover:border-accent-purple/10 transition-all duration-300">
                 <Phone size={18} />
               </div>
               <div>
@@ -477,7 +477,7 @@ export default function Contact() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/20 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
+                      className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/10 hover:shadow-[0_0_15px_rgba(124,58,237,0.06)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
                       title={social.label}
                       onMouseEnter={playHover}
                     >

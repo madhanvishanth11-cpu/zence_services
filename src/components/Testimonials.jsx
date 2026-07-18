@@ -176,7 +176,7 @@ export default function ClientFeedback() {
       particleCount: 150,
       spread: 80,
       origin: { y: 0.6 },
-      colors: ['#2563EB', '#06B6D4', '#8B5CF6', '#ffffff']
+      colors: ['#7C3AED', '#14B8A6', '#F8FAFC', '#94A3B8']
     });
 
     // Auto navigate to the newly added review in the slider
@@ -202,11 +202,11 @@ export default function ClientFeedback() {
   const currentReview = reviews[slideIndex];
 
   return (
-    <section id="feedback" className="relative bg-[#0B1120] py-24 border-t border-white/5 overflow-hidden">
+    <section id="feedback" className="relative bg-[#090B14] py-24 border-t border-white/5 overflow-hidden">
       
       {/* Background decorations */}
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-accent-purple/3 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-accent-blue/2 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-accent-purple/2 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -280,7 +280,7 @@ export default function ClientFeedback() {
                             className="w-12 h-12 rounded-full object-cover border border-white/10"
                           />
                         ) : (
-                          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#2563EB] to-[#06B6D4] flex items-center justify-center font-sora font-extrabold text-white text-base shadow-md">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#7C3AED] to-[#14B8A6] flex items-center justify-center font-sora font-extrabold text-white text-base shadow-md">
                             {currentReview.name.charAt(0)}
                           </div>
                         )}
@@ -295,7 +295,7 @@ export default function ClientFeedback() {
                       </div>
 
                       {/* Verified Badge */}
-                      <div className="flex items-center gap-1 bg-accent-blue/10 border border-accent-blue/20 px-3 py-1 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.15)] text-[10px] font-bold text-accent-cyan uppercase tracking-widest">
+                      <div className="flex items-center gap-1 bg-accent-blue/3 border border-accent-blue/10 px-3 py-1 rounded-full shadow-[0_0_10px_rgba(124,58,237,0.045)] text-[10px] font-bold text-accent-cyan uppercase tracking-widest">
                         <ShieldCheck size={12} className="text-accent-cyan" />
                         <span>Verified</span>
                       </div>
@@ -310,7 +310,7 @@ export default function ClientFeedback() {
               <button
                 onClick={handlePrev}
                 onMouseEnter={playHover}
-                className="p-3 border border-white/10 rounded-full hover:border-accent-cyan/40 hover:bg-white/5 text-white/60 hover:text-white transition-all cursor-pointer shadow-md"
+                className="p-3 border border-white/10 rounded-full hover:border-accent-cyan/15 hover:bg-white/5 text-white/60 hover:text-white transition-all cursor-pointer shadow-md"
                 title="Previous Review"
               >
                 <ChevronLeft size={18} />
@@ -333,7 +333,7 @@ export default function ClientFeedback() {
               <button
                 onClick={handleNext}
                 onMouseEnter={playHover}
-                className="p-3 border border-white/10 rounded-full hover:border-accent-cyan/40 hover:bg-white/5 text-white/60 hover:text-white transition-all cursor-pointer shadow-md"
+                className="p-3 border border-white/10 rounded-full hover:border-accent-cyan/15 hover:bg-white/5 text-white/60 hover:text-white transition-all cursor-pointer shadow-md"
                 title="Next Review"
               >
                 <ChevronRight size={18} />
@@ -356,7 +356,7 @@ export default function ClientFeedback() {
               onClick={openFeedbackModal}
               onMouseEnter={playHover}
               whileHover={{ scale: 1.02 }}
-              className="flex items-center justify-center gap-2.5 px-8 py-4.5 rounded-2xl bg-gradient-to-r from-accent-blue to-accent-cyan text-white font-poppins font-bold tracking-wide transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] cursor-pointer"
+              className="flex items-center justify-center gap-2.5 px-8 py-4.5 rounded-2xl bg-gradient-to-r from-accent-blue to-accent-cyan text-white font-poppins font-bold tracking-wide transition-all shadow-[0_0_20px_rgba(124,58,237,0.09)] hover:shadow-[0_0_30px_rgba(124,58,237,0.15)] cursor-pointer"
             >
               <MessageSquare size={18} />
               <span>Share Your Feedback</span>
@@ -378,7 +378,7 @@ export default function ClientFeedback() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeFeedbackModal}
-              className="absolute inset-0 bg-[#0B1120]/85 backdrop-blur-md cursor-pointer"
+              className="absolute inset-0 bg-[#090B14]/85 backdrop-blur-md cursor-pointer"
             />
 
             {/* Popup Box */}
@@ -429,7 +429,7 @@ export default function ClientFeedback() {
                               value={name}
                               onChange={(e) => setName(e.target.value)}
                               placeholder="John Doe"
-                              className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/40 transition-colors"
+                              className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/15 transition-colors"
                             />
                           </div>
                           <div className="flex flex-col text-left">
@@ -442,7 +442,7 @@ export default function ClientFeedback() {
                               value={company}
                               onChange={(e) => setCompany(e.target.value)}
                               placeholder="Acme Corp"
-                              className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/40 transition-colors"
+                              className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/15 transition-colors"
                             />
                           </div>
                         </div>
@@ -458,7 +458,7 @@ export default function ClientFeedback() {
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                               placeholder="john@example.com"
-                              className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/40 transition-colors"
+                              className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/15 transition-colors"
                             />
                           </div>
                           <div className="flex flex-col text-left">
@@ -470,7 +470,7 @@ export default function ClientFeedback() {
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
                               placeholder="+91 99999 88888"
-                              className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/40 transition-colors"
+                              className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/15 transition-colors"
                             />
                           </div>
                         </div>
@@ -483,7 +483,7 @@ export default function ClientFeedback() {
                           <select
                             value={service}
                             onChange={(e) => setService(e.target.value)}
-                            className="w-full bg-[#111827] border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins focus:outline-none focus:border-accent-cyan/40 transition-colors cursor-pointer"
+                            className="w-full bg-[#151B2E] border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins focus:outline-none focus:border-accent-cyan/15 transition-colors cursor-pointer"
                           >
                             <option value="Meta Ads">Meta Ads</option>
                             <option value="Website Development">Website Development</option>
@@ -532,7 +532,7 @@ export default function ClientFeedback() {
                             value={feedbackMsg}
                             onChange={(e) => setFeedbackMsg(e.target.value)}
                             placeholder="Tell us about your experience working with ZENCE..."
-                            className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/40 transition-colors resize-none"
+                            className="w-full bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-white text-sm font-poppins placeholder-white/20 focus:outline-none focus:border-accent-cyan/15 transition-colors resize-none"
                           />
                         </div>
 
@@ -541,7 +541,7 @@ export default function ClientFeedback() {
                           <label className="font-poppins text-xs font-semibold text-white/50 mb-1.5 uppercase tracking-wide">
                             Upload Profile Photo (Optional)
                           </label>
-                          <label className="w-full bg-white/5 border border-dashed border-white/10 hover:border-accent-cyan/30 rounded-xl p-4 flex items-center justify-center gap-3 transition-colors cursor-pointer text-white/40 hover:text-white">
+                          <label className="w-full bg-white/5 border border-dashed border-white/10 hover:border-accent-cyan/15 rounded-xl p-4 flex items-center justify-center gap-3 transition-colors cursor-pointer text-white/40 hover:text-white">
                             <Upload size={16} />
                             <span className="font-poppins text-xs font-semibold">
                               {fileName || "Choose file..."}
@@ -558,7 +558,7 @@ export default function ClientFeedback() {
                         {/* Submit Button */}
                         <button
                           type="submit"
-                          className="w-full mt-6 py-4 px-6 rounded-xl bg-gradient-to-r from-accent-blue to-accent-cyan text-white font-poppins text-sm font-bold tracking-wide transition-all shadow-[0_0_15px_rgba(37,99,235,0.25)] hover:shadow-[0_0_25px_rgba(37,99,235,0.45)] cursor-pointer"
+                          className="w-full mt-6 py-4 px-6 rounded-xl bg-gradient-to-r from-accent-blue to-accent-cyan text-white font-poppins text-sm font-bold tracking-wide transition-all shadow-[0_0_15px_rgba(124,58,237,0.075)] hover:shadow-[0_0_25px_rgba(124,58,237,0.135)] cursor-pointer"
                         >
                           Submit Feedback
                         </button>
@@ -578,7 +578,7 @@ export default function ClientFeedback() {
                         initial={{ scale: 0 }}
                         animate={{ scale: [0, 1.2, 1] }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
-                        className="w-16 h-16 rounded-full bg-accent-cyan/10 border-2 border-accent-cyan flex items-center justify-center mb-6 text-accent-cyan shadow-[0_0_20px_rgba(6,182,212,0.3)] animate-pulse"
+                        className="w-16 h-16 rounded-full bg-accent-cyan/3 border-2 border-accent-cyan flex items-center justify-center mb-6 text-accent-cyan shadow-[0_0_20px_rgba(20,184,166,0.09)] animate-pulse"
                       >
                         <CheckCircle2 size={32} />
                       </motion.div>

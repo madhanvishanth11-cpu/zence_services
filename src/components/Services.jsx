@@ -38,37 +38,37 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
   // Glow colors mapping
   const glowStyles = {
     blue: {
-      radial: 'radial-gradient(120% 120% at 0% 0%, rgba(59, 130, 246, 0.15) 0%, rgba(13, 18, 34, 0) 50%)',
-      border: 'rgba(59, 130, 246, 0.4)',
-      borderHover: 'rgba(59, 130, 246, 1)',
-      shadow: '0 0 40px rgba(59, 130, 246, 0.15)',
-      shadowHover: '0 0 50px rgba(59, 130, 246, 0.3)',
-      iconBg: 'rgba(59, 130, 246, 0.1)',
-      iconBorder: 'rgba(59, 130, 246, 0.3)',
-      iconShadow: '0 0 20px rgba(59, 130, 246, 0.3)',
-      iconColor: '#3B82F6'
+      radial: 'radial-gradient(120% 120% at 0% 0%, rgba(124, 58, 237, 0.045) 0%, rgba(13, 18, 34, 0) 50%)',
+      border: 'rgba(124, 58, 237, 0.12)',
+      borderHover: 'rgba(124, 58, 237, 0.3)',
+      shadow: '0 0 40px rgba(124, 58, 237, 0.045)',
+      shadowHover: '0 0 50px rgba(124, 58, 237, 0.09)',
+      iconBg: 'rgba(124, 58, 237, 0.03)',
+      iconBorder: 'rgba(124, 58, 237, 0.09)',
+      iconShadow: '0 0 20px rgba(124, 58, 237, 0.09)',
+      iconColor: '#7C3AED'
     },
     purple: {
-      radial: 'radial-gradient(120% 120% at 0% 0%, rgba(139, 92, 246, 0.15) 0%, rgba(13, 18, 34, 0) 50%)',
-      border: 'rgba(139, 92, 246, 0.4)',
-      borderHover: 'rgba(139, 92, 246, 1)',
-      shadow: '0 0 40px rgba(139, 92, 246, 0.15)',
-      shadowHover: '0 0 50px rgba(139, 92, 246, 0.3)',
-      iconBg: 'rgba(139, 92, 246, 0.1)',
-      iconBorder: 'rgba(139, 92, 246, 0.3)',
-      iconShadow: '0 0 20px rgba(139, 92, 246, 0.3)',
-      iconColor: '#8B5CF6'
+      radial: 'radial-gradient(120% 120% at 0% 0%, rgba(124, 58, 237, 0.045) 0%, rgba(13, 18, 34, 0) 50%)',
+      border: 'rgba(124, 58, 237, 0.12)',
+      borderHover: 'rgba(124, 58, 237, 0.3)',
+      shadow: '0 0 40px rgba(124, 58, 237, 0.045)',
+      shadowHover: '0 0 50px rgba(124, 58, 237, 0.09)',
+      iconBg: 'rgba(124, 58, 237, 0.03)',
+      iconBorder: 'rgba(124, 58, 237, 0.09)',
+      iconShadow: '0 0 20px rgba(124, 58, 237, 0.09)',
+      iconColor: '#7C3AED'
     },
     cyan: {
-      radial: 'radial-gradient(120% 120% at 0% 0%, rgba(6, 182, 212, 0.15) 0%, rgba(13, 18, 34, 0) 50%)',
-      border: 'rgba(6, 182, 212, 0.4)',
-      borderHover: 'rgba(6, 182, 212, 1)',
-      shadow: '0 0 40px rgba(6, 182, 212, 0.15)',
-      shadowHover: '0 0 50px rgba(6, 182, 212, 0.3)',
-      iconBg: 'rgba(6, 182, 212, 0.1)',
-      iconBorder: 'rgba(6, 182, 212, 0.3)',
-      iconShadow: '0 0 20px rgba(6, 182, 212, 0.3)',
-      iconColor: '#06B6D4'
+      radial: 'radial-gradient(120% 120% at 0% 0%, rgba(20, 184, 166, 0.045) 0%, rgba(13, 18, 34, 0) 50%)',
+      border: 'rgba(20, 184, 166, 0.12)',
+      borderHover: 'rgba(20, 184, 166, 0.3)',
+      shadow: '0 0 40px rgba(20, 184, 166, 0.045)',
+      shadowHover: '0 0 50px rgba(20, 184, 166, 0.09)',
+      iconBg: 'rgba(20, 184, 166, 0.03)',
+      iconBorder: 'rgba(20, 184, 166, 0.09)',
+      iconShadow: '0 0 20px rgba(20, 184, 166, 0.09)',
+      iconColor: '#14B8A6'
     }
   };
 
@@ -96,7 +96,7 @@ function ServiceCard({ icon: Icon, title, description, badge, glowColor, glowCla
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
-        background: `${style.radial}, #111827`,
+        background: `${style.radial}, #151B2E`,
         borderColor: style.border,
         boxShadow: style.shadow,
         willChange: "transform, box-shadow"
@@ -183,10 +183,10 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="relative bg-[#0B1120] py-24 border-t border-white/5 overflow-hidden">
+    <section id="services" className="relative bg-[#090B14] py-24 border-t border-white/5 overflow-hidden">
       {/* Dynamic Background glowing decorations */}
-      <div className="absolute top-1/3 right-0 w-[450px] h-[450px] bg-accent-blue/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/3 left-0 w-[450px] h-[450px] bg-accent-purple/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 right-0 w-[450px] h-[450px] bg-accent-blue/2 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/3 left-0 w-[450px] h-[450px] bg-accent-purple/2 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -230,7 +230,7 @@ export default function Services() {
             title="Website Development"
             description="Premium custom development and luxury no-code websites designed to capture interest and convert visitors into loyal clients. Responsive, fast-loading, SEO optimized, and fully customized."
             glowColor="purple"
-            ctaColor="#8B5CF6"
+            ctaColor="#7C3AED"
             delay={0.2}
             onClick={handleCardClick}
           />
@@ -241,7 +241,7 @@ export default function Services() {
             title="AI Voice Agent"
             description="AI-powered voice assistants designed for real-time customer support, appointment scheduling, call-routing, and instant lead qualification. Speaks naturally and resolves queries in seconds."
             glowColor="cyan"
-            ctaColor="#06B6D4"
+            ctaColor="#14B8A6"
             delay={0.3}
             onClick={handleCardClick}
           />

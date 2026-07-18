@@ -58,7 +58,7 @@ export default function FounderAboutSection() {
   const headingWords = "About MADHAN M".split(" ");
 
   return (
-    <section id="why-us" className="relative bg-[#0B1120] py-24 border-t border-white/5 overflow-hidden">
+    <section id="why-us" className="relative bg-[#090B14] py-24 border-t border-white/5 overflow-hidden">
       
       {/* Animated Background Particles matching the site theme */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40">
@@ -85,8 +85,8 @@ export default function FounderAboutSection() {
       </div>
 
       {/* Background glowing decorations */}
-      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-blue/5 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent-purple/3 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-blue/2 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent-purple/2 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div 
@@ -128,7 +128,7 @@ export default function FounderAboutSection() {
                   transformStyle: "preserve-3d",
                   willChange: "transform"
                 }}
-                className="relative aspect-[2/3] rounded-[24px] overflow-hidden border border-white/10 shadow-[0_0_45px_rgba(37,99,235,0.2)] bg-slate-950/40 backdrop-blur-md cursor-pointer select-none"
+                className="relative aspect-[2/3] rounded-[24px] overflow-hidden border border-white/10 shadow-[0_0_45px_rgba(124,58,237,0.06)] bg-slate-950/40 backdrop-blur-md cursor-pointer select-none"
               >
                 {/* Photo: Center-aligned, clear, sharp portrait */}
                 <img 
@@ -143,7 +143,7 @@ export default function FounderAboutSection() {
                 {/* Premium badge at the bottom of the image */}
                 <div 
                   style={{ transform: "translateZ(30px)" }}
-                  className="absolute bottom-6 left-6 right-6 z-20 bg-slate-950/85 backdrop-blur-xl border border-accent-blue/40 p-4 rounded-2xl shadow-[0_0_20px_rgba(37,99,235,0.25)] select-none text-left flex flex-col"
+                  className="absolute bottom-6 left-6 right-6 z-20 bg-slate-950/85 backdrop-blur-xl border border-accent-blue/40 p-4 rounded-2xl shadow-[0_0_20px_rgba(124,58,237,0.075)] select-none text-left flex flex-col"
                 >
                   <span className="font-poppins text-[10px] font-bold text-accent-cyan uppercase tracking-widest leading-none">
                     Founder
@@ -233,7 +233,7 @@ export default function FounderAboutSection() {
                   transition={{ duration: 0.5, delay: 0.6 + idx * 0.08 }}
                   className="flex items-center gap-3 text-white/80 font-poppins text-sm sm:text-base"
                 >
-                  <span className="p-0.5 bg-accent-blue/10 border border-accent-blue/20 rounded-lg text-accent-cyan shrink-0">
+                  <span className="p-0.5 bg-accent-blue/3 border border-accent-blue/10 rounded-lg text-accent-cyan shrink-0">
                     <Check size={14} strokeWidth={3} />
                   </span>
                   <span className="font-medium text-white/70">{h}</span>
@@ -251,7 +251,7 @@ export default function FounderAboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.8 }}
-                className="px-8 py-4 bg-gradient-to-r from-accent-blue to-accent-cyan text-white rounded-2xl font-poppins font-bold tracking-wide transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] hover:scale-[1.02] cursor-pointer text-center"
+                className="px-8 py-4 bg-gradient-to-r from-accent-blue to-accent-cyan text-white rounded-2xl font-poppins font-bold tracking-wide transition-all shadow-[0_0_20px_rgba(124,58,237,0.09)] hover:shadow-[0_0_30px_rgba(124,58,237,0.15)] hover:scale-[1.02] cursor-pointer text-center"
               >
                 Book Free Consultation
               </motion.button>

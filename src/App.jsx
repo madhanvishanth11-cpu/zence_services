@@ -33,7 +33,7 @@ function InfiniteMarquee() {
         {tags.concat(tags).map((tag, idx) => (
           <div key={idx} className="flex items-center gap-16 shrink-0">
             <span>{tag}</span>
-            <span className="w-2.5 h-2.5 rounded-full bg-accent-cyan shadow-[0_0_10px_rgba(6,182,212,0.6)]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-accent-cyan shadow-[0_0_6px_rgba(20,184,166,0.15)]" />
           </div>
         ))}
       </div>
@@ -45,7 +45,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="bg-[#0B1120] min-h-screen text-white antialiased relative selection:bg-accent-cyan selection:text-black overflow-x-hidden w-full max-w-full">
+    <div className="bg-[#090B14] min-h-screen text-white antialiased relative selection:bg-accent-cyan selection:text-black overflow-x-hidden w-full max-w-full">
       {/* Premium custom cursor followers */}
       <CustomCursor />
 

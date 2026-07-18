@@ -101,7 +101,7 @@ export default function CustomCursor() {
           borderWidth: isHovered ? '1.5px' : '2.5px',
           boxShadow: isHovered 
             ? '0 0 20px rgba(6, 182, 212, 0.6)' 
-            : '0 0 10px rgba(139, 92, 246, 0.3)',
+            : '0 0 10px rgba(124, 58, 237, 0.1)',
         }}
       />
     </>
