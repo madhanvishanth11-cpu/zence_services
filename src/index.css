@@ -102,18 +102,18 @@ body {
 }
 
 .glow-blue {
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.08);
-  border-color: rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.024);
+  border-color: rgba(124, 58, 237, 0.045);
 }
 
 .glow-purple {
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.08);
-  border-color: rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.024);
+  border-color: rgba(124, 58, 237, 0.045);
 }
 
 .glow-cyan {
-  box-shadow: 0 0 15px rgba(20, 184, 166, 0.08);
-  border-color: rgba(20, 184, 166, 0.15);
+  box-shadow: 0 0 15px rgba(20, 184, 166, 0.024);
+  border-color: rgba(20, 184, 166, 0.045);
 }
 
 .neon-text-blue {

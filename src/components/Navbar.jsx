@@ -14,46 +14,40 @@ export default function Navbar() {
     { id: 'services', label: 'Services' },
     { id: 'packages', label: 'Packages' },
     { id: 'portfolio', label: 'Portfolio' },
-    { id: 'why-us', label: 'Why ZENCE' },
+    { id: 'why-zence', label: 'Why ZENCE' },
     { id: 'process', label: 'Process' },
+    { id: 'feedback', label: 'Feedback' }
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
-
-      // Handle very top of page
-      if (window.scrollY < 100) {
-        setActiveSection('home');
-        return;
-      }
-
-      // Handle bottom of page
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50) {
-        setActiveSection(navLinks[navLinks.length - 1].id);
-        return;
-      }
-
-      for (const link of navLinks) {
-        const section = document.getElementById(link.id);
-        if (section) {
-          const top = section.offsetTop;
-          const height = section.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(link.id);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    // Initial check
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.offsetHeight : 0;
+    const sections = navLinks.map((link) => document.getElementById(link.id)).filter(Boolean);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, {
+      rootMargin: `-${headerHeight + 20}px 0px -70% 0px`,
+      threshold: 0.1,
+    });
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  // Lock body scroll when mobile menu open
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+  }, [isMobileMenuOpen]);
 
   const handleNavClick = (id) => {
     playClick();
@@ -61,7 +55,11 @@ export default function Navbar() {
     setActiveSection(id);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerHeight - 10; // 10px extra space
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   };
 
