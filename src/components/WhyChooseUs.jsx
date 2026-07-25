@@ -77,7 +77,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section id="why-us" className="relative bg-[#090B14] py-24 border-t border-white/5">
+    <section id="why-zence" className="relative bg-[#090B14] py-24 border-t border-white/5">
       {/* Background glowing decorations */}
       <div className="absolute top-1/2 left-1/10 w-96 h-96 bg-accent-blue/2 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute bottom-1/10 right-1/10 w-80 h-80 bg-accent-purple/2 rounded-full blur-[100px] pointer-events-none" />
