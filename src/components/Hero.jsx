@@ -237,16 +237,16 @@ export default function Hero() {
   const ctaDuration = isMobile ? 0.4 : 0.8;
 
   return (
-    <section id="home" className="relative min-h-[80vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-primary pt-24 pb-16 lg:py-0" style={{ background: 'radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.03) 0%, #090B14 80%)' }}>
+    <section id="home" className="relative min-h-[85vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0B1020] pt-24 pb-16 lg:py-0">
       {/* 3D WebGL Canvas container */}
-      <div ref={mountRef} className="absolute inset-0 z-0 opacity-80" />
+      <div ref={mountRef} className="absolute inset-0 z-0 opacity-60 pointer-events-none" />
 
-      {/* Floating Glowing Ambient Blobs (hidden on mobile to save performance) */}
-      <div className="hidden md:block absolute top-1/4 left-1/10 w-80 h-80 bg-accent-blue/3 rounded-full blur-[100px] animate-blob-spin pointer-events-none" />
-      <div className="hidden md:block absolute bottom-1/4 right-1/10 w-96 h-96 bg-accent-purple/3 rounded-full blur-[120px] animate-blob-spin pointer-events-none" style={{ animationDelay: '-4s' }} />
+      {/* Subtle ambient lighting */}
+      <div className="hidden md:block absolute top-1/4 left-1/10 w-96 h-96 bg-blue-600/5 rounded-full blur-[140px] animate-blob-spin pointer-events-none" />
+      <div className="hidden md:block absolute bottom-1/4 right-1/10 w-96 h-96 bg-cyan-500/5 rounded-full blur-[140px] animate-blob-spin pointer-events-none" style={{ animationDelay: '-4s' }} />
 
-      {/* Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none z-1" />
+      {/* Precision Grid Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none z-1" />
 
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -257,34 +257,31 @@ export default function Hero() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: badgeDuration, delay: badgeDelay }}
-            style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent-blue/10 bg-accent-blue/2 w-fit mb-6 glassmorphism-light will-change-transform transform-gpu"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/10 w-fit mb-6 glassmorphism-light"
           >
-            <Sparkles size={14} className="text-accent-cyan animate-pulse" />
-            <span className="font-poppins text-xs font-semibold tracking-wider text-accent-cyan uppercase">
+            <Sparkles size={14} className="text-cyan-400 animate-pulse" />
+            <span className="font-poppins text-xs font-semibold tracking-wide text-cyan-400 uppercase">
               Digital Growth Agency
             </span>
           </motion.div>
 
-          {/* Headline - simple static fade-up with dynamic timing */}
+          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: headlineDuration, delay: headlineDelay }}
-            style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
-            className="text-3xl sm:text-5xl md:text-6xl font-sora font-extrabold text-white leading-tight will-change-transform transform-gpu"
+            className="text-3xl sm:text-5xl md:text-6xl font-sora font-extrabold text-white leading-[1.15] tracking-tight"
           >
-            We Build Businesses That <span className="text-gradient-blue-cyan neon-text-blue">Grow.</span>
+            Engineering Scalable Revenue Engine for <span className="text-gradient-blue-cyan">High-Growth Brands.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: descDuration, delay: descDelay }}
-            style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
-            className="mt-6 text-base sm:text-lg text-white/60 font-poppins max-w-xl font-light leading-relaxed will-change-transform transform-gpu"
+            className="mt-6 text-base sm:text-lg text-slate-300 font-poppins max-w-xl font-light leading-relaxed"
           >
-            ZENCE combines high-converting Meta Ads, cutting-edge customized web platforms, and automated AI Voice Agents to build luxury businesses that scale to millions.
+            ZENCE unifies high-converting Meta Ads, enterprise custom WebGL platforms, and autonomous AI Voice Agents into a single predictable customer acquisition infrastructure.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -292,84 +289,77 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: ctaDuration, delay: ctaDelay }}
-            style={{ willChange: "transform, opacity", transform: "translate3d(0,0,0)" }}
-            className="mt-10 flex flex-wrap gap-4 will-change-transform transform-gpu"
+            className="mt-10 flex flex-wrap gap-4"
           >
-            {/* Primary button */}
             <button
               onClick={() => scrollToSection('contact')}
-              className="group relative flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan hover:shadow-[0_0_30px_rgba(124,58,237,0.15)] text-white px-7 py-4 rounded-2xl font-poppins text-sm md:text-base font-bold tracking-wide transition-all duration-300 cursor-pointer"
+              className="group relative flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white px-7 py-4 rounded-xl font-poppins text-sm md:text-base font-semibold tracking-wide shadow-lg hover:shadow-blue-500/20 transition-all duration-300 cursor-pointer"
               onMouseEnter={playHover}
             >
-              <span>Book Free Consultation</span>
+              <span>Book Growth Consultation</span>
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
 
-            {/* Secondary button */}
             <button
               onClick={() => scrollToSection('portfolio')}
-              className="group flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:border-accent-cyan/15 hover:bg-white/10 text-white px-7 py-4 rounded-2xl font-poppins text-sm md:text-base font-bold tracking-wide transition-all duration-300 cursor-pointer glassmorphism-light"
+              className="group flex items-center justify-center gap-2 bg-slate-900/60 border border-white/10 hover:border-cyan-500/30 hover:bg-slate-800/80 text-white px-7 py-4 rounded-xl font-poppins text-sm md:text-base font-semibold tracking-wide transition-all duration-300 cursor-pointer glassmorphism-light"
               onMouseEnter={playHover}
             >
-              <span>View Portfolio</span>
+              <span>Explore Demo Work</span>
             </button>
           </motion.div>
         </div>
 
         {/* Right dashboard column */}
-        <div className="hidden lg:flex lg:col-span-5 relative w-full h-[350px] sm:h-[450px] items-center justify-center">
-          {/* Main Visual Center: Glowing Hologram Sphere */}
+        <div className="hidden lg:flex lg:col-span-5 relative w-full h-[380px] sm:h-[450px] items-center justify-center">
+          {/* Main Visual Center */}
           <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
+            initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2, delay: 3.2 }}
-            className="absolute w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-accent-blue/20 to-accent-cyan/20 blur-xl animate-pulse"
+            transition={{ duration: 1, delay: 3.2 }}
+            className="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-blue-600/10 to-cyan-500/10 blur-2xl animate-pulse"
           />
 
           {/* Floating Card 1: Revenue Card */}
           <motion.div
             initial={{ opacity: 0, y: 40, x: -30 }}
             animate={{ opacity: 1, y: 0, x: 0 }}
-            transition={{ duration: 0.8, delay: 3.8 }}
-            className="absolute top-1/10 left-1/10 sm:left-0 glassmorphism p-5 rounded-2xl shadow-2xl flex flex-col items-start gap-2 border-l-4 border-l-accent-cyan max-w-[200px] hover:translate-y-[-5px] transition-transform pointer-events-auto"
+            transition={{ duration: 0.8, delay: 3.6 }}
+            className="absolute top-1/10 left-0 glassmorphism p-5 rounded-2xl border-l-4 border-l-cyan-400 max-w-[220px] hover:-translate-y-1 transition-transform pointer-events-auto shadow-2xl"
             style={{ animation: 'float-anim 6s ease-in-out infinite' }}
           >
-            <div className="p-2 rounded-lg bg-accent-cyan/3 text-accent-cyan">
+            <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 w-fit mb-2">
               <TrendingUp size={18} />
             </div>
-            <span className="font-poppins text-xs font-semibold text-white/50 tracking-wide">ROAS average</span>
-            <span className="font-sora font-extrabold text-xl text-white">4.8x+</span>
-            <span className="font-poppins text-[10px] text-emerald-400">▲ +12% this month</span>
+            <span className="font-poppins text-xs font-medium text-slate-400">Verified Ads ROAS</span>
+            <div className="font-sora font-extrabold text-2xl text-white mt-0.5">4.8x Avg</div>
+            <span className="font-poppins text-[10px] text-emerald-400 font-semibold">▲ +142% Revenue Growth</span>
           </motion.div>
 
-          {/* Floating Card 2: AI Agent Status Card */}
+          {/* Floating Card 2: AI Voice Agent Status Card */}
           <motion.div
             initial={{ opacity: 0, y: -40, x: 30 }}
             animate={{ opacity: 1, y: 0, x: 0 }}
-            transition={{ duration: 0.8, delay: 4.0 }}
-            className="absolute bottom-1/10 right-1/10 sm:right-0 glassmorphism p-5 rounded-2xl shadow-2xl flex flex-col items-start gap-2 border-l-4 border-l-accent-purple max-w-[200px] hover:translate-y-[-5px] transition-transform pointer-events-auto"
-            style={{ animation: 'float-anim 6s ease-in-out infinite', animationDelay: '-2s' }}
+            transition={{ duration: 0.8, delay: 3.9 }}
+            className="absolute bottom-1/10 right-0 glassmorphism p-5 rounded-2xl border-l-4 border-l-blue-500 max-w-[220px] hover:-translate-y-1 transition-transform pointer-events-auto shadow-2xl"
+            style={{ animation: 'float-anim 6s ease-in-out infinite', animationDelay: '-3s' }}
           >
-            <div className="p-2 rounded-lg bg-accent-purple/3 text-accent-purple">
+            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 w-fit mb-2">
               <BarChart3 size={18} />
             </div>
-            <span className="font-poppins text-xs font-semibold text-white/50 tracking-wide">AI Conversational Agents</span>
-            <span className="font-sora font-extrabold text-xl text-white">99.4%</span>
-            <span className="font-poppins text-[10px] text-accent-cyan">Accuracy Rate</span>
+            <span className="font-poppins text-xs font-medium text-slate-400">AI Voice Booking</span>
+            <div className="font-sora font-extrabold text-2xl text-white mt-0.5">99.4% Accuracy</div>
+            <span className="font-poppins text-[10px] text-cyan-400 font-semibold">24/7 Autonomous Resolution</span>
           </motion.div>
-
-          {/* Decorative floating grids */}
-          <div className="absolute w-full h-full border border-white/5 rounded-full animate-spin pointer-events-none opacity-20" style={{ animationDuration: '60s' }} />
-          <div className="absolute w-[80%] h-[80%] border border-white/5 border-dashed rounded-full animate-spin pointer-events-none opacity-30" style={{ animationDuration: '40s', animationDirection: 'reverse' }} />
         </div>
       </div>
 
       {/* Mouse parallax scrolling hint */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
-        <span className="font-poppins text-[10px] text-white/40 uppercase tracking-widest">Scroll to explore</span>
-        <div className="w-5 h-8 border-2 border-white/20 rounded-full flex justify-center p-1">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+        <span className="font-poppins text-[10px] text-slate-400 uppercase tracking-widest">Scroll to explore</span>
+        <div className="w-5 h-8 border border-white/20 rounded-full flex justify-center p-1">
           <motion.div 
-            className="w-1.5 h-1.5 bg-accent-cyan rounded-full" 
+            className="w-1 h-1 bg-cyan-400 rounded-full" 
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
           />

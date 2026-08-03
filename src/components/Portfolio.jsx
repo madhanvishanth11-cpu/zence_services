@@ -218,8 +218,8 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
           <div className="absolute inset-0 bg-[#090B14]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
 
           {/* Demo Website Badge */}
-          <div className="absolute top-3 right-3 z-20 px-2 py-0.5 rounded-md bg-[#101522]/90 border border-accent-cyan/15 text-accent-cyan text-[9px] font-extrabold uppercase tracking-wider shadow-[0_0_8px_rgba(20,184,166,0.06)]">
-            DEMO WEBSITE
+          <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-md bg-[#0B1020]/90 border border-cyan-500/30 text-cyan-400 text-[10px] font-extrabold uppercase tracking-wider shadow-lg">
+            Demo Project
           </div>
         </div>
       )}
@@ -385,25 +385,21 @@ export default function Portfolio() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="flex flex-col items-center"
+              className="flex flex-col items-center text-center"
             >
-              {filter === 'websites' && (
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#101522]/80 border border-accent-cyan/15 text-accent-cyan text-[10px] font-extrabold uppercase tracking-widest shadow-[0_0_15px_rgba(20,184,166,0.045)] mb-4 mx-auto w-fit">
-                  DEMO PROJECTS
-                </div>
-              )}
+              {/* Mandatory User Requirement Notice */}
+              <div className="max-w-2xl mx-auto p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-slate-300 font-poppins text-xs leading-relaxed mb-6">
+                <span className="font-semibold text-cyan-400 block mb-1">PROVEN DESIGN & ENGINEERING CAPABILITIES</span>
+                These are demonstration websites created to showcase our design and development capabilities. They are not client projects.
+              </div>
+
               <h2 className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
                 {headerContent.prefix}
-                <span className="text-gradient-blue-cyan neon-text-blue">{headerContent.highlight}</span>
+                <span className="text-gradient-blue-cyan">{headerContent.highlight}</span>
               </h2>
-              <p className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light leading-relaxed">
+              <p className="mt-4 font-poppins text-base sm:text-lg text-slate-400 font-light leading-relaxed">
                 {headerContent.subtitle}
               </p>
-              {filter === 'websites' && (
-                <p className="mt-4 font-poppins text-xs text-accent-cyan/80 font-semibold tracking-wide">
-                  Note: All websites shown below are demo projects created for portfolio presentation purposes.
-                </p>
-              )}
             </motion.div>
           </AnimatePresence>
         </div>
