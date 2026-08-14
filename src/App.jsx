@@ -5,6 +5,7 @@ import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhyChooseZence from './components/Stats';
+import ResultsSection from './components/ResultsSection';
 import Services from './components/Services';
 import Packages from './components/Packages';
 import WhyChooseUs from './components/WhyChooseUs';
@@ -71,6 +72,7 @@ export default function App() {
             <Hero />
             <WhyChooseZence />
             <InfiniteMarquee />
+            <ResultsSection />
             <Services />
             <Packages />
             <WhyChooseUs />
