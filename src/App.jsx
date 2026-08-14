@@ -15,6 +15,7 @@ import Process from './components/Process';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 
 function InfiniteMarquee() {
   const tags = [
@@ -84,6 +85,9 @@ export default function App() {
 
           {/* Brand Footer */}
           <Footer />
+
+          {/* Fixed Floating WhatsApp Button */}
+          <FloatingWhatsApp />
         </motion.div>
       )}
     </div>
