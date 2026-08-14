@@ -78,12 +78,25 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
         y: -6,
         scale: 1.01
       }}
-      className={`relative flex flex-col justify-between p-8 sm:p-10 rounded-[28px] border transition-all duration-300 cursor-pointer select-none bg-white ${
-        popular ? 'border-blue-500 shadow-lg ring-2 ring-blue-500/20' : 'border-slate-200 shadow-sm hover:shadow-xl hover:border-slate-300'
+      whileTap={{
+        y: -4,
+        scale: 1.01
+      }}
+      className={`group relative rounded-[28px] transition-all duration-300 cursor-pointer select-none ${
+        popular ? 'shadow-lg ring-2 ring-blue-500/20' : 'shadow-sm hover:shadow-xl'
       }`}
       onClick={handleCardClick}
       onMouseEnter={playHover}
     >
+      {/* Animated Border Glow Wrapper (Visible on hover/touch) */}
+      <div className="absolute inset-[-2px] rounded-[30px] overflow-hidden opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-400 pointer-events-none z-0">
+        <div className="absolute inset-[-100%] animate-[spin_2.5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,rgba(37,99,235,0.2)_40%,rgba(6,182,212,0.8)_100%)]" />
+      </div>
+
+      {/* Card Inner Container */}
+      <div className={`relative h-full flex flex-col justify-between p-8 sm:p-10 rounded-[28px] bg-white border z-10 transition-colors duration-300 ${
+        popular ? 'border-blue-500' : 'border-slate-200 group-hover:border-transparent'
+      }`}>
       <div className="relative z-10">
         {/* Package Header */}
         <div className="flex justify-between items-start mb-6">
@@ -148,6 +161,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
       >
         {buttonText}
       </button>
+      </div>
     </motion.div>
   );
 }
