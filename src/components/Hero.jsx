@@ -246,22 +246,23 @@ export default function Hero() {
   const ctaDuration = isMobile ? 0.4 : 0.8;
 
   return (
-    <section ref={sectionRef} id="home" className="relative min-h-[85vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0B1020] pt-24 pb-16 lg:py-0">
+    <section ref={sectionRef} id="home" className="relative min-h-[85vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0B1020] pt-28 pb-16 lg:pt-32 lg:pb-20">
       
-      <motion.div style={{ y: heroY, opacity: heroOpacity }} className="absolute inset-0 w-full h-full flex flex-col items-center justify-center z-10 pointer-events-none">
-        
-        {/* Main Content Area */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pointer-events-auto">
+      {/* 3D WebGL Canvas container */}
+      <div ref={mountRef} className="absolute inset-0 z-0 opacity-60 pointer-events-none" />
 
       {/* Subtle ambient lighting */}
-      <div className="hidden md:block absolute top-1/4 left-1/10 w-96 h-96 bg-blue-600/5 rounded-full blur-[140px] animate-blob-spin pointer-events-none" />
-      <div className="hidden md:block absolute bottom-1/4 right-1/10 w-96 h-96 bg-cyan-500/5 rounded-full blur-[140px] animate-blob-spin pointer-events-none" style={{ animationDelay: '-4s' }} />
+      <div className="hidden md:block absolute top-1/4 left-[10%] w-96 h-96 bg-blue-600/5 rounded-full blur-[140px] animate-blob-spin pointer-events-none" />
+      <div className="hidden md:block absolute bottom-1/4 right-[10%] w-96 h-96 bg-cyan-500/5 rounded-full blur-[140px] animate-blob-spin pointer-events-none" style={{ animationDelay: '-4s' }} />
 
       {/* Precision Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none z-1" />
 
-      {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* Main Content Area with Scroll Transition */}
+      <motion.div 
+        style={{ y: heroY, opacity: heroOpacity }} 
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+      >
         {/* Left text column */}
         <div className="lg:col-span-7 flex flex-col text-left">
           {/* Badge */}
@@ -282,12 +283,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: headlineDuration, delay: headlineDelay }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sora font-extrabold text-white leading-[1.1] tracking-tight flex flex-col gap-2"
+            className="text-3xl sm:text-5xl md:text-6xl font-sora font-extrabold text-white leading-[1.15] tracking-tight"
           >
-            <span>Engineering</span>
-            <span>Scalable Revenue</span>
-            <span>Engine for</span>
-            <span className="text-gradient-blue-cyan">High-Growth Brands.</span>
+            Engineering Scalable Revenue Engine for <span className="text-gradient-blue-cyan">High-Growth Brands.</span>
           </motion.h1>
 
           <motion.p
@@ -325,22 +323,22 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right dashboard column - Vertically stacked cards */}
-        <div className="flex lg:col-span-5 flex-col items-center lg:items-end justify-center gap-6 relative w-full pt-12 lg:pt-0">
-          {/* Main Visual Center Glow */}
+        {/* Right dashboard column */}
+        <div className="hidden lg:flex lg:col-span-5 relative w-full h-[380px] sm:h-[450px] items-center justify-center">
+          {/* Main Visual Center */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, delay: 3.2 }}
-            className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-gradient-to-tr from-blue-600/10 to-cyan-500/10 blur-[80px] animate-pulse pointer-events-none"
+            className="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-blue-600/10 to-cyan-500/10 blur-2xl animate-pulse"
           />
 
           {/* Floating Card 1: Revenue Card */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 40, x: -30 }}
+            animate={{ opacity: 1, y: 0, x: 0 }}
             transition={{ duration: 0.8, delay: 3.6 }}
-            className="relative glassmorphism p-5 rounded-2xl border-l-4 border-l-cyan-400 w-full max-w-[280px] sm:max-w-[320px] hover:-translate-y-2 transition-transform pointer-events-auto shadow-2xl z-10"
+            className="absolute top-[10%] left-0 glassmorphism p-5 rounded-2xl border-l-4 border-l-cyan-400 max-w-[220px] hover:-translate-y-1 transition-transform pointer-events-auto shadow-2xl"
             style={{ animation: 'float-anim 6s ease-in-out infinite' }}
           >
             <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 w-fit mb-2">
@@ -353,10 +351,10 @@ export default function Hero() {
 
           {/* Floating Card 2: AI Voice Agent Status Card */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: -40, x: 30 }}
+            animate={{ opacity: 1, y: 0, x: 0 }}
             transition={{ duration: 0.8, delay: 3.9 }}
-            className="relative glassmorphism p-5 rounded-2xl border-l-4 border-l-blue-500 w-full max-w-[280px] sm:max-w-[320px] hover:-translate-y-2 transition-transform pointer-events-auto shadow-2xl z-10"
+            className="absolute bottom-[10%] right-0 glassmorphism p-5 rounded-2xl border-l-4 border-l-blue-500 max-w-[220px] hover:-translate-y-1 transition-transform pointer-events-auto shadow-2xl"
             style={{ animation: 'float-anim 6s ease-in-out infinite', animationDelay: '-3s' }}
           >
             <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 w-fit mb-2">
@@ -367,10 +365,10 @@ export default function Hero() {
             <span className="font-poppins text-[10px] text-cyan-400 font-semibold">24/7 Autonomous Resolution</span>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Mouse parallax scrolling hint */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+      <motion.div style={{ opacity: heroOpacity }} className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
         <span className="font-poppins text-[10px] text-slate-400 uppercase tracking-widest">Scroll to explore</span>
         <div className="w-5 h-8 border border-white/20 rounded-full flex justify-center p-1">
           <motion.div 
@@ -379,12 +377,7 @@ export default function Hero() {
             transition={{ repeat: Infinity, duration: 1.5 }}
           />
         </div>
-      </div>
-        </div>
       </motion.div>
-
-      {/* 3D WebGL Canvas container (remains outside the fade container to avoid re-rendering issues) */}
-      <div ref={mountRef} className="absolute inset-0 z-0 opacity-60 pointer-events-none" />
     </section>
   );
 }
