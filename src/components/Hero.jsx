@@ -282,9 +282,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: headlineDuration, delay: headlineDelay }}
-            className="text-3xl sm:text-5xl md:text-6xl font-sora font-extrabold text-white leading-[1.15] tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sora font-extrabold text-white leading-[1.1] tracking-tight flex flex-col gap-2"
           >
-            Engineering Scalable Revenue Engine for <span className="text-gradient-blue-cyan">High-Growth Brands.</span>
+            <span>Engineering</span>
+            <span>Scalable Revenue</span>
+            <span>Engine for</span>
+            <span className="text-gradient-blue-cyan">High-Growth Brands.</span>
           </motion.h1>
 
           <motion.p
@@ -322,22 +325,22 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right dashboard column */}
-        <div className="hidden lg:flex lg:col-span-5 relative w-full h-[380px] sm:h-[450px] items-center justify-center">
-          {/* Main Visual Center */}
+        {/* Right dashboard column - Vertically stacked cards */}
+        <div className="flex lg:col-span-5 flex-col items-center lg:items-end justify-center gap-6 relative w-full pt-12 lg:pt-0">
+          {/* Main Visual Center Glow */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, delay: 3.2 }}
-            className="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-blue-600/10 to-cyan-500/10 blur-2xl animate-pulse"
+            className="absolute w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-gradient-to-tr from-blue-600/10 to-cyan-500/10 blur-[80px] animate-pulse pointer-events-none"
           />
 
           {/* Floating Card 1: Revenue Card */}
           <motion.div
-            initial={{ opacity: 0, y: 40, x: -30 }}
-            animate={{ opacity: 1, y: 0, x: 0 }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 3.6 }}
-            className="absolute top-1/10 left-0 glassmorphism p-5 rounded-2xl border-l-4 border-l-cyan-400 max-w-[220px] hover:-translate-y-1 transition-transform pointer-events-auto shadow-2xl"
+            className="relative glassmorphism p-5 rounded-2xl border-l-4 border-l-cyan-400 w-full max-w-[280px] sm:max-w-[320px] hover:-translate-y-2 transition-transform pointer-events-auto shadow-2xl z-10"
             style={{ animation: 'float-anim 6s ease-in-out infinite' }}
           >
             <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 w-fit mb-2">
@@ -350,10 +353,10 @@ export default function Hero() {
 
           {/* Floating Card 2: AI Voice Agent Status Card */}
           <motion.div
-            initial={{ opacity: 0, y: -40, x: 30 }}
-            animate={{ opacity: 1, y: 0, x: 0 }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 3.9 }}
-            className="absolute bottom-1/10 right-0 glassmorphism p-5 rounded-2xl border-l-4 border-l-blue-500 max-w-[220px] hover:-translate-y-1 transition-transform pointer-events-auto shadow-2xl"
+            className="relative glassmorphism p-5 rounded-2xl border-l-4 border-l-blue-500 w-full max-w-[280px] sm:max-w-[320px] hover:-translate-y-2 transition-transform pointer-events-auto shadow-2xl z-10"
             style={{ animation: 'float-anim 6s ease-in-out infinite', animationDelay: '-3s' }}
           >
             <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 w-fit mb-2">
