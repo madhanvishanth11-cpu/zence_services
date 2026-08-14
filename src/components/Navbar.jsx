@@ -179,14 +179,15 @@ export default function Navbar() {
                 <span>Feedback</span>
               </button>
 
-              <button
-                onClick={handleContactClick}
+              <a
+                href="tel:+917904035820"
                 className="relative overflow-hidden group flex items-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white px-5 py-2.5 rounded-xl font-poppins text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(124,58,237,0.12)] transition-all cursor-pointer"
                 onMouseEnter={playHover}
+                onClick={playClick}
               >
                 <span>Let's Talk</span>
                 <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-              </button>
+              </a>
             </div>
 
             {/* Mobile Header Buttons (Feedback & Hamburger Toggle) */}
@@ -255,14 +256,14 @@ export default function Navbar() {
                   </a>
                 ))}
                 <hr className="border-white/10 my-2" />
-                <button
-                  type="button"
-                  onClick={handleContactClick}
+                <a
+                  href="tel:+917904035820"
+                  onClick={playClick}
                   className="flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white w-full min-h-[52px] rounded-xl font-poppins text-base font-bold tracking-wide shadow-lg hover:shadow-xl pointer-events-auto touch-manipulation cursor-pointer active:scale-[0.98]"
                 >
                   <span>Let's Talk</span>
                   <ArrowRight size={18} />
-                </button>
+                </a>
               </nav>
             </motion.div>
           </>
