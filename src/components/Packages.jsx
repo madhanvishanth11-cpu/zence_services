@@ -43,9 +43,8 @@ const glowStyles = {
   }
 };
 
-function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, description, features, buttonText, popular = false, glowColor, delay }) {
+function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, description, features, buttonText, popular = false, delay }) {
   const { playClick, playHover } = useAudio();
-  const style = glowStyles[glowColor] || glowStyles.blue;
 
   const handleCardClick = (e) => {
     playClick();
@@ -59,7 +58,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
       particleCount: 120,
       spread: 70,
       origin: { x, y: y - 0.1 },
-      colors: ['#7C3AED', '#14B8A6', '#F8FAFC', '#94A3B8']
+      colors: ['#2563EB', '#0284C7', '#0F172A', '#94A3B8']
     });
 
     // Scroll to contact form
@@ -75,85 +74,66 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: delay }}
-      style={{
-        background: `${style.radial}, #151B2E`,
-        borderColor: style.border,
-        boxShadow: style.shadow,
-        willChange: "transform, box-shadow"
-      }}
       whileHover={{
-        y: -8, // Lift by exactly 8px on hover
-        scale: 1.02,
-        boxShadow: style.shadowHover,
-        borderColor: style.borderHover
+        y: -6,
+        scale: 1.01
       }}
-      className="relative flex flex-col justify-between p-8 sm:p-10 rounded-[28px] border-[1.5px] transition-all duration-300 cursor-pointer backdrop-blur-[20px] select-none"
+      className={`relative flex flex-col justify-between p-8 sm:p-10 rounded-[28px] border transition-all duration-300 cursor-pointer select-none bg-white ${
+        popular ? 'border-blue-500 shadow-lg ring-2 ring-blue-500/20' : 'border-slate-200 shadow-sm hover:shadow-xl hover:border-slate-300'
+      }`}
       onClick={handleCardClick}
       onMouseEnter={playHover}
     >
-      {/* Subtle Noise Texture Overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.015] pointer-events-none mix-blend-overlay rounded-[28px] z-1"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-
       <div className="relative z-10">
         {/* Package Header */}
         <div className="flex justify-between items-start mb-6">
           <div>
-            <span className={`font-poppins text-xs font-bold tracking-widest uppercase ${style.badgeText}`}>
+            <span className="font-poppins text-xs font-extrabold tracking-widest uppercase text-blue-600">
               {badge}
             </span>
-            <h3 className="font-sora font-extrabold text-2xl text-white mt-1">
+            <h3 className="font-sora font-extrabold text-2xl text-slate-900 mt-1">
               {name}
             </h3>
           </div>
           <div 
-            style={{
-              backgroundColor: style.iconBg,
-              borderColor: style.iconBorder,
-              boxShadow: popular ? '0 0 15px rgba(124, 58, 237, 0.09)' : 'none'
-            }}
-            className="p-3 rounded-2xl border text-white transition-all duration-300"
+            className="p-3 rounded-2xl border border-blue-100 bg-blue-50 text-blue-600 transition-all duration-300"
           >
-            <Icon size={22} color={style.iconColor} />
+            <Icon size={22} className="text-blue-600" />
           </div>
         </div>
 
         {/* Pricing */}
         <div className="flex flex-col gap-1 mb-6">
-          <span className="font-poppins text-white/40 text-xs uppercase tracking-wider font-semibold">
+          <span className="font-poppins text-slate-400 text-xs uppercase tracking-wider font-semibold">
             {priceLabel}
           </span>
           <div className="flex items-baseline gap-1">
-            <span className="font-sora font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
+            <span className="font-sora font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight">
               {priceText}
             </span>
           </div>
         </div>
 
         {/* Description */}
-        <p className="font-poppins text-sm text-white/50 mb-8 leading-relaxed font-light min-h-[60px]">
+        <p className="font-poppins text-sm text-slate-600 mb-8 leading-relaxed font-normal min-h-[60px]">
           {description}
         </p>
 
         {/* Divider */}
-        <hr className="border-white/5 mb-8" />
+        <hr className="border-slate-200 mb-8" />
 
         {/* Includes list */}
         <div>
-          <p className="font-poppins text-xs font-bold tracking-wide uppercase text-white/40 mb-4">
+          <p className="font-poppins text-xs font-extrabold tracking-wide uppercase text-slate-400 mb-4">
             Includes
           </p>
           <ul className="space-y-3.5">
             {features.map((feature, idx) => (
               <li key={idx} className="flex items-start gap-3">
-                <span className="p-0.5 bg-white/5 border border-white/10 rounded text-accent-cyan mt-0.5 shrink-0">
-                  <Check size={12} strokeWidth={3} color={style.iconColor} />
+                <span className="p-0.5 bg-blue-50 border border-blue-200 rounded text-blue-600 mt-0.5 shrink-0">
+                  <Check size={12} strokeWidth={3} className="text-blue-600" />
                 </span>
-                <span className="font-poppins text-sm text-white/70 font-light">
+                <span className="font-poppins text-sm text-slate-700 font-medium">
                   {feature}
                 </span>
               </li>
@@ -164,7 +144,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
 
       {/* CTA Button */}
       <button
-        className={`w-full mt-10 py-4 px-6 rounded-2xl font-poppins text-sm sm:text-base font-bold tracking-wide transition-all duration-500 cursor-pointer bg-gradient-to-r text-white bg-[length:200%_auto] hover:bg-right ${style.btnBg}`}
+        className="w-full mt-10 py-4 px-6 rounded-2xl font-poppins text-sm sm:text-base font-bold tracking-wide transition-all duration-300 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md"
       >
         {buttonText}
       </button>
@@ -245,15 +225,15 @@ export default function Packages() {
   ];
 
   return (
-    <section id="packages" className="relative bg-[#090B14] py-24 border-t border-white/5">
+    <section id="packages" className="relative bg-slate-50 py-24 border-t border-slate-200">
       {/* Background glowing decorations */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-blue/2 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-purple/2 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 flex flex-col items-center">
-          {/* Glowing Pill Badge */}
+        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 flex flex-col items-center">
+          {/* Urgency Pill Badge */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -261,17 +241,13 @@ export default function Packages() {
             transition={{ duration: 0.6 }}
             className="mb-6"
           >
-            <motion.div
-              animate={{ scale: [1, 1.05, 1], boxShadow: ["0 0 10px rgba(124,58,237,0.06)", "0 0 20px rgba(124,58,237,0.135)", "0 0 10px rgba(124,58,237,0.06)"] }}
-              transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-              className="px-4.5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold font-poppins bg-gradient-to-r from-accent-blue to-accent-cyan text-white tracking-widest uppercase shadow-[0_0_15px_rgba(124,58,237,0.09)] border border-white/10"
-            >
+            <div className="px-4.5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold font-poppins bg-blue-600 text-white tracking-widest uppercase shadow-sm">
               🔥 LIMITED TO ONLY 5 CLIENTS
-            </motion.div>
+            </div>
           </motion.div>
 
-          {/* Word-by-word Heading Reveal */}
-          <h2 className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight flex flex-wrap justify-center">
+          {/* Heading */}
+          <h2 className="font-sora font-extrabold text-3xl sm:text-5xl text-slate-900 tracking-tight flex flex-wrap justify-center">
             {"Exclusive Launch Offer".split(" ").map((word, i) => (
               <motion.span
                 key={i}
@@ -279,7 +255,7 @@ export default function Packages() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.1 + i * 0.1 }}
-                className="inline-block mr-3 text-gradient-blue-cyan neon-text-blue"
+                className="inline-block mr-3 text-slate-900"
               >
                 {word}
               </motion.span>
@@ -292,26 +268,22 @@ export default function Packages() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-5 font-poppins text-base sm:text-lg text-white/50 font-light leading-relaxed"
+            className="mt-5 font-poppins text-base sm:text-lg text-slate-600 font-normal leading-relaxed"
           >
             To ensure premium quality and dedicated support, we are accepting only 5 new client projects under our exclusive launch pricing. Once all 5 slots are filled, our standard pricing will apply.
           </motion.p>
 
-          {/* Gently Pulsing Urgency Text */}
+          {/* Urgency Text */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.55 }}
-            className="mt-4 font-poppins text-xs sm:text-sm text-accent-blue font-bold tracking-wide"
+            className="mt-4 font-poppins text-xs sm:text-sm text-blue-600 font-bold tracking-wide"
           >
-            <motion.span
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-              className="flex items-center justify-center gap-1.5 drop-shadow-[0_0_8px_rgba(124,58,237,0.12)]"
-            >
+            <span className="flex items-center justify-center gap-1.5">
               ⚡ Only a few spots remaining.
-            </motion.span>
+            </span>
           </motion.p>
         </div>
 

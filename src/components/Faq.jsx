@@ -35,7 +35,7 @@ function AccordionItem({ question, answer, isOpen, toggleOpen, delay }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: delay }}
-      className="border-b border-white/5 last:border-0"
+      className="border-b border-slate-200 last:border-0"
     >
       <button
         onClick={() => { playClick(); toggleOpen(); }}
@@ -43,12 +43,12 @@ function AccordionItem({ question, answer, isOpen, toggleOpen, delay }) {
         className="w-full flex items-center justify-between py-6 text-left group cursor-pointer"
       >
         <div className="flex items-center gap-3.5 pr-4">
-          <HelpCircle size={18} className="text-accent-cyan shrink-0 group-hover:text-accent-purple transition-colors" />
-          <span className="font-sora font-semibold text-base sm:text-lg text-white group-hover:text-accent-cyan transition-colors">
+          <HelpCircle size={18} className="text-blue-600 shrink-0" />
+          <span className="font-sora font-bold text-base sm:text-lg text-slate-900 group-hover:text-blue-600 transition-colors">
             {question}
           </span>
         </div>
-        <div className="shrink-0 p-1.5 rounded-full bg-white/5 border border-white/5 text-white/50 group-hover:text-white transition-all">
+        <div className="shrink-0 p-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 group-hover:text-slate-900 transition-all">
           {isOpen ? <Minus size={16} /> : <Plus size={16} />}
         </div>
       </button>
@@ -62,7 +62,7 @@ function AccordionItem({ question, answer, isOpen, toggleOpen, delay }) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className="pb-6 pl-8 font-poppins text-sm text-white/60 leading-relaxed font-light max-w-3xl">
+            <p className="pb-6 pl-8 font-poppins text-sm text-slate-600 leading-relaxed font-normal max-w-3xl">
               {answer}
             </p>
           </motion.div>
@@ -80,7 +80,7 @@ export default function Faq() {
   };
 
   return (
-    <section className="relative bg-[#090B14] py-24 border-t border-white/5">
+    <section className="relative bg-slate-50 py-24 border-t border-slate-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -89,23 +89,23 @@ export default function Faq() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight"
+            className="font-sora font-extrabold text-3xl sm:text-5xl text-slate-900 tracking-tight"
           >
-            Frequently Asked <span className="text-gradient-purple-cyan neon-text-purple">Questions</span>
+            Frequently Asked <span className="text-blue-600">Questions</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light"
+            className="mt-4 font-poppins text-base sm:text-lg text-slate-600 font-normal"
           >
             Everything you need to know about our systems and collaboration models.
           </motion.p>
         </div>
 
         {/* Accordion Wrapper */}
-        <div className="glassmorphism p-6 sm:p-10 rounded-3xl border border-white/5 shadow-2xl">
+        <div className="bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-md">
           {faqs.map((faq, idx) => (
             <AccordionItem
               key={idx}

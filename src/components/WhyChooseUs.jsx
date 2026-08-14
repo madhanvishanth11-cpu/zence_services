@@ -13,23 +13,20 @@ function BenefitCard({ icon: Icon, title, description, delay }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: delay }}
       onMouseEnter={playHover}
-      className="glassmorphism p-6 sm:p-8 rounded-2xl border border-white/5 shadow-lg flex flex-col items-start text-left relative overflow-hidden group hover:border-accent-cyan/10 hover:shadow-[0_0_30px_rgba(20,184,166,0.03)] hover:translate-y-[-5px] transition-all duration-300"
+      className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-slate-50 shadow-sm flex flex-col items-start text-left relative overflow-hidden group hover:border-blue-400/40 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
     >
-      {/* Decorative Glow Spot */}
-      <div className="absolute top-0 left-0 w-16 h-16 bg-accent-cyan/2 rounded-full blur-2xl group-hover:bg-accent-cyan/15 transition-all" />
-
       {/* Icon */}
-      <div className="p-3.5 bg-white/5 rounded-xl text-accent-cyan group-hover:text-accent-purple group-hover:bg-white/10 transition-all duration-300 mb-6">
-        <Icon size={20} />
+      <div className="p-3.5 bg-blue-50 rounded-xl text-blue-600 group-hover:bg-blue-100 transition-all duration-300 mb-6">
+        <Icon size={20} className="text-blue-600" />
       </div>
 
       {/* Title */}
-      <h3 className="font-sora font-semibold text-lg sm:text-xl text-white tracking-wide">
+      <h3 className="font-sora font-extrabold text-lg sm:text-xl text-slate-900 tracking-wide">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="mt-3 font-poppins text-sm text-white/50 leading-relaxed font-light">
+      <p className="mt-3 font-poppins text-sm text-slate-600 leading-relaxed font-normal">
         {description}
       </p>
     </motion.div>
@@ -77,29 +74,29 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section id="why-zence" className="relative bg-[#090B14] py-24 border-t border-white/5">
-      {/* Background glowing decorations */}
-      <div className="absolute top-1/2 left-1/10 w-96 h-96 bg-accent-blue/2 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/10 right-1/10 w-80 h-80 bg-accent-purple/2 rounded-full blur-[100px] pointer-events-none" />
+    <section id="why-zence" className="relative bg-white py-24 border-t border-slate-200">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/10 w-96 h-96 bg-blue-500/5 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/10 right-1/10 w-80 h-80 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
+        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight"
+            className="font-sora font-extrabold text-3xl sm:text-5xl text-slate-900 tracking-tight"
           >
-            Why Choose <span className="text-gradient-rainbow neon-text-blue">ZENCE</span>
+            Why Choose <span className="text-blue-600">ZENCE</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light"
+            className="mt-4 font-poppins text-base sm:text-lg text-slate-600 font-normal"
           >
             We don't just deliver files; we build fully-automated client acquisition pipelines.
           </motion.p>

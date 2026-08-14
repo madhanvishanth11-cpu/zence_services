@@ -158,8 +158,8 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { stiffness: 180, damping: 25 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 180, damping: 25 });
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [5, -5]), { stiffness: 180, damping: 25 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-5, 5]), { stiffness: 180, damping: 25 });
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
@@ -194,7 +194,7 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
       onClick={handleClick}
       onMouseEnter={playHover}
       style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-      className="group relative rounded-2xl overflow-hidden bg-[#151B2E]/85 backdrop-blur-xl border border-white/5 hover:border-accent-cyan/15 transition-colors flex flex-col hover:shadow-[0_0_20px_rgba(124,58,237,0.08)] shadow-xl cursor-pointer h-[420px] will-change-transform"
+      className="group relative rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-blue-400/40 transition-all flex flex-col hover:shadow-xl shadow-sm cursor-pointer h-[420px] will-change-transform"
       variants={{
         hidden: { opacity: 0, y: 30 },
         show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
@@ -203,10 +203,7 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
     >
       {/* CARD HEADER VISUALS */}
       {type === 'websites' && (
-        <div className="relative w-full h-[52%] overflow-hidden bg-slate-950">
-          {/* Glass reflection shine */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out z-10 pointer-events-none" />
-          
+        <div className="relative w-full h-[52%] overflow-hidden bg-slate-100">
           <img
             src={project.image}
             alt={project.title}
@@ -214,28 +211,22 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
             loading="lazy"
           />
           
-          {/* Hover overlay with cyan shadow and glow */}
-          <div className="absolute inset-0 bg-[#090B14]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+          <div className="absolute inset-0 bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
 
-          {/* Demo Website Badge */}
-          <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-md bg-[#0B1020]/90 border border-cyan-500/30 text-cyan-400 text-[10px] font-extrabold uppercase tracking-wider shadow-lg">
-            Demo Project
+          {/* DEMO WEBSITE Badge */}
+          <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-md bg-blue-600 text-white text-[10px] font-extrabold uppercase tracking-wider shadow-md">
+            DEMO WEBSITE
           </div>
         </div>
       )}
 
       {type === 'ads' && (
-        <div className="relative w-full h-[52%] overflow-hidden bg-slate-950 flex items-center justify-center">
-          {/* Glowing background */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-accent-blue/5 to-accent-cyan/5" />
-          <div className="absolute w-32 h-32 rounded-full bg-accent-cyan/3 blur-2xl" />
-
-          {/* Metric Display */}
+        <div className="relative w-full h-[52%] overflow-hidden bg-slate-100 flex items-center justify-center border-b border-slate-200">
           <div className="text-center z-10 flex flex-col items-center">
-            <span className="font-sora font-extrabold text-4xl sm:text-5xl text-white tracking-tight drop-shadow-[0_0_15px_rgba(20,184,166,0.09)] neon-text-blue">
+            <span className="font-sora font-extrabold text-4xl sm:text-5xl text-blue-600 tracking-tight">
               {project.stat}
             </span>
-            <span className="font-poppins text-[10px] font-bold uppercase tracking-wider text-accent-cyan bg-accent-cyan/3 px-3 py-1 rounded-full border border-accent-cyan/10 mt-3">
+            <span className="font-poppins text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-white px-3 py-1 rounded-full border border-slate-200 mt-3 shadow-sm">
               {project.substat}
             </span>
           </div>
@@ -243,15 +234,7 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
       )}
 
       {type === 'ai' && (
-        <div className="relative w-full h-[52%] overflow-hidden bg-slate-950 flex items-center justify-center">
-          {/* Floating background grids */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-20" />
-          <div className="absolute w-24 h-24 rounded-full bg-accent-blue/3 blur-xl animate-pulse" />
-          
-          {/* Pulsing Voice Rings */}
-          <div className="absolute w-16 h-16 rounded-full border border-accent-cyan/10 animate-ping opacity-25" style={{ animationDuration: '3s' }} />
-          <div className="absolute w-28 h-28 rounded-full border border-accent-purple/10 animate-ping opacity-15" style={{ animationDuration: '4s' }} />
-
+        <div className="relative w-full h-[52%] overflow-hidden bg-slate-100 flex items-center justify-center border-b border-slate-200">
           {/* Audio Wave Visualizer */}
           <div className="flex items-center gap-1.5 z-10">
             {[1, 2, 3, 4, 5, 6, 7].map((bar) => {
@@ -260,7 +243,7 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
               return (
                 <motion.div
                   key={bar}
-                  className="w-1 bg-gradient-to-t from-accent-blue to-accent-cyan rounded-full"
+                  className="w-1.5 bg-blue-600 rounded-full"
                   style={{ height: heights[bar - 1] }}
                   animate={{
                     scaleY: [1, 1.5, 0.8, 1.3, 1],
@@ -278,25 +261,25 @@ function PortfolioCard({ project, type, playHover, playClick, onOpenDetails }) {
       )}
 
       {/* CARD CONTENT INFO */}
-      <div className="p-5 flex flex-col justify-between flex-grow z-20" style={{ transform: 'translateZ(30px)' }}>
+      <div className="p-5 flex flex-col justify-between flex-grow z-20" style={{ transform: 'translateZ(20px)' }}>
         <div className="text-left">
-          <span className="inline-block px-2.5 py-1 rounded-full font-poppins text-[10px] font-bold text-accent-cyan bg-accent-cyan/3 border border-accent-cyan/10 uppercase tracking-widest">
+          <span className="inline-block px-2.5 py-1 rounded-full font-poppins text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 uppercase tracking-widest">
             {project.categoryLabel}
           </span>
-          <h3 className="font-sora font-extrabold text-lg text-white mt-3 group-hover:text-accent-cyan transition-colors">
+          <h3 className="font-sora font-extrabold text-lg text-slate-900 mt-2.5 group-hover:text-blue-600 transition-colors">
             {project.title}
           </h3>
-          <p className="font-poppins text-xs text-white/50 mt-2 font-light leading-relaxed line-clamp-3">
+          <p className="font-poppins text-xs text-slate-600 mt-1.5 font-normal leading-relaxed line-clamp-3">
             {project.description}
           </p>
         </div>
 
         {/* Action Button */}
-        <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-          <span className="font-poppins text-xs font-bold text-white group-hover:text-accent-cyan transition-colors flex items-center gap-1.5">
+        <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
+          <span className="font-poppins text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5">
             {project.buttonText}
           </span>
-          <div className="p-2 rounded-lg bg-white/5 text-white/50 group-hover:text-white group-hover:bg-accent-cyan/3 transition-all duration-300">
+          <div className="p-2 rounded-lg bg-slate-100 text-slate-600 group-hover:text-white group-hover:bg-blue-600 transition-all duration-300">
             <ArrowUpRight size={16} />
           </div>
         </div>
@@ -370,10 +353,10 @@ export default function Portfolio() {
   const headerContent = getHeaderContent();
 
   return (
-    <section id="portfolio" className="relative bg-[#090B14] py-24 border-t border-white/5">
+    <section id="portfolio" className="relative bg-slate-50 py-24 border-t border-slate-200">
       {/* Background glow decoration */}
-      <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-accent-blue/2 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent-purple/2 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
@@ -388,16 +371,16 @@ export default function Portfolio() {
               className="flex flex-col items-center text-center"
             >
               {/* Mandatory User Requirement Notice */}
-              <div className="max-w-2xl mx-auto p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-slate-300 font-poppins text-xs leading-relaxed mb-6">
-                <span className="font-semibold text-cyan-400 block mb-1">PROVEN DESIGN & ENGINEERING CAPABILITIES</span>
+              <div className="max-w-2xl mx-auto p-4 rounded-xl bg-blue-50 border border-blue-200 text-slate-800 font-poppins text-xs leading-relaxed mb-6 shadow-sm">
+                <span className="font-bold text-blue-600 block mb-1">PROVEN DESIGN & ENGINEERING CAPABILITIES</span>
                 These are demonstration websites created to showcase our design and development capabilities. They are not client projects.
               </div>
 
-              <h2 className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight">
+              <h2 className="font-sora font-extrabold text-3xl sm:text-5xl text-slate-900 tracking-tight">
                 {headerContent.prefix}
-                <span className="text-gradient-blue-cyan">{headerContent.highlight}</span>
+                <span className="text-blue-600">{headerContent.highlight}</span>
               </h2>
-              <p className="mt-4 font-poppins text-base sm:text-lg text-slate-400 font-light leading-relaxed">
+              <p className="mt-4 font-poppins text-base sm:text-lg text-slate-600 font-normal leading-relaxed">
                 {headerContent.subtitle}
               </p>
             </motion.div>
@@ -413,8 +396,8 @@ export default function Portfolio() {
               onMouseEnter={playHover}
               className={`px-5 py-2.5 rounded-full font-poppins text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                 filter === tab.id
-                  ? 'bg-gradient-to-r from-accent-blue to-accent-cyan text-white shadow-[0_0_15px_rgba(20,184,166,0.105)]'
-                  : 'bg-white/5 border border-white/10 hover:border-white/20 text-white/60 hover:text-white'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-white border border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900 shadow-sm'
               }`}
             >
               {tab.label}
@@ -465,7 +448,7 @@ export default function Portfolio() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-[#090B14]/85 backdrop-blur-md cursor-pointer"
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm cursor-pointer"
             />
 
             {/* Modal Box */}
@@ -474,66 +457,66 @@ export default function Portfolio() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 30 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="relative w-full max-w-2xl glassmorphism rounded-3xl overflow-hidden shadow-2xl z-10 border border-white/10"
+              className="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-2xl z-10 border border-slate-200"
             >
               {/* Close Button */}
               <button
                 onClick={closeModal}
-                className="absolute top-5 right-5 p-2 rounded-full bg-white/5 border border-white/10 hover:border-white/20 text-white/60 hover:text-white transition-colors cursor-pointer"
+                className="absolute top-5 right-5 p-2 rounded-full bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
               >
                 <X size={20} />
               </button>
 
               {/* Case Study / Demo Flow Content */}
               <div className="p-6 sm:p-10 max-h-[85vh] overflow-y-auto text-left">
-                <span className="font-poppins text-xs font-bold text-accent-cyan uppercase tracking-widest">
+                <span className="font-poppins text-xs font-bold text-blue-600 uppercase tracking-widest">
                   {filter === 'ads' ? 'META ADS CASE STUDY' : 'AI VOICE AGENT FLOW'}
                 </span>
-                <h3 className="font-sora font-extrabold text-2xl sm:text-3xl text-white mt-1">
+                <h3 className="font-sora font-extrabold text-2xl sm:text-3xl text-slate-900 mt-1">
                   {activeProject.title}
                 </h3>
-                <p className="font-poppins text-xs text-white/50 mt-1 uppercase tracking-wide">
+                <p className="font-poppins text-xs text-slate-500 mt-1 uppercase tracking-wide">
                   {filter === 'ads' ? `Business Type: ${activeProject.businessType}` : `System Type: ${activeProject.categoryLabel}`}
                 </p>
 
-                <hr className="border-white/5 my-6" />
+                <hr className="border-slate-200 my-6" />
 
                 {filter === 'ads' ? (
                   <div className="grid grid-cols-1 gap-6">
                     {/* Problem & Solution */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h4 className="font-sora font-bold text-white text-base mb-2 flex items-center gap-2">
+                        <h4 className="font-sora font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 bg-rose-500 rounded-full" />
                           The Problem
                         </h4>
-                        <p className="font-poppins text-sm text-white/60 leading-relaxed font-light">
+                        <p className="font-poppins text-sm text-slate-600 leading-relaxed font-normal">
                           {activeProject.caseStudy.problem}
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-sora font-bold text-white text-base mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 bg-accent-cyan rounded-full" />
+                        <h4 className="font-sora font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 bg-blue-600 rounded-full" />
                           Our Solution
                         </h4>
-                        <p className="font-poppins text-sm text-white/60 leading-relaxed font-light">
+                        <p className="font-poppins text-sm text-slate-600 leading-relaxed font-normal">
                           {activeProject.caseStudy.solution}
                         </p>
                       </div>
                     </div>
 
                     {/* Results */}
-                    <div className="bg-white/3 p-6 rounded-2xl border border-white/5 mt-4">
-                      <h4 className="font-sora font-bold text-accent-cyan text-base mb-3 flex items-center gap-2">
+                    <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 mt-4">
+                      <h4 className="font-sora font-bold text-blue-600 text-base mb-3 flex items-center gap-2">
                         <TrendingUp size={16} />
                         Measurable Results
                       </h4>
                       <ul className="space-y-3">
                         {activeProject.caseStudy.results.map((r, idx) => (
                           <li key={idx} className="flex items-start gap-2.5 text-sm font-poppins">
-                            <CheckCircle2 size={16} className="text-emerald-400 mt-0.5 shrink-0" />
-                            <span className="text-white/80 font-medium">{r}</span>
+                            <CheckCircle2 size={16} className="text-emerald-600 mt-0.5 shrink-0" />
+                            <span className="text-slate-800 font-medium">{r}</span>
                           </li>
                         ))}
                       </ul>
@@ -543,28 +526,28 @@ export default function Portfolio() {
                   <div>
                     {/* Trigger Event */}
                     <div className="mb-6">
-                      <h4 className="font-sora font-bold text-white text-base mb-2 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-accent-purple rounded-full" />
+                      <h4 className="font-sora font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full" />
                         Trigger Action
                       </h4>
-                      <div className="p-4 rounded-xl bg-white/3 border border-white/5 font-poppins text-sm text-white/70 leading-relaxed font-light">
+                      <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 font-poppins text-sm text-slate-700 leading-relaxed font-normal">
                         {activeProject.demoFlow.trigger}
                       </div>
                     </div>
 
                     {/* System Response Flow */}
                     <div>
-                      <h4 className="font-sora font-bold text-accent-cyan text-base mb-3 flex items-center gap-2">
+                      <h4 className="font-sora font-bold text-blue-600 text-base mb-3 flex items-center gap-2">
                         <Phone size={16} />
                         Conversational Flow Steps
                       </h4>
                       <div className="space-y-4">
                         {activeProject.demoFlow.actions.map((act, idx) => (
                           <div key={idx} className="flex gap-4 items-start">
-                            <div className="w-6 h-6 rounded-full bg-accent-cyan/3 border border-accent-cyan/10 text-accent-cyan font-sora font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                            <div className="w-6 h-6 rounded-full bg-blue-50 border border-blue-200 text-blue-600 font-sora font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                               {idx + 1}
                             </div>
-                            <p className="font-poppins text-sm text-white/70 leading-relaxed font-light">
+                            <p className="font-poppins text-sm text-slate-700 leading-relaxed font-normal">
                               {act}
                             </p>
                           </div>
@@ -583,7 +566,7 @@ export default function Portfolio() {
                         if (el) el.scrollIntoView({ behavior: 'smooth' });
                       }, 400);
                     }}
-                    className="flex items-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white py-3 px-6 rounded-xl font-poppins text-sm font-bold tracking-wide hover:shadow-[0_0_15px_rgba(124,58,237,0.09)] transition-all cursor-pointer"
+                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-poppins text-sm font-bold tracking-wide shadow-sm hover:shadow-md transition-all cursor-pointer"
                   >
                     <span>Request Similar System</span>
                     <ArrowUpRight size={16} />

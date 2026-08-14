@@ -43,12 +43,11 @@ function ProcessStepCard({ num, title, desc, delay }) {
   const { playHover } = useAudio();
   const cardRef = useRef(null);
 
-  // Mouse coords relative to card for 3D tilt
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { damping: 25, stiffness: 180 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { damping: 25, stiffness: 180 });
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [5, -5]), { damping: 25, stiffness: 180 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-5, 5]), { damping: 25, stiffness: 180 });
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
@@ -76,30 +75,29 @@ function ProcessStepCard({ num, title, desc, delay }) {
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
-        background: 'radial-gradient(120% 120% at 0% 0%, rgba(124, 58, 237, 0.009) 0%, rgba(13, 18, 34, 0) 50%), #151B2E',
         willChange: "transform"
       }}
-      className="relative p-6 sm:p-8 rounded-[24px] border border-white/5 shadow-xl flex flex-col items-start text-left cursor-pointer transition-all duration-300 backdrop-blur-md select-none group hover:border-accent-cyan/15 hover:shadow-[0_0_20px_rgba(20,184,166,0.03)]"
+      className="relative p-6 sm:p-8 rounded-[24px] border border-slate-200 bg-slate-50/90 shadow-sm flex flex-col items-start text-left cursor-pointer transition-all duration-300 select-none group hover:border-blue-400/40 hover:shadow-md"
     >
-      {/* Node Marker & Number with pulsing border glow */}
+      {/* Node Marker */}
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-9 h-9 rounded-full bg-[#090B14] border-2 border-accent-cyan/15 group-hover:border-accent-cyan flex items-center justify-center shadow-[0_0_10px_rgba(20,184,166,0.045)] group-hover:shadow-[0_0_15px_rgba(20,184,166,0.105)] transition-all duration-300">
-          <span className="font-sora font-extrabold text-xs text-accent-cyan animate-pulse">
+        <div className="w-9 h-9 rounded-full bg-white border-2 border-blue-600 flex items-center justify-center shadow-sm">
+          <span className="font-sora font-extrabold text-xs text-blue-600">
             {num}
           </span>
         </div>
-        <span className="font-poppins text-xs font-bold text-white/30 uppercase tracking-widest group-hover:text-accent-cyan/40 transition-colors">
+        <span className="font-poppins text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors">
           Step {num}
         </span>
       </div>
 
       {/* Step Title */}
-      <h4 className="font-sora font-bold text-base sm:text-lg text-white group-hover:text-accent-cyan transition-colors duration-300">
+      <h4 className="font-sora font-extrabold text-base sm:text-lg text-slate-900 group-hover:text-blue-600 transition-colors duration-300">
         {title}
       </h4>
 
       {/* Step Description */}
-      <p className="mt-3 font-poppins text-xs sm:text-sm text-white/55 leading-relaxed font-light">
+      <p className="mt-3 font-poppins text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
         {desc}
       </p>
     </motion.div>
@@ -122,69 +120,43 @@ export default function Process() {
   ];
 
   return (
-    <section id="process" className="relative bg-[#090B14] py-24 border-t border-white/5 overflow-hidden">
-      
-      {/* Animated Background Particles */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-accent-blue/30"
-            style={{
-              top: `${15 + Math.random() * 70}%`,
-              left: `${10 + Math.random() * 80}%`,
-            }}
-            animate={{
-              y: [0, -60, 0],
-              opacity: [0.1, 0.6, 0.1]
-            }}
-            transition={{
-              duration: 7 + Math.random() * 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: Math.random() * 3
-            }}
-          />
-        ))}
-      </div>
-
+    <section id="process" className="relative bg-slate-50 py-24 border-t border-slate-200 overflow-hidden">
       {/* Background decoration glows */}
-      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-blue/2 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/2 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/5 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Header Section fade-up */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
+        {/* Header Section */}
+        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight"
+            className="font-sora font-extrabold text-3xl sm:text-5xl text-slate-900 tracking-tight"
           >
-            How We <span className="text-gradient-blue-cyan neon-text-blue">Work</span>
+            How We <span className="text-blue-600">Work</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-4 font-poppins text-base sm:text-lg text-white/50 font-light"
+            className="mt-4 font-poppins text-base sm:text-lg text-slate-600 font-normal"
           >
             A clear step-by-step process for Meta Ads, Premium Websites, and AI Voice Agents.
           </motion.p>
         </div>
 
-        {/* Large Glassmorphism Container */}
+        {/* Large Container */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="glassmorphism p-6 sm:p-12 rounded-[32px] border border-white/5 shadow-2xl relative flex flex-col items-center z-10"
+          className="p-6 sm:p-12 rounded-[32px] border border-slate-200 bg-white shadow-xl relative flex flex-col items-center z-10"
         >
-          {/* Service Tabs/Cards: slide in from bottom */}
+          {/* Service Tabs */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12 sm:mb-16 w-full max-w-4xl z-10">
             {tabs.map((tab) => {
               const TabIcon = tab.icon;
@@ -195,37 +167,33 @@ export default function Process() {
                   key={tab.id}
                   onClick={() => handleTabClick(tab.id)}
                   onMouseEnter={playHover}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  style={{
-                    boxShadow: isActive ? '0 0 20px rgba(20,184,166,0.075)' : 'none'
-                  }}
+                  whileHover={{ y: -2, scale: 1.01 }}
                   className={`relative p-5 rounded-2xl border flex items-center justify-center gap-3.5 font-poppins text-xs sm:text-sm font-bold tracking-wide uppercase transition-all duration-300 cursor-pointer ${
                     isActive
-                      ? 'bg-gradient-to-r from-accent-blue to-accent-cyan border-accent-cyan text-white'
-                      : 'bg-white/5 border-white/10 hover:border-white/20 text-white/60 hover:text-white'
+                      ? 'bg-blue-600 border-blue-600 text-white shadow-md'
+                      : 'bg-slate-100 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-200/70'
                   }`}
                 >
-                  <TabIcon size={18} className={isActive ? 'animate-pulse text-white' : 'text-white/40'} />
+                  <TabIcon size={18} className={isActive ? 'text-white' : 'text-slate-400'} />
                   <span>{tab.label}</span>
                 </motion.button>
               );
             })}
           </div>
 
-          {/* Process Timeline below */}
+          {/* Process Timeline */}
           <div className="relative w-full z-10">
-            {/* Connecting line animates left to right behind step nodes (desktop/tablet only) */}
-            <div className="absolute top-[38px] left-[10%] right-[10%] h-[1.5px] bg-white/5 hidden lg:block z-0">
+            <div className="absolute top-[38px] left-[10%] right-[10%] h-[2px] bg-slate-200 hidden lg:block z-0">
               <motion.div
                 key={activeTab}
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1.2, ease: "easeInOut" }}
-                className="h-full bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-blue shadow-[0_0_8px_rgba(20,184,166,0.12)]"
+                className="h-full bg-blue-600"
               />
             </div>
 
-            {/* Steps list grid with slide transition */}
+            {/* Steps list grid */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}

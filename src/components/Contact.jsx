@@ -156,24 +156,24 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative bg-[#090B14] py-24 border-t border-white/5">
+    <section id="contact" className="relative bg-white py-24 border-t border-slate-200">
       {/* Background glowing decorations */}
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-accent-blue/2 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent-purple/2 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-start">
           
-          {/* Left Side: Contact Information (order-1 on mobile, lg:col-span-5 on desktop) */}
+          {/* Left Side: Contact Information */}
           <div className="order-1 lg:col-span-5 flex flex-col justify-center lg:self-center text-left">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-sora font-extrabold text-3xl sm:text-5xl text-white tracking-tight"
+              className="font-sora font-extrabold text-3xl sm:text-5xl text-slate-900 tracking-tight"
             >
-              Let's Build <span className="text-gradient-blue-cyan neon-text-blue">Something Great</span>
+              Let's Build <span className="text-blue-600">Something Great</span>
             </motion.h2>
             
             <motion.p
@@ -181,7 +181,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-4 font-poppins text-base text-white/50 font-light leading-relaxed max-w-md"
+              className="mt-4 font-poppins text-base text-slate-600 font-normal leading-relaxed max-w-md"
             >
               Ready to scale your business? Fill out the inquiry form or reach out directly to set up a free consultation.
             </motion.p>
@@ -194,12 +194,12 @@ export default function Contact() {
                 className="flex items-center gap-4 group cursor-pointer"
                 onMouseEnter={playHover}
               >
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-cyan group-hover:text-white group-hover:bg-accent-cyan/3 group-hover:border-accent-cyan/10 transition-all duration-300">
+                <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">
                   <Mail size={18} />
                 </div>
                 <div>
-                  <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Email Us</p>
-                  <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">zenceservice@gmail.com</p>
+                  <p className="font-poppins text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Us</p>
+                  <p className="font-sora font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">zenceservice@gmail.com</p>
                 </div>
               </motion.a>
 
@@ -209,18 +209,18 @@ export default function Contact() {
                 className="flex items-center gap-4 group cursor-pointer"
                 onMouseEnter={playHover}
               >
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-purple group-hover:text-white group-hover:bg-accent-purple/3 group-hover:border-accent-purple/10 transition-all duration-300">
+                <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">
                   <Phone size={18} />
                 </div>
                 <div>
-                  <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Call Us</p>
-                  <p className="font-sora font-semibold text-white group-hover:text-accent-purple transition-colors">+91 7904035820</p>
+                  <p className="font-poppins text-[10px] font-bold text-slate-400 uppercase tracking-widest">Call Us</p>
+                  <p className="font-sora font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7904035820</p>
                 </div>
               </motion.a>
 
               {/* Socials Media Grid */}
-              <div className="pt-6 border-t border-white/5">
-                <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest mb-4">Connect Socially</p>
+              <div className="pt-6 border-t border-slate-200">
+                <p className="font-poppins text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Connect Socially</p>
                 <div className="flex items-center gap-3">
                   {socialLinks.map((social, idx) => {
                     const SocialIcon = social.icon;
@@ -230,7 +230,7 @@ export default function Contact() {
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/10 hover:shadow-[0_0_15px_rgba(124,58,237,0.06)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
+                        className="p-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-white hover:bg-blue-600 hover:border-blue-600 hover:-translate-y-1 transition-all duration-300 cursor-pointer shadow-sm"
                         title={social.label}
                         onMouseEnter={playHover}
                       >
@@ -243,23 +243,23 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right Side: Interactive Inquiry Form (order-2 on mobile, lg:col-span-7 on desktop) */}
+          {/* Right Side: Interactive Inquiry Form */}
           <div className="order-2 lg:col-span-7 w-full">
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="glassmorphism p-8 sm:p-10 rounded-3xl border border-white/5 shadow-2xl relative"
+              className="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl relative"
             >
-              {/* WhatsApp direct floating option inside the form header */}
+              {/* WhatsApp direct floating option */}
               <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-                <span className="font-sora font-bold text-lg text-white">Inquiry Form</span>
+                <span className="font-sora font-extrabold text-xl text-slate-900">Inquiry Form</span>
                 <a
                   href="https://wa.me/917904035820?text=Hi%20ZENCE%2C%20I%20want%20to%20know%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white px-4 py-2 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(37,211,102,0.3)] hover:shadow-[0_0_20px_rgba(37,211,102,0.5)] cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white px-4 py-2 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all shadow-sm hover:shadow-md cursor-pointer"
                   onMouseEnter={playHover}
                   onClick={playClick}
                 >
@@ -280,7 +280,7 @@ export default function Contact() {
                   >
                     {/* Full Name */}
                     <div className="flex flex-col text-left">
-                      <label className="font-poppins text-xs font-semibold text-white/50 uppercase tracking-widest mb-2 ml-1">
+                      <label className="font-poppins text-xs font-semibold text-slate-600 uppercase tracking-widest mb-2 ml-1">
                         Full Name
                       </label>
                       <input
@@ -289,14 +289,14 @@ export default function Contact() {
                         required
                         value={formData.fullName}
                         onChange={handleChange}
-                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/15 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
+                        className="bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-5 py-4 text-slate-900 font-poppins text-sm outline-none transition-all focus:bg-white placeholder:text-slate-400"
                         placeholder="John Doe"
                       />
                     </div>
 
                     {/* Email */}
                     <div className="flex flex-col text-left">
-                      <label className="font-poppins text-xs font-semibold text-white/50 uppercase tracking-widest mb-2 ml-1">
+                      <label className="font-poppins text-xs font-semibold text-slate-600 uppercase tracking-widest mb-2 ml-1">
                         Business Email
                       </label>
                       <input
@@ -305,14 +305,14 @@ export default function Contact() {
                         required
                         value={formData.businessEmail}
                         onChange={handleChange}
-                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/15 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
+                        className="bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-5 py-4 text-slate-900 font-poppins text-sm outline-none transition-all focus:bg-white placeholder:text-slate-400"
                         placeholder="john@company.com"
                       />
                     </div>
 
                     {/* Phone */}
                     <div className="flex flex-col text-left">
-                      <label className="font-poppins text-xs font-semibold text-white/50 uppercase tracking-widest mb-2 ml-1">
+                      <label className="font-poppins text-xs font-semibold text-slate-600 uppercase tracking-widest mb-2 ml-1">
                         Business Phone
                       </label>
                       <input
@@ -321,14 +321,14 @@ export default function Contact() {
                         required
                         value={formData.businessPhone}
                         onChange={handleChange}
-                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/15 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10"
+                        className="bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-5 py-4 text-slate-900 font-poppins text-sm outline-none transition-all focus:bg-white placeholder:text-slate-400"
                         placeholder="+91 98765 43210"
                       />
                     </div>
 
                     {/* Service buttons */}
                     <div className="flex flex-col text-left">
-                      <label className="font-poppins text-xs font-semibold text-white/50 uppercase tracking-widest mb-3 ml-1">
+                      <label className="font-poppins text-xs font-semibold text-slate-600 uppercase tracking-widest mb-3 ml-1">
                         Select Core Service Needed
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -348,8 +348,8 @@ export default function Contact() {
                             }
                             className={`py-3.5 px-4 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer ${
                               formData.coreService === srv.id
-                                ? 'bg-gradient-to-r from-accent-blue to-accent-cyan border-transparent text-white shadow-md'
-                                : 'bg-white/5 border-white/5 text-white/50 hover:border-white/10 hover:text-white'
+                                ? 'bg-blue-600 border-blue-600 text-white shadow-sm'
+                                : 'bg-slate-100 border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900'
                             }`}
                           >
                             {srv.label}
@@ -360,7 +360,7 @@ export default function Contact() {
 
                     {/* Message */}
                     <div className="flex flex-col text-left">
-                      <label className="font-poppins text-xs font-semibold text-white/50 uppercase tracking-widest mb-2 ml-1">
+                      <label className="font-poppins text-xs font-semibold text-slate-600 uppercase tracking-widest mb-2 ml-1">
                         Brief Project Scope
                       </label>
                       <textarea
@@ -369,13 +369,13 @@ export default function Contact() {
                         rows="4"
                         value={formData.projectScope}
                         onChange={handleChange}
-                        className="bg-white/5 border border-white/5 focus:border-accent-cyan/15 rounded-xl px-5 py-4 text-white font-poppins text-sm outline-none transition-all focus:bg-white/10 resize-none"
+                        className="bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-5 py-4 text-slate-900 font-poppins text-sm outline-none transition-all focus:bg-white resize-none placeholder:text-slate-400"
                         placeholder="Describe what you would like to build..."
                       />
                     </div>
 
                     {error && (
-                      <div className="rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-left text-xs font-medium text-rose-300">
+                      <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-left text-xs font-medium text-rose-700">
                         {error}
                       </div>
                     )}
@@ -384,7 +384,7 @@ export default function Contact() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white py-4 rounded-xl font-poppins font-bold tracking-wide hover:shadow-[0_0_25px_rgba(124,58,237,0.105)] transition-all disabled:opacity-50 cursor-pointer"
+                      className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-poppins font-bold tracking-wide shadow-md hover:shadow-lg transition-all disabled:opacity-50 cursor-pointer"
                       onMouseEnter={playHover}
                     >
                       {isSubmitting ? (
@@ -408,21 +408,21 @@ export default function Contact() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <div className="p-4 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20 mb-6 animate-bounce">
+                    <div className="p-4 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-200 mb-6 animate-bounce">
                       <CheckCircle size={40} />
                     </div>
                     
-                    <h4 className="font-sora font-extrabold text-2xl text-white">
+                    <h4 className="font-sora font-extrabold text-2xl text-slate-900">
                       Submitted!
                     </h4>
                     
-                    <p className="mt-3 font-poppins text-sm text-white/50 leading-relaxed font-light max-w-md">
+                    <p className="mt-3 font-poppins text-sm text-slate-600 leading-relaxed font-normal max-w-md">
                       Thank you! Your request has been submitted successfully.
                     </p>
 
                     <button
                       onClick={resetForm}
-                      className="mt-8 border border-white/10 hover:border-white/20 bg-white/5 text-white/70 hover:text-white px-6 py-2.5 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                      className="mt-8 border border-slate-300 hover:bg-slate-100 text-slate-800 px-6 py-2.5 rounded-xl font-poppins text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                       onMouseEnter={playHover}
                     >
                       Send Another Message
@@ -433,7 +433,7 @@ export default function Contact() {
             </motion.div>
           </div>
 
-          {/* Mobile-only Direct Contact Links (order-3 on mobile, hidden on desktop) */}
+          {/* Mobile-only Direct Contact Links */}
           <div className="lg:hidden order-3 flex flex-col items-center gap-6 mt-8 w-full">
             {/* Email */}
             <motion.a
@@ -441,12 +441,12 @@ export default function Contact() {
               className="flex items-center gap-4 group cursor-pointer text-left w-fit"
               onMouseEnter={playHover}
             >
-              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-cyan group-hover:text-white group-hover:bg-accent-cyan/3 group-hover:border-accent-cyan/10 transition-all duration-300">
+              <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
                 <Mail size={18} />
               </div>
               <div>
-                <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Email Us</p>
-                <p className="font-sora font-semibold text-white group-hover:text-accent-cyan transition-colors">zenceservice@gmail.com</p>
+                <p className="font-poppins text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Us</p>
+                <p className="font-sora font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">zenceservice@gmail.com</p>
               </div>
             </motion.a>
 
@@ -456,18 +456,18 @@ export default function Contact() {
               className="flex items-center gap-4 group cursor-pointer text-left w-fit"
               onMouseEnter={playHover}
             >
-              <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-accent-purple group-hover:text-white group-hover:bg-accent-purple/3 group-hover:border-accent-purple/10 transition-all duration-300">
+              <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
                 <Phone size={18} />
               </div>
               <div>
-                <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest">Call Us</p>
-                <p className="font-sora font-semibold text-white group-hover:text-accent-purple transition-colors">+91 7904035820</p>
+                <p className="font-poppins text-[10px] font-bold text-slate-400 uppercase tracking-widest">Call Us</p>
+                <p className="font-sora font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">+91 7904035820</p>
               </div>
             </motion.a>
 
             {/* Socials Media Grid */}
-            <div className="pt-6 border-t border-white/5 w-4/5 max-w-[280px] flex flex-col items-center">
-              <p className="font-poppins text-[10px] font-bold text-white/30 uppercase tracking-widest mb-4">Connect Socially</p>
+            <div className="pt-6 border-t border-slate-200 w-4/5 max-w-[280px] flex flex-col items-center">
+              <p className="font-poppins text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Connect Socially</p>
               <div className="flex items-center gap-3">
                 {socialLinks.map((social, idx) => {
                   const SocialIcon = social.icon;
@@ -477,7 +477,7 @@ export default function Contact() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 rounded-xl bg-white/5 border border-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-accent-blue/10 hover:shadow-[0_0_15px_rgba(124,58,237,0.06)] hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer"
+                      className="p-3 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-white hover:bg-blue-600 transition-all duration-300 cursor-pointer shadow-sm"
                       title={social.label}
                       onMouseEnter={playHover}
                     >
