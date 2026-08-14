@@ -117,7 +117,7 @@ export default function FounderAboutSection() {
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center"
         >
@@ -136,6 +136,12 @@ export default function FounderAboutSection() {
               style={{ y: portraitY }}
               className="relative w-full max-w-[360px] sm:max-w-[380px] z-10"
             >
+              <motion.div
+                initial={{ opacity: 0, y: 40, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+              >
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{
@@ -184,6 +190,7 @@ export default function FounderAboutSection() {
               </motion.div>
             </motion.div>
             </motion.div>
+            </motion.div>
           </div>
 
           {/* Right Side: About Content */}
@@ -196,7 +203,7 @@ export default function FounderAboutSection() {
                   key={i}
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false, amount: 0.1 }}
                   transition={{ duration: 0.4, delay: 0.1 + i * 0.1 }}
                   className="inline-block mr-3 text-slate-900"
                 >
@@ -209,7 +216,7 @@ export default function FounderAboutSection() {
             <motion.h3 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="font-poppins text-sm sm:text-base text-blue-600 font-bold uppercase tracking-wider mt-4 leading-relaxed max-w-xl"
             >
@@ -221,7 +228,7 @@ export default function FounderAboutSection() {
               <motion.p 
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
                 Hi, I'm Madhan M, the founder of ZENCE.
@@ -229,7 +236,7 @@ export default function FounderAboutSection() {
               <motion.p 
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: 0.55 }}
               >
                 I help businesses grow through high-converting Meta Ads, premium no-code websites, and AI Voice Agents that improve customer communication and lead generation.
@@ -237,7 +244,7 @@ export default function FounderAboutSection() {
               <motion.p 
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
                 My mission is to help startups, local businesses, and entrepreneurs build a strong digital presence that generates quality leads, increases sales, and strengthens their online brand.
@@ -245,7 +252,7 @@ export default function FounderAboutSection() {
               <motion.p 
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: 0.65 }}
               >
                 Every project is built with performance, trust, speed, user experience, and measurable business growth in mind.
@@ -259,7 +266,7 @@ export default function FounderAboutSection() {
                   key={idx}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false, amount: 0.1 }}
                   transition={{ duration: 0.5, delay: 0.6 + idx * 0.08 }}
                   className="flex items-center gap-3 text-slate-700 font-poppins text-sm sm:text-base"
                 >
@@ -279,7 +286,7 @@ export default function FounderAboutSection() {
                 onMouseEnter={playHover}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
                 className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-2xl font-poppins font-bold tracking-wide transition-all shadow-md hover:shadow-lg hover:scale-[1.02] cursor-pointer text-center"
               >
@@ -292,7 +299,7 @@ export default function FounderAboutSection() {
                 onMouseEnter={playHover}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: 0.88 }}
                 className="px-8 py-4 bg-white border border-slate-300 hover:border-slate-400 text-slate-800 rounded-2xl font-poppins font-bold tracking-wide transition-all hover:bg-slate-50 hover:scale-[1.02] cursor-pointer text-center shadow-sm"
               >

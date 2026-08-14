@@ -1,13 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE_LIB from 'three';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles, TrendingUp, BarChart3 } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
 
 export default function Hero() {
   const mountRef = useRef(null);
+  const sectionRef = useRef(null);
   const { playHover, playClick } = useAudio();
   const [isMobile, setIsMobile] = useState(false);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   // Detect mobile viewports dynamically
   useEffect(() => {
@@ -237,9 +246,12 @@ export default function Hero() {
   const ctaDuration = isMobile ? 0.4 : 0.8;
 
   return (
-    <section id="home" className="relative min-h-[85vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0B1020] pt-24 pb-16 lg:py-0">
-      {/* 3D WebGL Canvas container */}
-      <div ref={mountRef} className="absolute inset-0 z-0 opacity-60 pointer-events-none" />
+    <section ref={sectionRef} id="home" className="relative min-h-[85vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0B1020] pt-24 pb-16 lg:py-0">
+      
+      <motion.div style={{ y: heroY, opacity: heroOpacity }} className="absolute inset-0 w-full h-full flex flex-col items-center justify-center z-10 pointer-events-none">
+        
+        {/* Main Content Area */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pointer-events-auto">
 
       {/* Subtle ambient lighting */}
       <div className="hidden md:block absolute top-1/4 left-1/10 w-96 h-96 bg-blue-600/5 rounded-full blur-[140px] animate-blob-spin pointer-events-none" />
@@ -365,6 +377,11 @@ export default function Hero() {
           />
         </div>
       </div>
+        </div>
+      </motion.div>
+
+      {/* 3D WebGL Canvas container (remains outside the fade container to avoid re-rendering issues) */}
+      <div ref={mountRef} className="absolute inset-0 z-0 opacity-60 pointer-events-none" />
     </section>
   );
 }
