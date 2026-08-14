@@ -82,9 +82,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
         y: -4,
         scale: 1.01
       }}
-      className={`group relative rounded-[28px] transition-all duration-300 cursor-pointer select-none ${
-        popular ? 'shadow-lg ring-2 ring-blue-500/20' : 'shadow-sm hover:shadow-xl'
-      }`}
+      className="group relative rounded-[28px] transition-all duration-300 cursor-pointer select-none shadow-sm hover:shadow-xl outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50"
       onClick={handleCardClick}
       onMouseEnter={playHover}
     >
@@ -94,9 +92,7 @@ function PackageCard({ name, priceText, priceLabel, badge, icon: Icon, descripti
       </div>
 
       {/* Card Inner Container */}
-      <div className={`relative h-full flex flex-col justify-between p-8 sm:p-10 rounded-[28px] bg-white border z-10 transition-colors duration-300 ${
-        popular ? 'border-blue-500' : 'border-slate-200 group-hover:border-transparent'
-      }`}>
+      <div className="relative h-full flex flex-col justify-between p-8 sm:p-10 rounded-[28px] bg-white border border-slate-200 group-hover:border-transparent z-10 transition-colors duration-300">
       <div className="relative z-10">
         {/* Package Header */}
         <div className="flex justify-between items-start mb-6">
