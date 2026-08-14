@@ -367,17 +367,7 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Mouse parallax scrolling hint */}
-      <motion.div style={{ opacity: heroOpacity }} className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="font-poppins text-[10px] text-slate-400 uppercase tracking-widest">Scroll to explore</span>
-        <div className="w-5 h-8 border border-white/20 rounded-full flex justify-center p-1">
-          <motion.div 
-            className="w-1 h-1 bg-cyan-400 rounded-full" 
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-          />
-        </div>
-      </motion.div>
+
     </section>
   );
 }
