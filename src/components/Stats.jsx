@@ -1,11 +1,33 @@
 import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { useAudio } from '../hooks/useAudio';
 
 export default function FounderAboutSection() {
   const { playClick, playHover } = useAudio();
   const cardRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  // Scroll tracking for zero-gravity parallax
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Parallax Layers
+  // Layer 1 - Background (Very slow, large depth)
+  const yLayer1 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  
+  // Layer 2 - Midground (Slow drift, gentle rotation)
+  const yLayer2 = useTransform(scrollYProgress, [0, 1], [0, -300]);
+  const rLayer2 = useTransform(scrollYProgress, [0, 1], [0, 45]);
+
+  // Layer 3 - Foreground (Faster, translucent)
+  const yLayer3 = useTransform(scrollYProgress, [0, 1], [0, -500]);
+  const rLayer3 = useTransform(scrollYProgress, [0, 1], [0, -90]);
+
+  // Portrait Parallax (Layer 4)
+  const portraitY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   // Mouse coordinates relative to card for 3D tilt
   const x = useMotionValue(0);
@@ -58,11 +80,38 @@ export default function FounderAboutSection() {
   const headingWords = "About MADHAN M".split(" ");
 
   return (
-    <section id="why-us" className="relative bg-white py-24 border-t border-slate-200 overflow-hidden">
+    <section ref={sectionRef} id="why-us" className="relative bg-white py-24 border-t border-slate-200 overflow-hidden">
       
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/5 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[160px] pointer-events-none" />
+      {/* --- ZERO GRAVITY PARTICLE LAYERS --- */}
+      
+      {/* LAYER 1: Background (Deepest, highly blurred) */}
+      <motion.div style={{ y: yLayer1 }} className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-[10%] left-[5%] w-64 h-64 bg-blue-500/5 rounded-full blur-[100px]" />
+        <div className="absolute top-[60%] right-[10%] w-96 h-96 bg-violet-500/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[10%] left-[40%] w-72 h-72 bg-cyan-500/5 rounded-full blur-[90px]" />
+      </motion.div>
+
+      {/* LAYER 2: Midground (Small dust & abstract shapes) */}
+      <motion.div style={{ y: yLayer2, rotate: rLayer2 }} className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-[20%] left-[15%] w-2 h-2 bg-slate-300 rounded-full blur-[1px] opacity-40" />
+        <div className="absolute top-[70%] left-[8%] w-3 h-3 bg-slate-200 rounded-sm blur-[1px] opacity-30 rotate-12" />
+        <div className="absolute top-[30%] right-[20%] w-4 h-4 bg-blue-100 rounded-full blur-[2px] opacity-50" />
+        <div className="absolute bottom-[25%] right-[15%] w-2 h-2 bg-slate-300 rounded-full blur-[1px] opacity-40" />
+        <div className="absolute top-[50%] left-[80%] w-1.5 h-1.5 bg-violet-200 rounded-full opacity-30" />
+        <div className="absolute bottom-[40%] left-[25%] w-4 h-4 border border-slate-200 rounded-full opacity-20" />
+      </motion.div>
+
+      {/* LAYER 3: Foreground (Faster, translucent geometric elements) */}
+      <motion.div style={{ y: yLayer3, rotate: rLayer3 }} className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-[15%] right-[25%] w-6 h-6 border border-blue-100 rounded-lg opacity-20 rotate-45 blur-[1px]" />
+        <div className="absolute top-[80%] left-[12%] w-8 h-8 border border-violet-100 rounded-full opacity-20 blur-[2px]" />
+        <div className="absolute bottom-[15%] right-[8%] w-5 h-5 bg-white shadow-[0_0_15px_rgba(59,130,246,0.1)] rounded-full opacity-60" />
+        <div className="absolute top-[40%] left-[5%] w-3 h-3 bg-white shadow-[0_0_10px_rgba(139,92,246,0.1)] rounded-full opacity-50" />
+      </motion.div>
+
+      {/* Existing Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/5 rounded-full blur-[130px] pointer-events-none z-0" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[160px] pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div 
@@ -82,16 +131,20 @@ export default function FounderAboutSection() {
               className="absolute w-72 h-72 sm:w-96 sm:h-96 bg-gradient-to-tr from-blue-500/10 to-cyan-500/10 rounded-full blur-[80px] pointer-events-none z-0" 
             />
 
-            {/* Float container */}
+            {/* Float container with portrait scroll parallax */}
             <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{
-                repeat: Infinity,
-                duration: 6,
-                ease: "easeInOut"
-              }}
+              style={{ y: portraitY }}
               className="relative w-full max-w-[360px] sm:max-w-[380px] z-10"
             >
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 6,
+                  ease: "easeInOut"
+                }}
+                className="w-full h-full"
+              >
               {/* 3D Tilt Card */}
               <motion.div
                 ref={cardRef}
@@ -129,6 +182,7 @@ export default function FounderAboutSection() {
                   </span>
                 </div>
               </motion.div>
+            </motion.div>
             </motion.div>
           </div>
 
