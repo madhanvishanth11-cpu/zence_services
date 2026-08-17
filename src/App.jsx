@@ -9,7 +9,6 @@ import Services from './components/Services';
 import Packages from './components/Packages';
 import WhyChooseUs from './components/WhyChooseUs';
 import Portfolio from './components/Portfolio';
-import TechStack from './components/TechStack';
 import Testimonials from './components/Testimonials';
 import Process from './components/Process';
 import Faq from './components/Faq';
@@ -76,7 +75,6 @@ export default function App() {
             <Packages />
             <WhyChooseUs />
             <Portfolio />
-            <TechStack />
             <Process />
             <Testimonials />
             <Faq />
